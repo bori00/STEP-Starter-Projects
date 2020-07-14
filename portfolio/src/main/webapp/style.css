@@ -1,19 +1,12 @@
-/* colors */
-/* 
+/* --------------------general styling---------------------- */
+/* colors
 almost white: #fefefe
 light brown: #D8C3A5
 dark brown: #8E8D8A
-light orange: #E98074
-dark orange: #E85A4F
- */
+light orange: ##D8C3A5
+dark orange: #E85A4F*
+other orange: #ff9966*/
 
-#greeting-container {
-  margin-top: 20px;
-}
-
-/* my part */
-
-/* ------------general styling------------- */
 *{
     margin: 0px;
     padding: 0px;
@@ -21,8 +14,8 @@ dark orange: #E85A4F
 }
 
 html, body{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.7em;
+    font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5em;
     text-align: center;
     text-decoration: none;
     color: #8E8D8A;
@@ -38,6 +31,13 @@ a:hover{
     color: #8E8D8A;
 }
 
+.dotted-list{
+    list-style-type: circle;
+    list-style-position: inside;
+    text-align: left;
+    padding-left: 20px;
+}
+
 ul{
     list-style: none;
 }
@@ -46,14 +46,26 @@ li{
     text-decoration: none;
 }
 
+
+
 h1{
-    padding: 20px 0;
-    font-size: 46px;
+    padding: 5px 0 20px 0;
+    font-size: 58px;
 }
 
 h2{
-    padding: 10px 0;
-    font-size: 32px;
+    padding: 0px 0 8px 0;
+    font-size: 48px;
+}
+
+h3{
+    padding: 0px 0 6px 0;
+    font-size: 20px;
+}
+
+h4{
+    padding: 0px 0 4px 0;
+    font-size: 16px;
 }
 
 .text-primary{
@@ -68,11 +80,15 @@ h2{
     color: #8E8D8A;
 }
 
-/* --------------content------------------- */
-/* ------navbar------ */
+.page-title{
+    margin: 20px;
+}
+
+/* ------------------------content------------------------- */
+/* --------------navbar-------------- */
 #navbar{
     background-color: #8E8D8A;
-    height: 80px;
+    height: 77px;
     position: sticky;
     top: 0;
 }
@@ -81,7 +97,7 @@ h2{
     float: left;
     font-size: 46px;
     text-align: center;
-    margin: 22px 25px;
+    margin: 10px 25px;
 }
 
 #navbar #menu-title a{
@@ -102,16 +118,16 @@ h2{
     text-align: center;
     padding: 25px;
     display: block;
-    color: f2eeed;
+    color: #f2eeed;
 }
 
 #navbar li a:hover,
 #navbar li a.current{
     background-color: #D8C3A5;
-    color: #E98074
+    color: #ff9966
 }
 
-/* ------home info-- */
+/* -------------home info---------------- */
 #home-info{
     background-color: #f2eeed;
     padding: 10px;
@@ -130,13 +146,13 @@ h2{
 
 #home-info #info-content{
     display: inline;
-    background-color: hsla(6, 73%, 68%, 80%);
+    background-color: hsla(20, 100%, 70%, 80%);
     position: absolute;
     top: 50px;
     right: 50px;
     color: #8E8D8A;
     border-radius: 15% 0 15% 0;
-    padding: 100px;
+    padding: 5%;
     text-align: right;
     display: block;
 }
@@ -183,6 +199,53 @@ h2{
 }
 
 /* icons' source: https://www.iconsdb.com/white-icons/linkedin-icon.html */
+
+/* ---------------timeline for resume-------------- */
+.timeline{
+    position: relative;
+    margin: 0 auto;
+    max-width: 1000px;
+    padding-top: 30px;
+}
+
+.timeline::after{
+    content: '';
+    position: absolute;
+    width: 10px;
+    background-color: #D8C3A5;
+    top: 30px;
+    bottom: 0px;
+    left: 50%;
+}
+
+.container{
+    max-width: 500px;
+    background-color: #ff9966;
+    padding: 10px;
+    margin: 20px 10px;
+}
+
+.container-left{
+    position: relative;
+    left: 0;
+    border-radius: 0px 25% 0 25%
+}
+
+.container-section-break{
+    position: relative;
+    left: 25%;
+    border-radius: 45%;
+    z-index: 1;
+    background-color: #8E8D8A;
+    color: #f2eeed;
+}
+
+.container-right{
+    left: 50%;
+    position: relative;
+    border-radius: 25% 0 25% 0;
+    /* right: 60px; */
+}
 
 /* -----footer----- */
 #main-footer{
