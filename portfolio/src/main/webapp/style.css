@@ -26,11 +26,12 @@ html, body{
     text-align: center;
     text-decoration: none;
     color: #8E8D8A;
+    background-color: #f2eeed;
 }
 
 a{
     text-decoration: none;
-    color: #fefefe;
+    color: #f2eeed;
 }
 
 a:hover{
@@ -56,11 +57,11 @@ h2{
 }
 
 .text-primary{
-    color: #fefefe;
+    color: #f2eeed;
 }
 
 .link-light{
-    color: #fefefe;
+    color: #f2eeed;
 }
 
 .link-light:hover{
@@ -84,7 +85,7 @@ h2{
 }
 
 #navbar #menu-title a{
-    color: #EAE7DC;
+    color: #f2eeed;
 }
 
 #navbar ul{
@@ -101,7 +102,7 @@ h2{
     text-align: center;
     padding: 25px;
     display: block;
-    color: #EAE7DC;
+    color: f2eeed;
 }
 
 #navbar li a:hover,
@@ -112,20 +113,24 @@ h2{
 
 /* ------home info-- */
 #home-info{
-    height: 844px;
-    background-color: #fefefe
+    background-color: #f2eeed;
+    padding: 10px;
+    height: 874px;
+    overflow: auto;
 }
 
 #home-info #info-img{
-    object-fit: contain;
-    background: url('./images/bori_bg.jpg');
+    background: url('./images/bori_side.jpg');
     background-repeat: no-repeat;
-    min-width: 700px;
+    width: 700px;
     height: 844px;
-    padding: 100px 50px 0 0;
+    box-shadow: 0 0 15px 15px inset #f2eeed;
+    margin: 10px;
+    float: left;
 }
 
-#home-info #info-img #info-content{
+#home-info #info-content{
+    display: inline;
     background-color: hsla(6, 73%, 68%, 80%);
     position: absolute;
     top: 50px;
@@ -134,13 +139,14 @@ h2{
     border-radius: 15% 0 15% 0;
     padding: 100px;
     text-align: right;
-    width: 505px;
     display: block;
 }
 
 /* ------side navbar for social media----- */
 #my-sidenav{
     margin-top: 500px;
+    height: 120px;
+    width: 120px;
 }
 
 #my-sidenav ul{
@@ -174,7 +180,8 @@ h2{
 /* -----footer----- */
 #main-footer{
     background-color: #8E8D8A;
-    color: #EAE7DC;
+    color: #f2eeed;
     height: 20%;
+    overflow: auto;
 }
 
