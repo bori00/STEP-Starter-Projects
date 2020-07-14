@@ -37,6 +37,14 @@ a:hover{
     color: #8E8D8A;
 }
 
+ul{
+    list-style: none;
+}
+
+li{
+    text-decoration: none;
+}
+
 h1{
     padding: 20px 0;
     font-size: 46px;
@@ -49,6 +57,14 @@ h2{
 
 .text-primary{
     color: #fefefe;
+}
+
+.link-light{
+    color: #fefefe;
+}
+
+.link-light:hover{
+    color: #8E8D8A;
 }
 
 /* --------------content------------------- */
@@ -94,7 +110,7 @@ h2{
     color: #E98074
 }
 
-/* ------showcase-- */
+/* ------home info-- */
 #home-info{
     height: 844px;
     background-color: #fefefe
@@ -111,14 +127,55 @@ h2{
 
 #home-info #info-img #info-content{
     background-color: hsla(6, 73%, 68%, 80%);
-    position: sticky;
+    position: absolute;
     top: 50px;
+    right: 50px;
     color: #8E8D8A;
-    border-radius: 15%;
-    float: right;
+    border-radius: 15% 0 15% 0;
     padding: 100px;
     text-align: right;
+    width: 505px;
+    display: block;
 }
+
+/* ------side navbar for social media----- */
+#my-sidenav{
+    margin-top: 500px;
+}
+
+#my-sidenav ul {
+    padding: 15px;
+    width: 120px;
+    position: absolute;
+    right: 0px;
+}
+
+#my-sidenav ul li{
+    height: 50px;
+    border-radius: 15% 0 15% 0;
+    background-color: #8E8D8A;
+    margin: 5px;
+    transition: 0.3s;
+    padding: 10px;
+}
+  
+#my-sidenav ul li:hover {
+   right: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+/* source: https://www.iconsdb.com/white-icons/linkedin-icon.html */
+#my-sidenav #facebook {
+    background-image: url('./images/facebook-32.ico');
+    background-size: contain;
+    background: no-repeat;
+}
+
+#my-sidenav #linkedin {
+    background-image: url('./images/linkedin-32.ico');
+    background-size: contain;
+    background: no-repeat;
+}
+
 
 
 /* -----footer----- */
