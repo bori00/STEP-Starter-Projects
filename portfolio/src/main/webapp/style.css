@@ -124,7 +124,7 @@ h2{
     background-repeat: no-repeat;
     width: 700px;
     height: 844px;
-    box-shadow: 0 0 15px 15px inset #f2eeed;
+    box-shadow: 0 0 35px 45px inset #f2eeed;;
     margin: 10px;
     float: left;
 }
