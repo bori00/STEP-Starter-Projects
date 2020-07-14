@@ -115,8 +115,7 @@ h2{
 #home-info{
     background-color: #f2eeed;
     padding: 10px;
-    height: 874px;
-    overflow: auto;
+    height: 884px;
 }
 
 #home-info #info-img{
@@ -144,9 +143,12 @@ h2{
 
 /* ------side navbar for social media----- */
 #my-sidenav{
-    margin-top: 500px;
+    margin-top: 700px;
+    position: absolute;
+    right: 0px;
+    overflow: hidden;
+    width: 110px;
     height: 120px;
-    width: 120px;
 }
 
 #my-sidenav ul{
