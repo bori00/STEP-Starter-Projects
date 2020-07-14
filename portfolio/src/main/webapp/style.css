@@ -1,13 +1,6 @@
 /* colors */
-/*background: #0d1524 - drak blue(indigo)
-    color: #be915e; - drapp??
-    #54a095 - light blue
-    #963627 - teglapiros
-    #102f46 - not so dark blue
-*/
-
 /* 
-almost white: #EAE7DC
+almost white: #fefefe
 light brown: #D8C3A5
 dark brown: #8E8D8A
 light orange: #E98074
@@ -37,7 +30,25 @@ html, body{
 
 a{
     text-decoration: none;
-    color: #EAE7DC;
+    color: #fefefe;
+}
+
+a:hover{
+    color: #8E8D8A;
+}
+
+h1{
+    padding: 20px 0;
+    font-size: 46px;
+}
+
+h2{
+    padding: 10px 0;
+    font-size: 32px;
+}
+
+.text-primary{
+    color: #fefefe;
 }
 
 /* --------------content------------------- */
@@ -84,13 +95,31 @@ a{
 }
 
 /* ------showcase-- */
-#showcase{
-    background-image: url("/images/printed_circuits.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 600px;
+#home-info{
+    height: 844px;
+    background-color: #fefefe
 }
+
+#home-info #info-img{
+    object-fit: contain;
+    background: url('./images/bori_bg.jpg');
+    background-repeat: no-repeat;
+    min-width: 700px;
+    height: 844px;
+    padding: 100px 50px 0 0;
+}
+
+#home-info #info-img #info-content{
+    background-color: hsla(6, 73%, 68%, 80%);
+    position: sticky;
+    top: 50px;
+    color: #8E8D8A;
+    border-radius: 15%;
+    float: right;
+    padding: 100px;
+    text-align: right;
+}
+
 
 /* -----footer----- */
 #main-footer{
