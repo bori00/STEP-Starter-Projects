@@ -6,6 +6,14 @@
     #102f46 - not so dark blue
 */
 
+/* 
+almost white: #EAE7DC
+light brown: #D8C3A5
+dark brown: #8E8D8A
+light orange: #E98074
+dark orange: #E85A4F
+ */
+
 #greeting-container {
   margin-top: 20px;
 }
@@ -24,20 +32,21 @@ html, body{
     line-height: 1.7em;
     text-align: center;
     text-decoration: none;
-    color: #54a095;
+    color: #8E8D8A;
 }
 
 a{
     text-decoration: none;
-    color: #54a095;
+    color: #EAE7DC;
 }
 
 /* --------------content------------------- */
 /* ------navbar------ */
 #navbar{
-    background-color: #0d1524;
+    background-color: #8E8D8A;
     height: 80px;
     position: sticky;
+    top: 0;
 }
 
 #navbar #menu-title{
@@ -47,9 +56,14 @@ a{
     margin: 22px 25px;
 }
 
+#navbar #menu-title a{
+    color: #EAE7DC;
+}
+
 #navbar ul{
     float: right;
     list-style: none;
+    height: 100%;
 }
 
 #navbar li{
@@ -60,12 +74,13 @@ a{
     text-align: center;
     padding: 25px;
     display: block;
+    color: #EAE7DC;
 }
 
 #navbar li a:hover,
 #navbar li a.current{
-    background-color: #102f46;
-    color: #963627;
+    background-color: #D8C3A5;
+    color: #E98074
 }
 
 /* ------showcase-- */
@@ -79,6 +94,8 @@ a{
 
 /* -----footer----- */
 #main-footer{
-    background-color: #0d1524;
-    height: 10%;
+    background-color: #8E8D8A;
+    color: #EAE7DC;
+    height: 20%;
 }
+
