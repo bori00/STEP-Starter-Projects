@@ -27,10 +27,6 @@ a{
     color: #f2eeed;
 }
 
-a:hover{
-    color: #8E8D8A;
-}
-
 .dotted-list{
     list-style-type: circle;
     list-style-position: inside;
@@ -45,8 +41,6 @@ ul{
 li{
     text-decoration: none;
 }
-
-
 
 h1{
     padding: 5px 0 20px 0;
@@ -96,6 +90,7 @@ h5{
     height: 77px;
     position: sticky;
     top: 0;
+    overflow: auto;
 }
 
 #navbar #menu-title{
@@ -162,8 +157,13 @@ h5{
     display: block;
 }
 
+#home-info #info-content a:hover{
+    color: #8E8D8A;
+}
+
+
 /* ------side navbar for social media----- */
-#my-sidenav{
+#social-media-sidenav{
     margin-top: 620px;
     position: absolute;
     right: 0px;
@@ -172,12 +172,12 @@ h5{
     height: 180px;
 }
 
-#my-sidenav ul{
+#social-media-sidenav ul{
     position: absolute;
     right: -20px;
 }
 
-#my-sidenav ul li{
+#social-media-sidenav ul li{
     height: 50px;
     border-radius: 15px 0 15px 0;
     background-color: #8E8D8A;
@@ -189,17 +189,63 @@ h5{
     transition: 0.3s;
 }
 
-#my-sidenav #linkedin{
+#social-media-sidenav #linkedin{
     position: absolute;
     top: 60px;
 }
 
-#my-sidenav #facebook{
+#social-media-sidenav #facebook{
     position: absolute;
     top: 120px;
 }
   
-#my-sidenav ul li:hover {
+#social-media-sidenav ul li:hover {
+   right: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+/* --------------sidebar for resume----------- */
+#resume-sidenav{
+    margin-top: 20px;
+    position: absolute;
+    right: 0px;
+    overflow: hidden;
+    width: 200px;
+    height: 240px;
+}
+
+#resume-sidenav ul{
+    position: absolute;
+    right: -20px;
+}
+
+#resume-sidenav ul li{
+    height: 50px;
+    border-radius: 15px 0 15px 0;
+    background-color: #8E8D8A;
+    margin: 5px;
+    padding: 10px;
+    width: 200px;
+    position: absolute;
+    right: -30px;
+    transition: 0.3s;
+}
+
+#resume-sidenav #job{
+    position: absolute;
+    top: 60px;
+}
+
+#resume-sidenav #awards{
+    position: absolute;
+    top: 120px;
+}
+
+#resume-sidenav #other{
+    position: absolute;
+    top: 180px;
+}
+  
+#resume-sidenav ul li:hover {
    right: 0; /* On mouse-over, make the elements appear as they should */
 }
 
@@ -209,7 +255,7 @@ h5{
 .timeline{
     position: relative;
     margin: 0 auto;
-    max-width: 1000px;
+    max-width: 800px;
     padding-top: 30px;
 }
 
@@ -218,13 +264,13 @@ h5{
     position: absolute;
     width: 10px;
     background-color: #ff9966;
-    top: 30px;
+    top: 60px;
     bottom: 0px;
     left: 50%;
 }
 
 .container{
-    max-width: 500px;
+    max-width: 400px;
     background-color: #D8C3A5;
     padding: 25px;
     margin: 20px 10px;
@@ -252,7 +298,7 @@ h5{
     /* right: 60px; */
 }
 
-.container h1, h2, h3, h4{
+.container h1, .container h2, .container h3, .container h4{
     color: #f2eeed;
 }
 
