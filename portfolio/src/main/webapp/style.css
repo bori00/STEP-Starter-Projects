@@ -1,9 +1,84 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
-}
+/* colors */
+/*background: #0d1524 - drak blue(indigo)
+    color: #be915e; - drapp??
+    #54a095 - light blue
+    #963627 - teglapiros
+    #102f46 - not so dark blue
+*/
 
 #greeting-container {
   margin-top: 20px;
+}
+
+/* my part */
+
+/* ------------general styling------------- */
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+html, body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7em;
+    text-align: center;
+    text-decoration: none;
+    color: #54a095;
+}
+
+a{
+    text-decoration: none;
+    color: #54a095;
+}
+
+/* --------------content------------------- */
+/* ------navbar------ */
+#navbar{
+    background-color: #0d1524;
+    height: 80px;
+    position: sticky;
+}
+
+#navbar #menu-title{
+    float: left;
+    font-size: 46px;
+    text-align: center;
+    margin: 22px 25px;
+}
+
+#navbar ul{
+    float: right;
+    list-style: none;
+}
+
+#navbar li{
+    float: left;
+}
+
+#navbar li a{
+    text-align: center;
+    padding: 25px;
+    display: block;
+}
+
+#navbar li a:hover,
+#navbar li a.current{
+    background-color: #102f46;
+    color: #963627;
+}
+
+/* ------showcase-- */
+#showcase{
+    background-image: url("/images/printed_circuits.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 600px;
+}
+
+/* -----footer----- */
+#main-footer{
+    background-color: #0d1524;
+    height: 10%;
 }
