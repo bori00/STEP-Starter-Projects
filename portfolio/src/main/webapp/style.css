@@ -143,40 +143,33 @@ h2{
     margin-top: 500px;
 }
 
-#my-sidenav ul {
-    padding: 15px;
-    width: 120px;
+#my-sidenav ul{
     position: absolute;
-    right: 0px;
+    right: -20px;
 }
 
 #my-sidenav ul li{
     height: 50px;
-    border-radius: 15% 0 15% 0;
+    border-radius: 15px 0 15px 0;
     background-color: #8E8D8A;
     margin: 5px;
-    transition: 0.3s;
     padding: 10px;
+    width: 120px;
+    position: absolute;
+    right: -30px;
+    transition: 0.3s;
+}
+
+#my-sidenav #linkedin{
+    position: absolute;
+    top: 60px;
 }
   
 #my-sidenav ul li:hover {
    right: 0; /* On mouse-over, make the elements appear as they should */
 }
 
-/* source: https://www.iconsdb.com/white-icons/linkedin-icon.html */
-#my-sidenav #facebook {
-    background-image: url('./images/facebook-32.ico');
-    background-size: contain;
-    background: no-repeat;
-}
-
-#my-sidenav #linkedin {
-    background-image: url('./images/linkedin-32.ico');
-    background-size: contain;
-    background: no-repeat;
-}
-
-
+/* icons' source: https://www.iconsdb.com/white-icons/linkedin-icon.html */
 
 /* -----footer----- */
 #main-footer{
