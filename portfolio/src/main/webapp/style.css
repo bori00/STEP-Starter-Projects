@@ -347,10 +347,12 @@ h5{
 
 .btn-next{
     right: 5px;
+    display: none;
 }
 
 .btn-prev{
     left: 5px;
+    display: none;
 }
 
 .slidenumber{
@@ -361,7 +363,7 @@ h5{
     top: 25px;
     left: 50%;
     width: 40px;
-
+    display: none;
 }
 
 .caption{
@@ -372,6 +374,7 @@ h5{
     bottom: 50px;
     left: 50%;
     transform: translate(-50%);
+    display: none;
 }
 
 /* ------------------footer------------------ */

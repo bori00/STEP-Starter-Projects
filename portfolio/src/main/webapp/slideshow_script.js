@@ -1,6 +1,7 @@
+//sliding
 var slideIndex = 1;
+var timeout;
 showSlide(slideIndex); //initial state
-
 
 function showSlide(index){
     var slides = document.getElementsByClassName("slide");
@@ -20,3 +21,29 @@ function plusSlides(n){
     slideIndex=slideIndex+n;
     showSlide(slideIndex);
 }
+
+// fading buttons, captions and slidenumbers
+var fadingObjects = document.querySelectorAll('.btn-prev, .btn-next, .caption, .slidenumber')
+setFadingObjectsEventListener();
+
+function showButtons(){
+    clearTimeout(timeout);
+    console.log("show buttons");
+    for (var i = 0; i < fadingObjects.length; i++) {
+        fadingObjects[i].style.display="block";
+    }
+    timeout = setTimeout(hideButtons, 3000);
+}
+
+function hideButtons(){
+    console.log("hide buttons");
+    for (var i = 0; i < fadingObjects.length; i++) {
+        fadingObjects[i].style.display="none";
+    }
+}
+
+function setFadingObjectsEventListener(){
+    window.addEventListener('mousemove', showButtons);
+}
+
+
