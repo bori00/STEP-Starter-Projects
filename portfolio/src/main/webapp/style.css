@@ -45,26 +45,31 @@ li{
 
 h1{
     margin: 5px 0 25px 0;
+    line-height: 1em;
     font-size: 58px;
 }
 
 h2{
     padding: 5px 0 16px 0;
+    line-height: 1em;
     font-size: 48px;
 }
 
 h3{
     padding: 0px 0 6px 0;
+    line-height: 1em;
     font-size: 20px;
 }
 
 h4{
     padding: 0px 0 4px 0;
+    line-height: 1em;
     font-size: 16px;
 }
 
 h5{
     padding: 0px 0 4px 0;
+    line-height: 1em;
     font-size: 14px;
 }
 
@@ -107,16 +112,13 @@ h5{
 #navbar{
     background-color: #8E8D8A;
     height: 70px;
-    position: sticky;
-    top: 0;
-    overflow: auto;
 }
 
 #navbar #menu-title{
     float: left;
     font-size: 46px;
     text-align: center;
-    margin: 22px 25px;
+    margin: 15px 25px;
 }
 
 #navbar #menu-title a{
@@ -146,7 +148,15 @@ h5{
     color: #ff9966
 }
 
-/* -------------home info---------------- */
+
+/* --------------showcase---------------- */
+#showcase{
+    background: url('./images/leaf.jpg') no-repeat center fixed;
+    background-size: cover;
+    height: 800px;
+}
+
+/* -------------home and about info---------------- */
 #home-info{
     background-color: #f2eeed;
     padding: 10px;
@@ -163,20 +173,33 @@ h5{
     float: left;
 }
 
-#home-info #info-content{
+.info-content{
     display: inline;
     background-color: hsla(20, 100%, 70%, 80%);
-    position: absolute;
-    top: 50px;
-    right: 50px;
     color: #8E8D8A;
     border-radius: 15% 0 15% 0;
     padding: 5%;
-    text-align: right;
     display: block;
 }
 
-#home-info #info-content a:hover{
+#home-info-content{
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    text-align: right;
+    display: block;
+} 
+
+#quote-info-content{
+    width: 500px;
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    text-align: center;
+    display: block;
+}
+
+#home-info .info-content a:hover{
     color: #8E8D8A;
 }
 
