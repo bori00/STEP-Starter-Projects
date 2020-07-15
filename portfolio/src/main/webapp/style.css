@@ -400,6 +400,126 @@ h5{
     display: none;
 }
 
+/* ----------------card---------------------- */
+.card-holder{
+    display: inline-block;
+    position: relative;
+    margin: 30px;
+    width: 350px;
+    height: 350px;
+    border-radius: 15% 0 15% 0;
+}
+
+.card{
+    vertical-align: top;
+    display: inline-block;
+    background: hsla(20, 100%, 70%, 60%);
+    box-shadow: 5px 5px 10px #8E8D8A;
+    padding: 20px;
+    width: 350px;
+    height: 350px;
+}
+
+.card img{
+    min-width: 128px;
+    max-width: 280px;
+    max-height: 200px;
+    padding: 30px 0;
+}
+
+.overlay { 
+    position: absolute; 
+    top: 0px;
+    left: 0;
+    width: 350px;
+    transition: all 1s ease; 
+    opacity: 0%; 
+    background-color: #8E8D8A;
+    color: #f2eeed;
+    padding: 20px;
+} 
+
+.card-holder:hover .overlay{
+    opacity: 100%;
+}
+
+.overlay-top{ 
+    height: 0;   
+} 
+
+.card-holder:hover .overlay-top{ 
+    height: 350px; 
+} 
+
+.card .answer{
+    padding: 20px;
+}
+
+/* --small version */
+.card-row-small{
+    height: 320px;
+}
+
+.card-holder-small{
+    vertical-align: top;
+    position: relative;
+    margin: 30px 26px;
+    width: 250px;
+    height: 250px;
+    border-radius: 15% 0 15% 0;
+    display: inline-block;
+}
+
+.card-small{
+    vertical-align: top;
+    display: inline-block;
+    background: hsl(45, 2%, 55%, 60%);
+    box-shadow: 5px 5px 10px #8E8D8A;
+    padding: 20px;
+    width: 250px;
+    height: 250px;
+    color: #f2eeed;
+}
+
+.card-small img{
+    max-width: 120px;
+    max-height: 120px;
+    padding-bottom: 20px;
+}
+
+.card-small:hover{
+    box-shadow: 5px 10px 20px #8E8D8A;
+}
+
+.overlay-small { 
+    position: absolute; 
+    top: 0px;
+    left: 0;
+    width: 250px;
+    transition: all 1s ease; 
+    opacity: 0%; 
+    background-color: #8E8D8A;
+    color: #f2eeed;
+    padding: 20px;
+} 
+
+.card-holder-small:hover .overlay-small{
+    opacity: 100%;
+}
+
+.overlay-top-small{ 
+    height: 0;   
+} 
+
+.card-holder-small:hover .overlay-top-small{ 
+    height: 250px;
+} 
+
+/* cards */
+#card-mothe-tongue, #card-nationality, #card-city{
+    top: 0px;
+}
+
 /* ------------------footer------------------ */
 #main-footer{
     background-color: #8E8D8A;

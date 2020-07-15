@@ -35,6 +35,12 @@ function showButtons(){
     timeout = setTimeout(hideButtons, 3000);
 }
 
+function fadeObject(object){
+    for(var i=10; i>=1; i--){
+        object.style.opacity=i/10;
+    }
+}
+
 function hideButtons(){
     console.log("hide buttons");
     for (var i = 0; i < fadingObjects.length; i++) {
