@@ -106,7 +106,7 @@ h5{
 /* --------------navbar-------------- */
 #navbar{
     background-color: #8E8D8A;
-    height: 77px;
+    height: 70px;
     position: sticky;
     top: 0;
     overflow: auto;
@@ -323,18 +323,14 @@ h5{
 
 /* -----------------slideshow---------------- */
 .slideshow-container{
-    max-width: 1200px;
     position: relative;
     margin: auto;
-    height: fit-content;
     padding: 20px;
-    max-height: 550px;
+    max-width: 1600px;
 }
 
 .slide{
     display: none;
-    max-height: 500px;
-    width: auto;
 }
 
 .btn-prev, .btn-next{
@@ -357,16 +353,16 @@ h5{
 }
 
 .slidenumber{
+    background: #f2eeed;
     letter-spacing: 4px;
-    padding: 8px 12px;
     position: absolute;
     top: 0;
     width: 100%;
 }
 
 .caption{
+    background: #f2eeed;
     font-size: 15px;
-    padding: 8px 12px;
     position: absolute;
     bottom: 8px;
     width: 100%;
