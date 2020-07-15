@@ -39,6 +39,11 @@ ul{
     list-style: none;
 }
 
+ol{
+    list-style-position: inside;
+    list-style-type: lower-alpha;
+}
+
 li{
     text-decoration: none;
 }
@@ -50,13 +55,13 @@ h1{
 }
 
 h2{
-    padding: 5px 0 16px 0;
+    padding: 10px 0 16px 0;
     line-height: 1em;
     font-size: 48px;
 }
 
 h3{
-    padding: 0px 0 6px 0;
+    padding: 0px 0 10px 0;
     line-height: 1em;
     font-size: 20px;
 }
@@ -105,6 +110,13 @@ h5{
 
 .transparent:hover{
     opacity: 80%;
+}
+
+hr{
+    width: 60%;
+    margin: auto;
+    height: 5px;
+    background-color: #8E8D8A;
 }
 
 /* ------------------------content------------------------- */
@@ -424,7 +436,7 @@ h5{
     min-width: 128px;
     max-width: 280px;
     max-height: 200px;
-    padding: 30px 0;
+    padding: 20px 0 10px 0;
 }
 
 .overlay { 
@@ -475,7 +487,7 @@ h5{
     display: inline-block;
     background: hsl(45, 2%, 55%, 60%);
     box-shadow: 5px 5px 10px #8E8D8A;
-    padding: 20px;
+    padding: 30px;
     width: 250px;
     height: 250px;
     color: #f2eeed;
@@ -515,10 +527,42 @@ h5{
     height: 250px;
 } 
 
-/* cards */
-#card-mothe-tongue, #card-nationality, #card-city{
-    top: 0px;
-}
+/*---------------Modal------------- */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1; 
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.4); 
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #f2eeed;
+    margin: auto;
+    padding: 20px;
+    border: 0.5px solid #8E8D8A;
+    width: 80%;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #8E8D8A;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #ff9966;
+    cursor: pointer;
+  }
+
 
 /* ------------------footer------------------ */
 #main-footer{
