@@ -1,0 +1,1 @@
+alert("Welcome!\nThis page contains some quiz questions. Hover your mouse over the question boc to find out the answer.\nGood luck!");
