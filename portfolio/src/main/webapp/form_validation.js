@@ -10,14 +10,14 @@ jobRelated_checkbox.addEventListener('change', function() {
 });
 
 
-//email check
+//email check: add red outline if invalid
 function validEmail(string){
-    return /@/.test(string) && !(/^@/.test(string) || /@$/.test(string));
+    return string!="" && /@/.test(string) && !(/^@/.test(string) || /@$/.test(string));
 }
 var email_input = document.getElementById("email-input");
 email_input.addEventListener('change', function() {
     console.log("test email");
-    if(this.value!="" && !validEmail(this.value)) {
+    if(!validEmail(this.value)) {
         this.style.outlineColor="red";
         this.style.borderColor="red";
         this.style.borderWidth="3px";
@@ -30,20 +30,20 @@ email_input.addEventListener('change', function() {
 });
 
 
-//phone check
+//phone check: add red outline if invalid
 function isNumeric(string)
 {
     return /^\d+$/.test(string);
 }
 
 function validPhone(string){
-    return string.length===10 && isNumeric(string);
+    return string!=="" && string.length===10 && isNumeric(string);
 }
 
 var phone_input = document.getElementById("phone-input");
 phone_input.addEventListener('change', function() {
     console.log("test phone: ", this.value, this.value.length);
-    if(this.value!="" && !validPhone(this.value)) {
+    if(!validPhone(this.value)) {
         this.style.outlineColor="red";
         this.style.borderColor="red";
         this.style.borderWidth="3px";
@@ -55,18 +55,20 @@ phone_input.addEventListener('change', function() {
     }
 });
 
+//end check: show alert box if message is successfully sent
 function formValidation(){
-    var inputs = document.getElementsByTagName("input");
-    var valid = true;
-    for(var i=0; i<inputs.length && valid; i++){
-        if(!inputs[i].valid){
-            valid = false;
-        }
-        else{
-            console.log(inputs[i])
-        }
-    }
-    if(valid){
-        window.alert("Message succesfully sent!")
-    }
+    console.log("validation");
+    var valid=true;
+    var firstName = document.getElementById("first-name-input").value;
+    var lastName = document.getElementById("last-name-input").value;
+    if(validEmail(email_input.value)
+     && validPhone(phone_input.value) 
+     && firstName != ""
+     && lastName != ""){ //form is valid, can be sent
+        var message = 'Your massage has been succesfully sent! I will contact you as soon as possible';
+        window.alert(message);
+     }
+     else{
+         console.log("invalid");
+     }
 }
