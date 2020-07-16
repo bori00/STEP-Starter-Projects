@@ -323,7 +323,7 @@ hr{
     left: 50%;
 }
 
-.container{
+.leaf{
     max-width: 400px;
     background-color: #D8C3A5;
     padding: 25px;
@@ -331,47 +331,50 @@ hr{
 }
 
 
-.container-left{
+.leaf-left{
     position: relative;
     left: 0;
-    border-radius: 40% 40% 0 40%
-}
-
-.container-left:hover{
+    border-radius: 40% 40% 0 40%;
     box-shadow: -5px 5px 10px #8E8D8A;
 }
 
-.container-section-break{
+.leaf-left:hover{
+    box-shadow: -5px 10px 20px #8E8D8A;
+}
+
+.leaf-section-break{
     position: relative;
     left: 25%;
     border-radius: 45%;
     z-index: 1;
     background-color: #8E8D8A;
     color: #f2eeed;
-}
-
-.container-section-break:hover{
     box-shadow: 0px 5px 10px #8E8D8A;
 }
 
-.container-right{
+.leaf-section-break:hover{
+    box-shadow: 0px 10px 20px #8E8D8A;
+}
+
+.leaf-right{
     left: 50%;
     position: relative;
     border-radius: 40% 40% 40% 0%;
+    box-shadow: 5px 5px 10px #8E8D8A;
     /* right: 60px; */
 }
 
-.container-right:hover{
-    box-shadow: 5px 5px 10px #8E8D8A;
+.leaf-right:hover{
+    box-shadow: 5px 10px 20px #8E8D8A;
 }
 
 
-.container h1, .container h2, .container h3, .container h4{
+.leaf h1, .leaf h2, .leaf h3, .leaf h4{
     color: #f2eeed;
 }
 
 /* -----------------slideshow---------------- */
-.slideshow-container{
+.slideshow-leaf{
     position: relative;
     margin: auto;
     padding: 5px;
