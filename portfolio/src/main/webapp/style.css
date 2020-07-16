@@ -330,10 +330,15 @@ hr{
     margin: 20px 10px;
 }
 
+
 .container-left{
     position: relative;
     left: 0;
     border-radius: 40% 40% 0 40%
+}
+
+.container-left:hover{
+    box-shadow: -5px 5px 10px #8E8D8A;
 }
 
 .container-section-break{
@@ -345,12 +350,21 @@ hr{
     color: #f2eeed;
 }
 
+.container-section-break:hover{
+    box-shadow: 0px 5px 10px #8E8D8A;
+}
+
 .container-right{
     left: 50%;
     position: relative;
     border-radius: 40% 40% 40% 0%;
     /* right: 60px; */
 }
+
+.container-right:hover{
+    box-shadow: 5px 5px 10px #8E8D8A;
+}
+
 
 .container h1, .container h2, .container h3, .container h4{
     color: #f2eeed;
