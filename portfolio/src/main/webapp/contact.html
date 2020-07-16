@@ -19,10 +19,52 @@
         </nav>
     </header>
 
-
+    <main>
+        <form class="info-content" id="contact-form">
+            <h2 class="text-primary">Contact</h2>
+            <hr>
+            <h4>Feel free to contact me!</h4>
+            <div class="form-field">
+                <label>First Name</label>
+                <input type="text" name="first-name" required>
+            </div>
+            <div class="form-field">
+                <label>Last Name</label>
+                <input type="text" name="last-name" required>
+            </div>
+            <div class="form-field">
+                <label>Email</label>
+                <input type="email" name="email" required >
+            </div>
+            <div class="form-field">
+                <label>Phone Number</label>
+                <input type="tel" name="phone" required>
+            </div>
+            <div class="form-field">
+                <label>Message type</label>
+                <input id="job-related-check" type="checkbox" name="type" value="job related">Job related
+            </div>
+            <div class="form-field">
+                <label>Your job title</label>
+                <select id="job-title-dropdown" class="input" name="job-title" disabled>
+                    <option value="host">Host</option>
+                    <option value="intern">Intern</option>
+                    <option value="recruiter">Recruiter</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label>Message</label>
+                <input type="textarea" name="message" cols=50 rows=5>
+            </div>
+            <button>Send</button>
+        </form>
+    </main>
 
     <footer id="main-footer">
         <p>Fazakas Borbála &copy</p>
     </footer>
+
+    <script src="form_validation.js"></script>
 </body>
 </html>
