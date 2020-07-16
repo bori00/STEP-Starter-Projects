@@ -34,11 +34,11 @@
             </div>
             <div class="form-field">
                 <label>Email</label>
-                <input type="email" name="email" required >
+                <input id="email-input" type="email" name="email" required>
             </div>
             <div class="form-field">
                 <label>Phone Number</label>
-                <input type="tel" name="phone" required>
+                <input id="phone-input" type="tel" name="phone" required>
             </div>
             <div class="form-field">
                 <label>Message type</label>
@@ -57,7 +57,7 @@
                 <label>Message</label>
                 <textarea class="input" name="message" rows="5" cols="50"></textarea> 
             </div>
-            <button>Send</button>
+            <button onClick="formValidation()">Send</button>
         </form>
     </main>
 
