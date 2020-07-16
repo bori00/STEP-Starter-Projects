@@ -642,7 +642,7 @@ hr{
 
 .form-field input:focus, .form-field .input:focus{
     border-width: 1px;
-    outline-color: #f2eeed;;
+    outline-color: #f2eeed;
 }
 
 .form-field label{
@@ -650,6 +650,10 @@ hr{
     margin: auto;
     text-align: left;
     display: block;
+}
+
+#job-title-dropdown{
+    padding: 8px 10px;
 }
 
 /* ------------------footer------------------ */
