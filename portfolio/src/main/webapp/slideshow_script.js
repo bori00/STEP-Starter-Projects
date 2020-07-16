@@ -1,55 +1,63 @@
 //sliding
 var slideIndex = 1;
-var timeout;
-showSlide(slideIndex); //initial state
+var slides = document.getElementsByClassName("slide");
+var noSlides = slides.length;
+showObject(slides[slideIndex-1]); //initial state
 
-function showSlide(index){
-    var slides = document.getElementsByClassName("slide");
-    var noSlides = slides.length
-    console.log(noSlides);
-    if(index>noSlides || index<1 ){
-        index=(index%noSlides+noSlides)%noSlides+1;
+//hide/show functions
+function showObject(object){
+    object.style.display="block";
+}
+
+function hideObject(object){
+    object.style.display="none";
+}
+
+
+//sliding
+function incrementSlideIndex(n){
+    slideIndex=slideIndex+n;
+    if(slideIndex>noSlides || slideIndex<1 ){
+        slideIndex=((slideIndex-1)%noSlides+noSlides)%noSlides+1;
     }
+}
+
+function hideAllSlides(){
     for(var i=0; i<noSlides; i++){
-        slides[i].style.display="none";
+        hideObject(slides[i]);
     }
-    slides[index-1].style.display="block";
-    console.log("show slide: " + index);
 }
 
 function plusSlides(n){
-    slideIndex=slideIndex+n;
-    showSlide(slideIndex);
+    incrementSlideIndex(n);
+    hideAllSlides();
+    showObject(slides[slideIndex-1]);
 }
 
-// fading buttons, captions and slidenumbers
-var fadingObjects = document.querySelectorAll('.btn-prev, .btn-next, .caption, .slidenumber')
-setFadingObjectsEventListener();
+// hiding buttons, captions and slidenumbers + showing them when mouse is moved
+var hidingObjects = document.querySelectorAll('.btn-prev, .btn-next, .caption, .slidenumber')
+setHidingObjectsEventListener();
 
-function showButtons(){
-    clearTimeout(timeout);
-    console.log("show buttons");
-    for (var i = 0; i < fadingObjects.length; i++) {
-        fadingObjects[i].style.display="block";
+var showTimeout; //time period for showing the objects
+function showObjects(){
+    clearTimeout(showTimeout);
+    console.log("show objects");
+    for (var i = 0; i < hidingObjects.length; i++) {
+        showObject(hidingObjects[i]);
     }
-    timeout = setTimeout(hideButtons, 3000);
+    //hide buttons after 2s, if the mouse is not moved again
+    showTimeout = setTimeout(hideObjects, 3000); 
 }
 
-function fadeObject(object){
-    for(var i=10; i>=1; i--){
-        object.style.opacity=i/10;
-    }
-}
-
-function hideButtons(){
-    console.log("hide buttons");
-    for (var i = 0; i < fadingObjects.length; i++) {
-        fadingObjects[i].style.display="none";
+function hideObjects(){
+    console.log("hide objects");
+    for (var i = 0; i < hidingObjects.length; i++) {
+        hideObject(hidingObjects[i]);
     }
 }
 
-function setFadingObjectsEventListener(){
-    window.addEventListener('mousemove', showButtons);
+function setHidingObjectsEventListener(){
+    window.addEventListener('mousemove', showObjects);
 }
 
 
