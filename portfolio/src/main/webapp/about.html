@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="slide_div_script.js"></script>
     <title>About | Bori</title>
 </head>
 <body>
@@ -28,10 +27,24 @@
 
     <div class="modal" id="modal-quiz">
         <div class="modal-content info-content">
-          <span class="close">&times;</span>
+          <span class="close" id="close-quiz">&times;</span>
           <h2>Welcome again!</h2>
           <p>On this page, you will find sume quizzes. <br> Just hover over the question card to find out the answer.</p>
           <h4 class="text primary">Good luck!</h4> 
+        </div>
+    </div>
+
+    <div class="modal" id="modal-romania">
+        <div class="modal-content info-content">
+             <span class="close" id="close-romania">&times;</span>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/j-QblDpVC7o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-cluj">
+        <div class="modal-content info-content">
+            <span class="close" id="close-cluj">&times;</span>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/Er9rAvnPG6o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -42,12 +55,14 @@
                 <div class="card-small">
                     <img src="https://img.icons8.com/wired/64/000000/country.png"/>
                     <p>I'm from Romania, a country in Eastern Europe</p>
+                    <a class="btn" onClick="showRomaniaModal()">+</a>
                 </div>
             </div>
             <div class="card-holder-small" id="card-city">
                 <div class="card-small">
                     <img src="https://img.icons8.com/wired/64/000000/city-buildings.png"/>
                     <p>I live in Cluj-Napoca, the Capital of Transylvania</p>
+                    <a class="btn" onClick="showClujModal()">+</a>
                 </div>
             </div>
             <div class="card-holder-small" id="card-mother-tongue">
@@ -172,5 +187,6 @@
     </footer>
 
     <script src="quiz_alert.js"></script>
+    <script src="additional_info_modal.js"></script>
 </body>
 </html>
