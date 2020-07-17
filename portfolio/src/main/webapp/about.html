@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>About | Bori</title>
+</head>
+<body>
+    <header> 
+        <nav id="navbar">
+            <h1 id="menu-title"><a href="index.html">Bori's Portfolio</a></h1>
+            <ul>
+                <li><a class="current" href="#">About</a><li></li>
+                <li><a href="resume.html">Resume</a><li>
+                <li><a href="photos.html">Photos</a><li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div id="showcase">
+            <div class="info-content" id="quote-info-content">
+                <h3><i>"I think there's just one kind of folks. Folks."</i></h3> 
+                <p><sub>― Harper Lee, To Kill a Mockingbird</sub></p>
+            </div>
+        </div>
+    </header>
+
+    <div class="modal" id="modal-instructions">
+        <div class="modal-content info-content">
+          <span class="close" id="close-instructions">&times;</span>
+          <h2>Welcome again!</h2>
+          <p>On this page, you will find sume quizzes. <br> Just hover over the question card to find out the answer.</p>
+          <h4 class="text primary">Good luck!</h4> 
+        </div>
+    </div>
+
+    <div class="modal" id="modal-romania">
+        <div class="modal-content info-content">
+             <span class="close" id="close-romania">&times;</span>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/j-QblDpVC7o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-cluj">
+        <div class="modal-content info-content">
+            <span class="close" id="close-cluj">&times;</span>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/Er9rAvnPG6o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <main>
+        <hr>
+        <h2>My origins</h2>
+        <div class="card-row-small" id="row-1">
+            <div class="card-holder-small" id="card-birthday">
+                <div class="card-small">
+                    <img src="https://img.icons8.com/ios/50/000000/birth-date.png"/>
+                    <p>I was born in December, 2020</p>
+                </div>
+            </div>
+            <div class="card-holder-small" id="card-nationality">
+                <div class="card-small">
+                    <img src="https://img.icons8.com/wired/64/000000/country.png"/>
+                    <p>I'm from Romania, a country in Eastern Europe</p>
+                    <a class="btn" onClick="showRomaniaModal()">+</a>
+                </div>
+            </div>
+            <div class="card-holder-small" id="card-city">
+                <div class="card-small">
+                    <img src="https://img.icons8.com/wired/64/000000/city-buildings.png"/>
+                    <p>I live in Cluj-Napoca, the Capital of Transylvania</p>
+                    <a class="btn" onClick="showClujModal()">+</a>
+                </div>
+            </div>
+            <div class="card-holder-small" id="card-city">
+                <div class="card-small">
+                    <img src="https://img.icons8.com/wired/64/000000/passport.png"/>
+                    <p>Being a member of an ethnic minority, I identify myself as a transylvanian Hungarian</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-row" id="row-2">
+            <div class="card-holder" id="card-visited">
+                <div class="card">
+                    <img src="https://img.icons8.com/wired/64/000000/travel-card.png"/>
+                    <h3>Guess!</h3>
+                    <p class="text-primary">How many countries have I ever visited?</p>
+                </div>
+                <div class="overlay overlay-top">The answer is: <h2 class="answer">22</h2></div>
+            </div>
+            <div class="card-holder" id="card-languages">
+                <div class="card">
+                    <img src="https://img.icons8.com/wired/64/000000/translation.png"/>
+                    <h3>Guess!</h3>
+                    <p class="text-primary">How many languages do I speak?</p>
+                </div>
+                <div class="overlay overlay-top">The answer is: <h2 class="answer">4</h2></div>
+            </div>
+            <div class="card-holder" id="card-destination">
+                <div class="card">
+                    <img src="https://img.icons8.com/wired/64/000000/user-location.png"/>
+                    <h3>Guess!</h3>
+                    <p class="text-primary">In which of the following cities would I like to live?</p>
+                    <ol>
+                        <li>Helsinki</li>
+                        <li>Naples</li>
+                        <li>Zürich</li>
+                    </ol>
+                </div>
+                <div class="overlay overlay-top">The answer is: <h3 class="answer">Zürich</h3></div>
+            </div>
+        </div>
+        <hr>
+        <h2>Hobbies</h2>
+        <div class="card-row-small" id="row-3">
+            <div class="card-holder-small" id="card-theater">
+                <div class="card-small">
+                    <img src="https://img.icons8.com/wired/64/000000/theatre-mask.png"/>
+                    <p>Theater</p>
+                </div>
+            </div>
+            <div class="card-holder-small" id="card-travel">
+                <div class="card-small">
+                    <img src="https://img.icons8.com/wired/64/000000/suitcase.png"/>
+                    <p>Travelling</p>
+                </div>
+            </div>
+            <div class="card-holder-small" id="card-coding">
+                <div class="card-small">
+                    <img src="https://img.icons8.com/wired/64/000000/source-code.png"/>
+                    <p>Coding</p>
+                </div>
+            </div>
+            <div class="card-holder-small" id="card-dancing">
+                <div class="card-small">
+                    <img src="https://img.icons8.com/wired/64/000000/dancing.png"/>
+                    <p>Dancing</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-row" id="row-4">
+            <div class="card-holder" id="card-prog-language">
+                <div class="card">
+                    <img src="https://img.icons8.com/wired/64/000000/variable.png"/>
+                    <h3>Guess!</h3>
+                    <p3 class="text-primary">Which programming languages do I prefer?</p3>
+                    <ol>
+                        <li>1.python, 2.java, 3.c++ </li>
+                        <li>1.java, 2.c++, 3.python </li>
+                        <li>1.c++, 2.java, 3.python </li>
+                    </ol>
+                </div>
+                <div class="overlay overlay-top">The answer is: <h3 class="answer">1.java, 2.c++, 3.python</h3></div>
+            </div>
+            <div class="card-holder" id="card-plays">
+                <div class="card">
+                    <img src="https://img.icons8.com/wired/64/000000/comedy.png"/>
+                    <h3>Guess!</h3>
+                    <p class="text-primary">Which of the following plays have I never seen?</p>
+                    <ol>
+                        <li>Julius Caesar, by William Shakespeare</li>
+                        <li>Cries and Whispers, by Ingmar Bergman</li>
+                        <li>Angels in America, by Tony Kushner</li>
+                        <li>Hedda Gabler, by Henrik Ibsen</li>
+                    </ol>
+                </div>
+                <div class="overlay overlay-top">The answer is: <h3 class="answer">Cries and Whispers, by Ingmar Bergman</h3></div>
+            </div>
+            <div class="card-holder" id="card-dances">
+                <div class="card">
+                    <img src="https://img.icons8.com/wired/64/000000/dancing.png"/>
+                    <h3>Guess!</h3>
+                    <p class="text-primary">Which of the following dances have I never learnt?</p>
+                    <ol>
+                        <li>Hungarian folk dances</li>
+                        <li>English Waltz</li>
+                        <li>Hip-Hop</li>
+                        <li>Salsa</li>
+                    </ol>
+                </div>
+                <div class="overlay overlay-top">The answer is: <h3 class="answer">Hip-Hop</h3></div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="main-footer">
+        <p>Fazakas Borbála &copy <br><sub>(Icons: https://icons8.com/)</sub></p>
+    </footer>
+
+    <script src="modals.js"></script>
+</body>
+</html>
