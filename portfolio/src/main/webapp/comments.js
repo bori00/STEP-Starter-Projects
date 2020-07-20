@@ -7,25 +7,37 @@ function displayComments(){
     .catch(error => console.log('failed to print comments to DOM'));
 }
 
-function addCommentToDOM(comment){
-    console.log("displaying comment " + comment)
-    //create container
+function createCardHolder(){
     var card_holder = document.createElement("div");
     card_holder.setAttribute('class', 'card-holder-small');
+    return card_holder;
+}
+
+function createCard(){
     var card = document.createElement("div");
     card.setAttribute('class', 'card-small');
-    card_holder.appendChild(card);
-    //add comment to container
+    return card;
+}
+
+function createParagraph(comment){
     var para = document.createElement("p"); 
     para.innerText = comment;
-    card.appendChild(para);  
-    //add container to main 
+    return para;
+}
+
+function addCommentToDOM(comment){
+    console.log("displaying comment " + comment)
+    var cardHolder = createCardHolder();
+    var card = createCard();
+    var para = createParagraph(comment);
+    card.appendChild(para);
+    cardHolder.appendChild(card);
     var main = document.getElementById("main-comments");        
-    main.appendChild(card_holder);  
+    main.appendChild(cardHolder);  
 }
 
 function addAllCommentsToDOM(comments){
-    console.log("started adding comments to DOM")
+    console.log("add all comments to DOM")
     for(var i=0; i<comments.length; i++){
         addCommentToDOM(comments[i]);
     }
