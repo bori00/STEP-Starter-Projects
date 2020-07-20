@@ -19,14 +19,31 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List; 
+import java.util.ArrayList;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
+@WebServlet("/welcome-data")
 public class DataServlet extends HttpServlet {
+  private List<String> welcomeTexts;
+
+  @Override
+  public void init(){
+      welcomeTexts = new ArrayList();
+      welcomeTexts.add("Welcome");
+      welcomeTexts.add("Isten hozott!");
+      welcomeTexts.add("Bine ai venit!");
+      welcomeTexts.add("Willkommen!");
+  }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello Bori!</h1>");
+    response.getWriter().println(getRandomWelcomeText());
+  }
+
+  private String getRandomWelcomeText(){
+    int index = (int) (Math.random() * welcomeTexts.size());
+    return welcomeTexts.get(index);
   }
 }
