@@ -34,6 +34,7 @@ public class CommentsServlet extends HttpServlet {
         comments.add("A little sassy!");
         comments.add("Adnventurous");
         comments.add("Learns quickly");
+        comments.add("Seems tired");
     }
   
     @Override
