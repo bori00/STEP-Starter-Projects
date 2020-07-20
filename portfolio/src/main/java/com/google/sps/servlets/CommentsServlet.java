@@ -47,5 +47,4 @@ public class CommentsServlet extends HttpServlet {
         String json = gson.toJson(strings);
         return json;
     }
-    
 }
