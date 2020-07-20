@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>Bori's Portfolio | Welcome</title>
     <link rel="stylesheet" href="style.css">
+    <script src="welcome_data.js"></script>
   </head>
-  <body>
+  <body onload="getWelcomeText()">
         <section id="home-info">
             <div id="info-img" alt="profile picture"></div>
             <div class="info-content" id="home-info-content">
-                <h1>Welcome!</h1>
+                <h1 id="welcome-data"></h1>
                 <h2>I'm <span class="text-primary">Bori Fazakas</span></h2> 
                 <p><sub>-Computer Science student and STEP intern-</sub></p>
                 <a href="about.html" class="link-light">Read more!</a>
