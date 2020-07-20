@@ -25,5 +25,14 @@ import java.util.ArrayList;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
+    private List<String> comments;
+
+    @Override
+    public void init(){
+        comments = new ArrayList<String>();
+        comments.add("A little sassy!");
+        comments.add("Adnventurous")
+        comments.add("Learns quickly");
+    }
   
 }
