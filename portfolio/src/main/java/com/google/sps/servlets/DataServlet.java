@@ -36,14 +36,14 @@ public class DataServlet extends HttpServlet {
       welcomeTexts.add("Willkommen!");
   }
 
-  String getRandomWelcomeText(){
-      int index = (int) (Math.random() * welcomeTexts.size());
-      return welcomeTexts.get(index);
-  }
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
     response.getWriter().println(getRandomWelcomeText());
+  }
+
+  private String getRandomWelcomeText(){
+    int index = (int) (Math.random() * welcomeTexts.size());
+    return welcomeTexts.get(index);
   }
 }
