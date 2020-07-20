@@ -23,27 +23,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/welcome-data")
-public class DataServlet extends HttpServlet {
-  private List<String> welcomeTexts;
-
-  @Override
-  public void init(){
-      welcomeTexts = new ArrayList();
-      welcomeTexts.add("Welcome");
-      welcomeTexts.add("Isten hozott!");
-      welcomeTexts.add("Bine ai venit!");
-      welcomeTexts.add("Willkommen!");
-  }
-
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println(getRandomWelcomeText());
-  }
-
-  private String getRandomWelcomeText(){
-    int index = (int) (Math.random() * welcomeTexts.size());
-    return welcomeTexts.get(index);
-  }
+@WebServlet("/comments-data")
+public class CommentsServlet extends HttpServlet {
+  
 }
