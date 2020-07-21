@@ -32,6 +32,27 @@ public class CommentsServlet extends HttpServlet {
     public void init(){
         comments = new ArrayList<Comment>();
     }
+
+     @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Comment newComment = getCommentFromRequest(request);
+        comments.add(newComment);
+        response.sendRedirect("/contact.html");
+    }
+
+    private Comment getCommentFromRequest(HttpServletRequest request){
+        String firstName = request.getParemeter("first-name");
+        String lastName = request.getParemeter("last-name");
+        String email = request.getParemeter("email");
+        String phone = request.getParemeter("phone");
+        Comment newComment = new Comment(firstName, lastName, email, phone);
+        if(request.getParemeter("type")){ //box is checked
+            newComment.setJobrelated();
+            String jobTitle = request.getParemeter("job-title");
+            newComment.addJobTitle()
+        }
+        return newComment;
+    }
   
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
