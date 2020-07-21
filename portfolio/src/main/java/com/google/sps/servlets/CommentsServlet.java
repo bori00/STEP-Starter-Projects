@@ -42,8 +42,8 @@ public class CommentsServlet extends HttpServlet {
     }
 
     private Comment getCommentFromRequest(HttpServletRequest request){
-        String firstName = request.getParameter("first-name");
-        String lastName = request.getParameter("last-name");
+        String firstName = request.getParameter("last-name");
+        String lastName = request.getParameter("first-name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String message = request.getParameter("comment");

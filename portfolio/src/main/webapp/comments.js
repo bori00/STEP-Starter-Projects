@@ -19,9 +19,15 @@ function createCardElement(){
     return card;
 }
 
-function createParagraphElement(comment){
+function createHeadingElement(string){
+    var heading = document.createElement("h3"); 
+    heading.innerText = string;
+    return heading;
+}
+
+function createParagraphElement(string){
     var paragraph = document.createElement("p"); 
-    paragraph.innerText = comment;
+    paragraph.innerText = string;
     return paragraph;
 }
 
@@ -29,8 +35,10 @@ function addCommentToDOM(comment){
     console.log("displaying comment " + comment)
     var cardHolder = createCardHolderElement();
     var card = createCardElement();
-    var paragraph = createParagraphElement(comment);
-    card.appendChild(paragraph);
+    var messageParagraph = createParagraphElement(comment.message);
+    var senderNameHeading = createHeadingElement(comment.firstName + " " + comment.lastName);
+    card.appendChild(senderNameHeading);
+    card.appendChild(messageParagraph);
     cardHolder.appendChild(card);
     var main = document.getElementById("main-comments");        
     main.appendChild(cardHolder);  
@@ -39,6 +47,7 @@ function addCommentToDOM(comment){
 function addAllCommentsToDOM(comments){
     console.log("add all comments to DOM: "+  comments.length)
     for(var i=0; i<comments.length; i++){
-        addCommentToDOM(comments[i].message);
+        addCommentToDOM(comments[i]);
+        console.log(comments[i]);
     }
 }

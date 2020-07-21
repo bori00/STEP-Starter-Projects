@@ -9,7 +9,7 @@ public class Comment{
     //message 
     private String message;
 
-    public Comment(String firstname, String lastName, String email, String phone, String message){
+    public Comment(String firstName, String lastName, String email, String phone, String message){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
