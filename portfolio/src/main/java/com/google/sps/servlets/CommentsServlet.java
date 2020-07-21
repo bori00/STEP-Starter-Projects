@@ -26,15 +26,11 @@ import java.util.ArrayList;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
-    private List<String> comments;
+    private List<Comment> comments;
 
     @Override
     public void init(){
-        comments = new ArrayList<String>();
-        comments.add("A little sassy!");
-        comments.add("Adnventurous");
-        comments.add("Learns quickly");
-        comments.add("Seems tired");
+        comments = new ArrayList<Comment>();
     }
   
     @Override
@@ -43,9 +39,9 @@ public class CommentsServlet extends HttpServlet {
         response.getWriter().println(convertToJsonUsingGson(comments));
     }
 
-    private String convertToJsonUsingGson(List<String> strings) {
+    private String convertToJsonUsingGson(Object o) {
         Gson gson = new Gson();
-        String json = gson.toJson(strings);
+        String json = gson.toJson(o);
         return json;
     }
 }
