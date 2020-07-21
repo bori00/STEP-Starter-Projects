@@ -23,22 +23,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List; 
 import java.util.ArrayList;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
-    private List<Comment> comments;
-
-    @Override
-    public void init(){
-        comments = new ArrayList<Comment>();
-    }
-
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Comment newComment = getCommentFromRequest(request);
-        comments.add(newComment);
+        putCommentToDatastore(newComment);
         response.sendRedirect("/contact.html");
+    }
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
+        PreparedQuery results = getCommentsFromDatastore(); 
+        List<Comment> comments = new ArrayList<>();
+        for (Entity entity : results.asIterable()) {
+            comments.add(getCommentFromCommentEntity(entity));
+        }
+        response.setContentType("application/json;");
+        response.getWriter().println(convertToJsonUsingGson(comments));
     }
 
     private Comment getCommentFromRequest(HttpServletRequest request){
@@ -55,11 +64,46 @@ public class CommentsServlet extends HttpServlet {
         }
         return newComment;
     }
-  
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
-        response.setContentType("application/json;");
-        response.getWriter().println(convertToJsonUsingGson(comments));
+
+    private void putCommentToDatastore(Comment myComment){
+        Entity commentEntity = getCommentEntityFromComment(myComment);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentEntity);
+    }
+
+    private Entity getCommentEntityFromComment(Comment myComment){
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("firstName", myComment.getFirstName());
+        commentEntity.setProperty("lastName", myComment.getLastName());
+        commentEntity.setProperty("email", myComment.getEmail());
+        commentEntity.setProperty("phone", myComment.getPhone());
+        commentEntity.setProperty("message", myComment.getMessage());
+        commentEntity.setProperty("jobRelated", String.valueOf(myComment.isJobRelated()));
+        commentEntity.setProperty("jobTitle", myComment.getJobTitle());
+        return commentEntity;
+    }
+
+    private PreparedQuery getCommentsFromDatastore(){
+        Query commentsQuery = new Query("Comment");
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery results = datastore.prepare(commentsQuery);
+        return results;
+    }
+
+    private Comment getCommentFromCommentEntity(Entity commentEntity){
+        String firstName = (String) commentEntity.getProperty("firstName");
+        String lastName = (String) commentEntity.getProperty("lastName");
+        String email = (String) commentEntity.getProperty("email");
+        String phone = (String) commentEntity.getProperty("phone");
+        String message = (String) commentEntity.getProperty("message");
+        Comment newComment = new Comment(firstName, lastName, email, phone, message);
+        boolean jobRelated = (boolean) Boolean.parseBoolean((String) commentEntity.getProperty("jobRelated"));
+        if(jobRelated){
+            String jobTitle = (String) commentEntity.getProperty("jobTitle");
+            newComment.setJobRelated();
+            newComment.addJobTitle(jobTitle);
+        }
+        return newComment;
     }
 
     private String convertToJsonUsingGson(Object o) {
