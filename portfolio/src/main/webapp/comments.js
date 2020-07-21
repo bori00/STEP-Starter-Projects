@@ -20,17 +20,17 @@ function createCard(){
 }
 
 function createParagraph(comment){
-    var para = document.createElement("p"); 
-    para.innerText = comment;
-    return para;
+    var paragraph = document.createElement("p"); 
+    paragraph.innerText = comment;
+    return paragraph;
 }
 
 function addCommentToDOM(comment){
     console.log("displaying comment " + comment)
     var cardHolder = createCardHolder();
     var card = createCard();
-    var para = createParagraph(comment);
-    card.appendChild(para);
+    var paragraph = createParagraph(comment);
+    card.appendChild(paragraph);
     cardHolder.appendChild(card);
     var main = document.getElementById("main-comments");        
     main.appendChild(cardHolder);  
