@@ -1,10 +1,10 @@
 function displayComments(){
     fetch('/comments-data')
-    .catch(error => console.log('failed to fetch comments data from server'))
+    .catch(error => console.log('failed to fetch comments data from server: '+ error))
     .then(response => response.json())
-    .catch(error => console.log('failed to parse comments'))
+    .catch(error => console.log('failed to parse comments: ' + error))
     .then(response => addAllCommentsToDOM(response))
-    .catch(error => console.log('failed to print comments to DOM'));
+    .catch(error => console.log('failed to print comments to DOM: ' + error));
 }
 
 function createCardHolderElement(){
