@@ -24,4 +24,32 @@ public class Comment{
     public void addJobTitle(String jobTitle){
         this.jobTitle = jobTitle;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public boolean isJobRelated() {
+        return jobRelated;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }
