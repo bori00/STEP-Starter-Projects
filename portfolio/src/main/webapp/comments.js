@@ -8,9 +8,9 @@ function displayComments(){
 }
 
 function createCardHolder(){
-    var card_holder = document.createElement("div");
-    card_holder.setAttribute('class', 'card-holder-small');
-    return card_holder;
+    var cardHolder = document.createElement("div");
+    cardHolder.setAttribute('class', 'card-holder-small');
+    return cardHolder;
 }
 
 function createCard(){
