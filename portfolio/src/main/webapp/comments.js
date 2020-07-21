@@ -7,19 +7,19 @@ function displayComments(){
     .catch(error => console.log('failed to print comments to DOM'));
 }
 
-function createCardHolder(){
+function createCardHolderElement(){
     var cardHolder = document.createElement("div");
     cardHolder.setAttribute('class', 'card-holder-small');
     return cardHolder;
 }
 
-function createCard(){
+function createCardElement(){
     var card = document.createElement("div");
     card.setAttribute('class', 'card-small');
     return card;
 }
 
-function createParagraph(comment){
+function createParagraphElement(comment){
     var paragraph = document.createElement("p"); 
     paragraph.innerText = comment;
     return paragraph;
@@ -27,9 +27,9 @@ function createParagraph(comment){
 
 function addCommentToDOM(comment){
     console.log("displaying comment " + comment)
-    var cardHolder = createCardHolder();
-    var card = createCard();
-    var paragraph = createParagraph(comment);
+    var cardHolder = createCardHolderElement();
+    var card = createCardElement();
+    var paragraph = createParagraphElement(comment);
     card.appendChild(paragraph);
     cardHolder.appendChild(card);
     var main = document.getElementById("main-comments");        
