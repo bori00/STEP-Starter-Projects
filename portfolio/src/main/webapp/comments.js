@@ -13,9 +13,12 @@ function createCardHolderElement(){
     return cardHolder;
 }
 
-function createCardElement(){
+function createCardElement(highlight){
     var card = document.createElement("div");
     card.setAttribute('class', 'card-small');
+    if(highlight===true){
+        card.style.backgroundColor = "hsla(20, 100%, 70%, 60%)"; //"#ff9966";
+    }
     return card;
 }
 
@@ -34,9 +37,9 @@ function createParagraphElement(string){
 function addCommentToDOM(comment){
     console.log("displaying comment " + comment)
     var cardHolder = createCardHolderElement();
-    var card = createCardElement();
+    var card = createCardElement(comment.jobRelated);
     var messageParagraph = createParagraphElement(comment.message);
-    var senderNameHeading = createHeadingElement(comment.firstName + " " + comment.lastName);
+    var senderNameHeading = createHeadingElement(comment.firstName + " " + comment.lastName + " says:");
     card.appendChild(senderNameHeading);
     card.appendChild(messageParagraph);
     cardHolder.appendChild(card);
