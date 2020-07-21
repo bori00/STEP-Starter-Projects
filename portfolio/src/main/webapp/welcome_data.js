@@ -1,9 +1,9 @@
 function getWelcomeText(){
     console.log("trying to get welcome text");
     fetch('/welcome-data')
-    .catch(console.log('failed to get resposne'))
+    .catch(error => console.log('failed to get resposne: ' + error))
     .then(response => response.text())
-    .catch(console.log('failed to convert to text'))
+    .catch(error => console.log('failed to convert to text: ' + error))
     .then(welcomeText => document.getElementById('welcome-data').innerText=welcomeText)
-    .catch(console.log('failed to print text to html element'));
+    .catch(error => console.log('failed to print text to html element: ' + error));
 }

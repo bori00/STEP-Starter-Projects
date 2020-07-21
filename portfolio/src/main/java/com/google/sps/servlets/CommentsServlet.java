@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,27 +24,28 @@ import java.util.List;
 import java.util.ArrayList;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/welcome-data")
-public class DataServlet extends HttpServlet {
-  private List<String> welcomeTexts;
+@WebServlet("/comments-data")
+public class CommentsServlet extends HttpServlet {
+    private List<String> comments;
 
-  @Override
-  public void init(){
-      welcomeTexts = new ArrayList();
-      welcomeTexts.add("Welcome");
-      welcomeTexts.add("Isten hozott!");
-      welcomeTexts.add("Bine ai venit!");
-      welcomeTexts.add("Willkommen!");
-  }
+    @Override
+    public void init(){
+        comments = new ArrayList<String>();
+        comments.add("A little sassy!");
+        comments.add("Adnventurous");
+        comments.add("Learns quickly");
+        comments.add("Seems tired");
+    }
+  
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
+        response.setContentType("application/json;");
+        response.getWriter().println(convertToJsonUsingGson(comments));
+    }
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println(getRandomWelcomeText());
-  }
-
-  private String getRandomWelcomeText(){
-    int index = (int) (Math.random() * welcomeTexts.size());
-    return welcomeTexts.get(index);
-  }
+    private String convertToJsonUsingGson(List<String> strings) {
+        Gson gson = new Gson();
+        String json = gson.toJson(strings);
+        return json;
+    }
 }
