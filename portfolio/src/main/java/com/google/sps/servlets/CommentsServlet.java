@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -33,23 +34,25 @@ public class CommentsServlet extends HttpServlet {
         comments = new ArrayList<Comment>();
     }
 
-     @Override
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Comment newComment = getCommentFromRequest(request);
         comments.add(newComment);
+        System.out.println("ADD COMMENT");
         response.sendRedirect("/contact.html");
     }
 
     private Comment getCommentFromRequest(HttpServletRequest request){
-        String firstName = request.getParemeter("first-name");
-        String lastName = request.getParemeter("last-name");
-        String email = request.getParemeter("email");
-        String phone = request.getParemeter("phone");
-        Comment newComment = new Comment(firstName, lastName, email, phone);
-        if(request.getParemeter("type")){ //box is checked
-            newComment.setJobrelated();
-            String jobTitle = request.getParemeter("job-title");
-            newComment.addJobTitle()
+        String firstName = request.getParameter("first-name");
+        String lastName = request.getParameter("last-name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String message = request.getParameter("comment");
+        Comment newComment = new Comment(firstName, lastName, email, phone, message);
+        if(request.getParameter("type")=="job related"){ //box is checked
+            newComment.setJobRelated();
+            String jobTitle = request.getParameter("job-title");
+            newComment.addJobTitle(jobTitle);
         }
         return newComment;
     }
