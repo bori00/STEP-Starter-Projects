@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Contact | Bori</title>
 </head>
-<body>
+<body onload="displayComments()">
     <header> 
         <nav id="navbar">
             <h1 id="menu-title"><a href="index.html">Bori's Portfolio</a></h1>
@@ -21,7 +21,7 @@
     </header>
 
     <main>
-        <form class="info-content" id="contact-form">
+        <form class="info-content" id="contact-form" action="/comments-data" method="POST">
             <h2 class="text-primary">Contact</h2>
             <hr>
             <h4>Feel free to contact me!</h4>

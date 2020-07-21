@@ -37,8 +37,8 @@ function addCommentToDOM(comment){
 }
 
 function addAllCommentsToDOM(comments){
-    console.log("add all comments to DOM")
+    console.log("add all comments to DOM: "+  comments.length)
     for(var i=0; i<comments.length; i++){
-        addCommentToDOM(comments[i]);
+        addCommentToDOM(comments[i].message);
     }
 }
