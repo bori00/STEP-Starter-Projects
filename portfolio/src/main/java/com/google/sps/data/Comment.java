@@ -1,3 +1,5 @@
+package com.google.sps.data;
+
 public class Comment{
     //personal data
     private String firstName, lastName, email, phone;
@@ -7,7 +9,7 @@ public class Comment{
     //message 
     private String message;
 
-    Comment(String firstname, String lastName, String email, String phone, String message){
+    public Comment(String firstname, String lastName, String email, String phone, String message){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
