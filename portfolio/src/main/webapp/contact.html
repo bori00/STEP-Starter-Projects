@@ -26,27 +26,27 @@
             <hr>
             <h4>Feel free to contact me!</h4>
             <div class="form-field">
-                <label>First Name</label>
+                <label for="first-name-input">First Name</label>
                 <input id="first-name-input" type="text" name="first-name" required>
             </div>
             <div class="form-field">
-                <label>Last Name</label>
+                <label for="last-name-input">Last Name</label>
                 <input id="last-name-input" type="text" name="last-name" required>
             </div>
             <div class="form-field">
-                <label>Email</label>
+                <label for="email-input">Email</label>
                 <input id="email-input" type="email" name="email" required>
             </div>
             <div class="form-field">
-                <label>Phone Number</label>
+                <label for="phone-input">Phone Number</label>
                 <input id="phone-input" type="tel" name="phone" pattern="[0-9]{10}"required>
             </div>
             <div class="form-field">
-                <label>Message type</label>
+                <label for="job-related-check">Message type</label>
                 <input id="job-related-check" type="checkbox" name="type" value="job related">Job related
             </div>
             <div class="form-field">
-                <label>Your job title</label>
+                <label for="job-title-dropdown">Your job title</label>
                 <select id="job-title-dropdown" class="input" name="job-title" disabled>
                     <option value="host">Host</option>
                     <option value="intern">Intern</option>
@@ -55,7 +55,7 @@
                 </select>
             </div>
             <div class="form-field">
-                <label>Comment</label>
+                <label for="comment-textarea">Comment</label>
                 <textarea id="comment-textarea" class="input" name="comment" rows="5" cols="50" required></textarea> 
             </div>
             <button onClick="formValidation()">Send</button>
