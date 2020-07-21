@@ -38,7 +38,6 @@ public class CommentsServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Comment newComment = getCommentFromRequest(request);
         comments.add(newComment);
-        System.out.println("ADD COMMENT");
         response.sendRedirect("/contact.html");
     }
 
