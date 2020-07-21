@@ -67,7 +67,7 @@ function formValidation(){
      && firstName != ""
      && lastName != ""
      && comment != ""){ //form is valid, can be sent
-        var message = 'Your massage has been succesfully sent! I will contact you as soon as possible';
+        var message = 'Your comment has been succesfully sent! I will contact you as soon as possible';
         window.alert(message);
      }
      else{
