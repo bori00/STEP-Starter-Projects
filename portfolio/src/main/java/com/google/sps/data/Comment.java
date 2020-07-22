@@ -4,8 +4,8 @@ public class Comment{
     //personal data
     final private String firstName, lastName, email, phone;
     //job related data: optional
-    private boolean jobRelated=false;
-    private String jobTitle="";
+    @Nullable
+    private String jobTitle = null;
     //message 
     final private String message;
 
@@ -15,10 +15,6 @@ public class Comment{
         this.email = email;
         this.phone = phone;
         this.message = message;
-    }
-
-    public void setJobRelated(){
-        this.jobRelated = true;
     }
 
     public void addJobTitle(String jobTitle){
