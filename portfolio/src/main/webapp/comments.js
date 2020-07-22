@@ -1,10 +1,16 @@
 function displayComments(){
-    fetch('/comments-data?max-comments=5')
+    var maxComments = getNoMaxComments();
+    console.log(maxComments);
+    fetch('/comments-data?max-comments='+maxComments)
     .catch(error => console.log('failed to fetch comments data from server: '+ error))
     .then(response => response.json())
     .catch(error => console.log('failed to parse comments: ' + error))
     .then(response => addAllCommentsToDOM(response))
     .catch(error => console.log('failed to print comments to DOM: ' + error));
+}
+
+function getNoMaxComments(){
+    return document.getElementById("max-comments").value;
 }
 
 function createCardHolderElement(){
