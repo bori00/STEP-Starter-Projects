@@ -6,7 +6,7 @@ public class Comment{
     //personal data
     final private String firstName, lastName, email, phone;
     //job related data: optional
-    @Nullable private String jobTitle = null;
+    @Nullable private String jobTitle;
     //message 
     final private String message;
 
@@ -36,10 +36,6 @@ public class Comment{
 
     public String getPhone() {
         return phone;
-    }
-
-    public boolean isJobRelated() {
-        return jobRelated;
     }
 
     public String getJobTitle() {
