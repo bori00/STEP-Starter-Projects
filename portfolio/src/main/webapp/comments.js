@@ -1,4 +1,10 @@
+function addMaxCommentsInputListener(){
+    var maxCommentsInput = document.getElementById("max-comments");
+    maxCommentsInput.addEventListener("change", displayComments);
+}
+
 function displayComments(){
+    removeAllCommentsFromDOM();
     var maxComments = getNoMaxComments();
     console.log(maxComments);
     fetch('/comments-data?max-comments='+maxComments)
@@ -58,5 +64,16 @@ function addAllCommentsToDOM(comments){
     for(var i=0; i<comments.length; i++){
         addCommentToDOM(comments[i]);
         console.log(comments[i]);
+    }
+}
+
+function removeAllCommentsFromDOM(){
+    var commentCardHolders = document.getElementsByClassName("card-holder-small");
+    console.log(commentCardHolders.length + " cards on the page");
+    var noCards = commentCardHolders.length;
+    for(var i=noCards-1; i>=0; i--){
+        console.log("i="+i)
+        commentCardHolders[i].remove();
+        console.log("remove card: " + i);
     }
 }
