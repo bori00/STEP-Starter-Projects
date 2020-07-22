@@ -61,11 +61,13 @@ function formValidation(){
     var valid=true;
     var firstName = document.getElementById("first-name-input").value;
     var lastName = document.getElementById("last-name-input").value;
+    var comment = document.getElementById("comment-textarea").value;
     if(validEmail(email_input.value)
      && validPhone(phone_input.value) 
      && firstName != ""
-     && lastName != ""){ //form is valid, can be sent
-        var message = 'Your massage has been succesfully sent! I will contact you as soon as possible';
+     && lastName != ""
+     && comment != ""){ //form is valid, can be sent
+        var message = 'Your comment has been succesfully sent! I will contact you as soon as possible';
         window.alert(message);
      }
      else{

@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -26,15 +27,32 @@ import java.util.ArrayList;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
-    private List<String> comments;
+    private List<Comment> comments;
 
     @Override
     public void init(){
-        comments = new ArrayList<String>();
-        comments.add("A little sassy!");
-        comments.add("Adnventurous");
-        comments.add("Learns quickly");
-        comments.add("Seems tired");
+        comments = new ArrayList<Comment>();
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Comment newComment = getCommentFromRequest(request);
+        comments.add(newComment);
+        response.sendRedirect("/contact.html");
+    }
+
+    private Comment getCommentFromRequest(HttpServletRequest request){
+        String firstName = request.getParameter("first-name");
+        String lastName = request.getParameter("last-name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String message = request.getParameter("comment");
+        Comment newComment = new Comment(firstName, lastName, email, phone, message);
+        if(request.getParameterValues("type")!=null){ //box is checked
+            String jobTitle = request.getParameter("job-title");
+            newComment.addJobTitle(jobTitle);
+        }
+        return newComment;
     }
   
     @Override
@@ -43,9 +61,9 @@ public class CommentsServlet extends HttpServlet {
         response.getWriter().println(convertToJsonUsingGson(comments));
     }
 
-    private String convertToJsonUsingGson(List<String> strings) {
+    private String convertToJsonUsingGson(Object o) {
         Gson gson = new Gson();
-        String json = gson.toJson(strings);
+        String json = gson.toJson(o);
         return json;
     }
 }
