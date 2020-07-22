@@ -1,11 +1,12 @@
 package com.google.sps.data;
 
+import org.jetbrains.annotations.Nullable;
+
 public class Comment{
     //personal data
     final private String firstName, lastName, email, phone;
     //job related data: optional
-    @Nullable
-    private String jobTitle = null;
+    @Nullable private String jobTitle = null;
     //message 
     final private String message;
 
