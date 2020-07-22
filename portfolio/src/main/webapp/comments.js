@@ -15,6 +15,12 @@ function displayComments(){
     .catch(error => console.log('failed to print comments to DOM: ' + error));
 }
 
+function deleteAllComments(){
+    fetch('/delete-comments-data', {method: 'POST'})
+    .catch(error => console.log('failed to fetch from delete-comments-data'))
+    .then(respone => displayComments());
+}
+
 function getNoMaxComments(){
     return document.getElementById("max-comments").value;
 }
