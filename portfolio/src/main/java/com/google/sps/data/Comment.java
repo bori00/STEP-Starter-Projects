@@ -1,13 +1,14 @@
 package com.google.sps.data;
 
+import org.jetbrains.annotations.Nullable;
+
 public class Comment{
     //personal data
-    private String firstName, lastName, email, phone;
+    final private String firstName, lastName, email, phone;
     //job related data: optional
-    private boolean jobRelated=false;
-    private String jobTitle="";
+    @Nullable private String jobTitle = null;
     //message 
-    private String message;
+    final private String message;
 
     public Comment(String firstName, String lastName, String email, String phone, String message){
         this.firstName = firstName;
@@ -15,10 +16,6 @@ public class Comment{
         this.email = email;
         this.phone = phone;
         this.message = message;
-    }
-
-    public void setJobRelated(){
-        this.jobRelated = true;
     }
 
     public void addJobTitle(String jobTitle){

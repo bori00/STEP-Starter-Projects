@@ -37,7 +37,7 @@ function createParagraphElement(string){
 function addCommentToDOM(comment){
     console.log("displaying comment " + comment)
     var cardHolder = createCardHolderElement();
-    var card = createCardElement(comment.jobRelated);
+    var card = createCardElement(comment.jobTitle!==undefined);
     var messageParagraph = createParagraphElement(comment.message);
     var senderNameHeading = createHeadingElement(comment.firstName + " " + comment.lastName + " says:");
     card.appendChild(senderNameHeading);

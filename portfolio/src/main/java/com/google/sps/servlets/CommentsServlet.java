@@ -58,7 +58,6 @@ public class CommentsServlet extends HttpServlet {
         String message = request.getParameter("comment");
         Comment newComment = new Comment(firstName, lastName, email, phone, message);
         if(request.getParameterValues("type")!=null){ //box is checked
-            newComment.setJobRelated();
             String jobTitle = request.getParameter("job-title");
             newComment.addJobTitle(jobTitle);
         }
