@@ -2,12 +2,12 @@ package com.google.sps.data;
 
 public class Comment{
     //personal data
-    private String firstName, lastName, email, phone;
+    final private String firstName, lastName, email, phone;
     //job related data: optional
     private boolean jobRelated=false;
     private String jobTitle="";
     //message 
-    private String message;
+    final private String message;
 
     public Comment(String firstName, String lastName, String email, String phone, String message){
         this.firstName = firstName;
