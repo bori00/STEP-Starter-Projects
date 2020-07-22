@@ -77,7 +77,6 @@ public class CommentsServlet extends HttpServlet {
         commentEntity.setProperty("email", myComment.getEmail());
         commentEntity.setProperty("phone", myComment.getPhone());
         commentEntity.setProperty("message", myComment.getMessage());
-        commentEntity.setProperty("jobRelated", String.valueOf(myComment.isJobRelated()));
         commentEntity.setProperty("jobTitle", myComment.getJobTitle());
         return commentEntity;
     }
@@ -96,12 +95,8 @@ public class CommentsServlet extends HttpServlet {
         String phone = (String) commentEntity.getProperty("phone");
         String message = (String) commentEntity.getProperty("message");
         Comment newComment = new Comment(firstName, lastName, email, phone, message);
-        boolean jobRelated = (boolean) Boolean.parseBoolean((String) commentEntity.getProperty("jobRelated"));
-        if(jobRelated){
-            String jobTitle = (String) commentEntity.getProperty("jobTitle");
-            newComment.setJobRelated();
-            newComment.addJobTitle(jobTitle);
-        }
+        String jobTitle = (String) commentEntity.getProperty("jobTitle");
+        newComment.addJobTitle(jobTitle);
         return newComment;
     }
 
