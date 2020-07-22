@@ -1,5 +1,5 @@
 function displayComments(){
-    fetch('/comments-data')
+    fetch('/comments-data?max-comments=5')
     .catch(error => console.log('failed to fetch comments data from server: '+ error))
     .then(response => response.json())
     .catch(error => console.log('failed to parse comments: ' + error))

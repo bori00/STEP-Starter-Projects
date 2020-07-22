@@ -42,9 +42,15 @@ public class CommentsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
         PreparedQuery results = getCommentsFromDatastore(); 
+        int maxComments = Integer.parseInt(request.getParameter("max-comments"));
         List<Comment> comments = new ArrayList<>();
+        int noComments=0;
         for (Entity entity : results.asIterable()) {
             comments.add(getCommentFromCommentEntity(entity));
+            noComments++;
+            if(noComments==maxComments){
+                break;
+            }
         }
         response.setContentType("application/json;");
         response.getWriter().println(convertToJsonUsingGson(comments));
