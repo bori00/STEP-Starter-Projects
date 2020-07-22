@@ -56,11 +56,11 @@ public class CommentsServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String message = request.getParameter("comment");
-        Comment newComment = new Comment(firstName, lastName, email, phone, message);
+        String jobTitle = null;
         if(request.getParameterValues("type")!=null){ //box is checked
-            String jobTitle = request.getParameter("job-title");
-            newComment.addJobTitle(jobTitle);
+            jobTitle = request.getParameter("job-title");
         }
+        Comment newComment = new Comment(firstName, lastName, email, phone, message, jobTitle);
         return newComment;
     }
 
@@ -94,9 +94,8 @@ public class CommentsServlet extends HttpServlet {
         String email = (String) commentEntity.getProperty("email");
         String phone = (String) commentEntity.getProperty("phone");
         String message = (String) commentEntity.getProperty("message");
-        Comment newComment = new Comment(firstName, lastName, email, phone, message);
         String jobTitle = (String) commentEntity.getProperty("jobTitle");
-        newComment.addJobTitle(jobTitle);
+        Comment newComment = new Comment(firstName, lastName, email, phone, message, jobTitle);
         return newComment;
     }
 

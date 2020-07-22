@@ -6,19 +6,16 @@ public class Comment{
     //personal data
     private final String firstName, lastName, email, phone;
     //job related data: optional
-    @Nullable private String jobTitle;
+    @Nullable private final String jobTitle;
     //message 
     private final String message;
 
-    public Comment(String firstName, String lastName, String email, String phone, String message){
+    public Comment(String firstName, String lastName, String email, String phone, String message, String jobTitle){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.message = message;
-    }
-
-    public void addJobTitle(String jobTitle){
         this.jobTitle = jobTitle;
     }
 
