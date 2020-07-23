@@ -76,12 +76,5 @@ function addAllCommentsToDOM(comments){
 }
 
 function removeAllCommentsFromDOM(){
-    var commentCardHolders = document.getElementsByClassName("card-holder-small");
-    console.log(commentCardHolders.length + " cards on the page");
-    var noCards = commentCardHolders.length;
-    for(var i=noCards-1; i>=0; i--){
-        console.log("i="+i)
-        commentCardHolders[i].remove();
-        console.log("remove card: " + i);
-    }
+    document.querySelectorAll('.card-holder-small').forEach(e => e.remove());
 }
