@@ -28,6 +28,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+ import com.google.appengine.api.datastore.FetchOptions;
 
 /** This servlet handles comment's data: 
  - doPost() stores get's the recently submitted comment's data from the request 
@@ -54,12 +55,8 @@ public class CommentsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
         PreparedQuery results = getCommentsFromDatastore(); 
-        List<Comment> comments = new ArrayList<>();
-        for (Entity entity : results.asIterable()) {
-            comments.add(getCommentFromCommentEntity(entity));
-        }
         response.setContentType("application/json;");
-        response.getWriter().println(convertToJsonUsingGson(comments));
+        response.getWriter().println(convertToJsonUsingGson(results.asList(FetchOptions.Builder.withDefaults())));
     }
 
     private Comment getCommentFromRequest(HttpServletRequest request){
@@ -98,17 +95,6 @@ public class CommentsServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(commentsQuery);
         return results;
-    }
-
-    private Comment getCommentFromCommentEntity(Entity commentEntity){
-        String firstName = (String) commentEntity.getProperty(firstNameProperty);
-        String lastName = (String) commentEntity.getProperty(lastNameProperty);
-        String email = (String) commentEntity.getProperty(emailProperty);
-        String phone = (String) commentEntity.getProperty(phoneProperty);
-        String message = (String) commentEntity.getProperty(messageProperty);
-        String jobTitle = (String) commentEntity.getProperty(jobTitleProperty);
-        Comment newComment = new Comment(firstName, lastName, email, phone, message, jobTitle);
-        return newComment;
     }
 
     private String convertToJsonUsingGson(Object o) {
