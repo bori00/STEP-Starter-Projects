@@ -1,3 +1,10 @@
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
 /* --------------------general styling---------------------- */
 /* colors
 almost white: #fefefe
@@ -6,12 +13,6 @@ dark brown: #8E8D8A
 light orange: ##D8C3A5
 dark orange: #E85A4F*
 other orange: #ff9966*/
-
-*{
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-}
 
 html, body{
     font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

@@ -4,21 +4,42 @@ import org.jetbrains.annotations.Nullable;
 
 public class Comment{
     //personal data
-    final private String firstName, lastName, email, phone;
+    private final String firstName, lastName, email, phone;
     //job related data: optional
-    @Nullable private String jobTitle = null;
+    @Nullable private final String jobTitle;
     //message 
-    final private String message;
+    private final String message;
 
-    public Comment(String firstName, String lastName, String email, String phone, String message){
+    public Comment(String firstName, String lastName, String email, String phone, String message, String jobTitle){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.message = message;
+        this.jobTitle = jobTitle;
     }
 
-    public void addJobTitle(String jobTitle){
-        this.jobTitle = jobTitle;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

@@ -23,22 +23,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List; 
 import java.util.ArrayList;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+ import com.google.appengine.api.datastore.FetchOptions;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** This servlet handles comment's data: 
+ *- doPost() stores get's the recently submitted comment's data from the request 
+ *          and stores in a database using Datastore API
+ *- doGet() returns the comments from the database, aftern converting them to JSON*/
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
-    private List<Comment> comments;
+    private static final String COMMENT_ENTITY_NAME = "Comment";
+    private static final String FIRST_NAME_PROPERTY = "firstName";
+    private static final String LAST_NAME_PROPERTY = "lastName";
+    private static final String EMAIL_PROPERTY = "email";
+    private static final String MESSAGE_PROPERTY = "message";
+    private static final String PHONE_PROPERTY = "phone";
+    private static final String JOB_TITLE_PROPERTY = "jobTitle";
 
-    @Override
-    public void init(){
-        comments = new ArrayList<Comment>();
-    }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Comment newComment = getCommentFromRequest(request);
-        comments.add(newComment);
+        putCommentToDatastore(newComment);
         response.sendRedirect("/contact.html");
+    }
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
+        PreparedQuery results = getCommentsFromDatastore(); 
+        response.setContentType("application/json;");
+        response.getWriter().println(convertToJsonUsingGson(results.asList(FetchOptions.Builder.withDefaults())));
     }
 
     private Comment getCommentFromRequest(HttpServletRequest request){
@@ -47,18 +65,36 @@ public class CommentsServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String message = request.getParameter("comment");
-        Comment newComment = new Comment(firstName, lastName, email, phone, message);
+        String jobTitle = null;
         if(request.getParameterValues("type")!=null){ //box is checked
-            String jobTitle = request.getParameter("job-title");
-            newComment.addJobTitle(jobTitle);
+            jobTitle = request.getParameter("job-title");
         }
+        Comment newComment = new Comment(firstName, lastName, email, phone, message, jobTitle);
         return newComment;
     }
-  
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
-        response.setContentType("application/json;");
-        response.getWriter().println(convertToJsonUsingGson(comments));
+
+    private void putCommentToDatastore(Comment myComment){
+        Entity commentEntity = getCommentEntityFromComment(myComment);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentEntity);
+    }
+
+    private Entity getCommentEntityFromComment(Comment myComment){
+        Entity commentEntity = new Entity(COMMENT_ENTITY_NAME);
+        commentEntity.setProperty(FIRST_NAME_PROPERTY, myComment.getFirstName());
+        commentEntity.setProperty(LAST_NAME_PROPERTY, myComment.getLastName());
+        commentEntity.setProperty(EMAIL_PROPERTY, myComment.getEmail());
+        commentEntity.setProperty(PHONE_PROPERTY, myComment.getPhone());
+        commentEntity.setProperty(MESSAGE_PROPERTY, myComment.getMessage());
+        commentEntity.setProperty(JOB_TITLE_PROPERTY, myComment.getJobTitle());
+        return commentEntity;
+    }
+
+    private PreparedQuery getCommentsFromDatastore(){
+        Query commentsQuery = new Query(COMMENT_ENTITY_NAME);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery results = datastore.prepare(commentsQuery);
+        return results;
     }
 
     private String convertToJsonUsingGson(Object o) {
