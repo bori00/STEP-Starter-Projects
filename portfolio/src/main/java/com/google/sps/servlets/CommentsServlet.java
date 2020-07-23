@@ -35,6 +35,15 @@ import com.google.appengine.api.datastore.Query;
  - doGet() returns the comments from the database, aftern converting them to JSON*/
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
+    private final String commentEntityName = "Comment";
+    private final String firstNameProperty = "firstName";
+    private final String lastNameProperty = "lastName";
+    private final String emailProperty = "email";
+    private final String messageProperty = "message";
+    private final String phoneProperty = "phone";
+    private final String jobTitleProperty = "jobTitle";
+
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Comment newComment = getCommentFromRequest(request);
@@ -74,30 +83,30 @@ public class CommentsServlet extends HttpServlet {
     }
 
     private Entity getCommentEntityFromComment(Comment myComment){
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("firstName", myComment.getFirstName());
-        commentEntity.setProperty("lastName", myComment.getLastName());
-        commentEntity.setProperty("email", myComment.getEmail());
-        commentEntity.setProperty("phone", myComment.getPhone());
-        commentEntity.setProperty("message", myComment.getMessage());
-        commentEntity.setProperty("jobTitle", myComment.getJobTitle());
+        Entity commentEntity = new Entity(commentEntityName);
+        commentEntity.setProperty(firstNameProperty, myComment.getFirstName());
+        commentEntity.setProperty(lastNameProperty, myComment.getLastName());
+        commentEntity.setProperty(emailProperty, myComment.getEmail());
+        commentEntity.setProperty(phoneProperty, myComment.getPhone());
+        commentEntity.setProperty(messageProperty, myComment.getMessage());
+        commentEntity.setProperty(jobTitleProperty, myComment.getJobTitle());
         return commentEntity;
     }
 
     private PreparedQuery getCommentsFromDatastore(){
-        Query commentsQuery = new Query("Comment");
+        Query commentsQuery = new Query(commentEntityName);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(commentsQuery);
         return results;
     }
 
     private Comment getCommentFromCommentEntity(Entity commentEntity){
-        String firstName = (String) commentEntity.getProperty("firstName");
-        String lastName = (String) commentEntity.getProperty("lastName");
-        String email = (String) commentEntity.getProperty("email");
-        String phone = (String) commentEntity.getProperty("phone");
-        String message = (String) commentEntity.getProperty("message");
-        String jobTitle = (String) commentEntity.getProperty("jobTitle");
+        String firstName = (String) commentEntity.getProperty(firstNameProperty);
+        String lastName = (String) commentEntity.getProperty(lastNameProperty);
+        String email = (String) commentEntity.getProperty(emailProperty);
+        String phone = (String) commentEntity.getProperty(phoneProperty);
+        String message = (String) commentEntity.getProperty(messageProperty);
+        String jobTitle = (String) commentEntity.getProperty(jobTitleProperty);
         Comment newComment = new Comment(firstName, lastName, email, phone, message, jobTitle);
         return newComment;
     }
