@@ -7,7 +7,9 @@ function displayComments(){
     removeAllCommentsFromDOM();
     var maxComments = getNoMaxComments();
     console.log(maxComments);
-    fetch('/comments-data?max-comments='+maxComments)
+    var url = new URL("/comments-data", document.URL);
+    url.searchParams.append('max-comments', maxComments)
+    fetch(url) 
     .catch(error => console.log('failed to fetch comments data from server: '+ error))
     .then(response => response.json())
     .catch(error => console.log('failed to parse comments: ' + error))
