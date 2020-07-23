@@ -36,13 +36,13 @@ import com.google.appengine.api.datastore.Query;
  *- doGet() returns the comments from the database, aftern converting them to JSON*/
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
-    private final String commentEntityName = "Comment";
-    private final String firstNameProperty = "firstName";
-    private final String lastNameProperty = "lastName";
-    private final String emailProperty = "email";
-    private final String messageProperty = "message";
-    private final String phoneProperty = "phone";
-    private final String jobTitleProperty = "jobTitle";
+    private static final String COMMENT_ENTITY_NAME = "Comment";
+    private static final String FIRST_NAME_PROPERTY = "firstName";
+    private static final String LAST_NAME_PROPERTY = "lastName";
+    private static final String EMAIL_PROPERTY = "email";
+    private static final String MESSAGE_PROPERTY = "message";
+    private static final String PHONE_PROPERTY = "phone";
+    private static final String JOB_TITLE_PROPERTY = "jobTitle";
 
 
     @Override
@@ -80,18 +80,18 @@ public class CommentsServlet extends HttpServlet {
     }
 
     private Entity getCommentEntityFromComment(Comment myComment){
-        Entity commentEntity = new Entity(commentEntityName);
-        commentEntity.setProperty(firstNameProperty, myComment.getFirstName());
-        commentEntity.setProperty(lastNameProperty, myComment.getLastName());
-        commentEntity.setProperty(emailProperty, myComment.getEmail());
-        commentEntity.setProperty(phoneProperty, myComment.getPhone());
-        commentEntity.setProperty(messageProperty, myComment.getMessage());
-        commentEntity.setProperty(jobTitleProperty, myComment.getJobTitle());
+        Entity commentEntity = new Entity(COMMENT_ENTITY_NAME);
+        commentEntity.setProperty(FIRST_NAME_PROPERTY, myComment.getFirstName());
+        commentEntity.setProperty(LAST_NAME_PROPERTY, myComment.getLastName());
+        commentEntity.setProperty(EMAIL_PROPERTY, myComment.getEmail());
+        commentEntity.setProperty(PHONE_PROPERTY, myComment.getPhone());
+        commentEntity.setProperty(MESSAGE_PROPERTY, myComment.getMessage());
+        commentEntity.setProperty(JOB_TITLE_PROPERTY, myComment.getJobTitle());
         return commentEntity;
     }
 
     private PreparedQuery getCommentsFromDatastore(){
-        Query commentsQuery = new Query(commentEntityName);
+        Query commentsQuery = new Query(COMMENT_ENTITY_NAME);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(commentsQuery);
         return results;
