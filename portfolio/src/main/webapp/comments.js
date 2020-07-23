@@ -76,5 +76,5 @@ function addAllCommentsToDOM(comments){
 }
 
 function removeAllCommentsFromDOM(){
-    document.querySelectorAll('.card-holder-small').forEach(e => e.remove());
+    document.getElementById("main-comments").innerHTML = "";
 }
