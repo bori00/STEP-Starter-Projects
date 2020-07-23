@@ -28,10 +28,23 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.FetchOptions;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** This servlet handles comment's data: 
+ *- doPost() stores get's the recently submitted comment's data from the request 
+ *          and stores in a database using Datastore API
+ *- doGet() returns the comments from the database, aftern converting them to JSON*/
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
+    private static final String COMMENT_ENTITY_NAME = "Comment";
+    private static final String FIRST_NAME_PROPERTY = "firstName";
+    private static final String LAST_NAME_PROPERTY = "lastName";
+    private static final String EMAIL_PROPERTY = "email";
+    private static final String MESSAGE_PROPERTY = "message";
+    private static final String PHONE_PROPERTY = "phone";
+    private static final String JOB_TITLE_PROPERTY = "jobTitle";
+
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Comment newComment = getCommentFromRequest(request);
@@ -41,19 +54,10 @@ public class CommentsServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
-        PreparedQuery results = getCommentsFromDatastore(); 
         int maxComments = Integer.parseInt(request.getParameter("max-comments"));
-        List<Comment> comments = new ArrayList<>();
-        int noComments=0;
-        for (Entity entity : results.asIterable()) {
-            comments.add(getCommentFromCommentEntity(entity));
-            noComments++;
-            if(noComments==maxComments){
-                break;
-            }
-        }
+        List<Entity> results = getCommentsFromDatastore(maxComments); 
         response.setContentType("application/json;");
-        response.getWriter().println(convertToJsonUsingGson(comments));
+        response.getWriter().println(convertToJsonUsingGson(results));
     }
 
     private Comment getCommentFromRequest(HttpServletRequest request){
@@ -62,12 +66,11 @@ public class CommentsServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String message = request.getParameter("comment");
-        Comment newComment = new Comment(firstName, lastName, email, phone, message);
+        String jobTitle = null;
         if(request.getParameterValues("type")!=null){ //box is checked
-            newComment.setJobRelated();
-            String jobTitle = request.getParameter("job-title");
-            newComment.addJobTitle(jobTitle);
+            jobTitle = request.getParameter("job-title");
         }
+        Comment newComment = new Comment(firstName, lastName, email, phone, message, jobTitle);
         return newComment;
     }
 
@@ -78,38 +81,21 @@ public class CommentsServlet extends HttpServlet {
     }
 
     private Entity getCommentEntityFromComment(Comment myComment){
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("firstName", myComment.getFirstName());
-        commentEntity.setProperty("lastName", myComment.getLastName());
-        commentEntity.setProperty("email", myComment.getEmail());
-        commentEntity.setProperty("phone", myComment.getPhone());
-        commentEntity.setProperty("message", myComment.getMessage());
-        commentEntity.setProperty("jobRelated", String.valueOf(myComment.isJobRelated()));
-        commentEntity.setProperty("jobTitle", myComment.getJobTitle());
+        Entity commentEntity = new Entity(COMMENT_ENTITY_NAME);
+        commentEntity.setProperty(FIRST_NAME_PROPERTY, myComment.getFirstName());
+        commentEntity.setProperty(LAST_NAME_PROPERTY, myComment.getLastName());
+        commentEntity.setProperty(EMAIL_PROPERTY, myComment.getEmail());
+        commentEntity.setProperty(PHONE_PROPERTY, myComment.getPhone());
+        commentEntity.setProperty(MESSAGE_PROPERTY, myComment.getMessage());
+        commentEntity.setProperty(JOB_TITLE_PROPERTY, myComment.getJobTitle());
         return commentEntity;
     }
 
-    private PreparedQuery getCommentsFromDatastore(){
-        Query commentsQuery = new Query("Comment");
+    private List<Entity> getCommentsFromDatastore(int maxComments){
+        Query commentsQuery = new Query(COMMENT_ENTITY_NAME);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(commentsQuery);
-        return results;
-    }
-
-    private Comment getCommentFromCommentEntity(Entity commentEntity){
-        String firstName = (String) commentEntity.getProperty("firstName");
-        String lastName = (String) commentEntity.getProperty("lastName");
-        String email = (String) commentEntity.getProperty("email");
-        String phone = (String) commentEntity.getProperty("phone");
-        String message = (String) commentEntity.getProperty("message");
-        Comment newComment = new Comment(firstName, lastName, email, phone, message);
-        boolean jobRelated = (boolean) Boolean.parseBoolean((String) commentEntity.getProperty("jobRelated"));
-        if(jobRelated){
-            String jobTitle = (String) commentEntity.getProperty("jobTitle");
-            newComment.setJobRelated();
-            newComment.addJobTitle(jobTitle);
-        }
-        return newComment;
+        return results.asList(FetchOptions.Builder.withLimit(maxComments));
     }
 
     private String convertToJsonUsingGson(Object o) {

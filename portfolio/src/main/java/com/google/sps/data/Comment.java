@@ -1,27 +1,21 @@
 package com.google.sps.data;
 
+import org.jetbrains.annotations.Nullable;
+
 public class Comment{
     //personal data
-    private String firstName, lastName, email, phone;
+    private final String firstName, lastName, email, phone;
     //job related data: optional
-    private boolean jobRelated=false;
-    private String jobTitle="";
+    @Nullable private final String jobTitle;
     //message 
-    private String message;
+    private final String message;
 
-    public Comment(String firstName, String lastName, String email, String phone, String message){
+    public Comment(String firstName, String lastName, String email, String phone, String message, String jobTitle){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.message = message;
-    }
-
-    public void setJobRelated(){
-        this.jobRelated = true;
-    }
-
-    public void addJobTitle(String jobTitle){
         this.jobTitle = jobTitle;
     }
 
@@ -39,10 +33,6 @@ public class Comment{
 
     public String getPhone() {
         return phone;
-    }
-
-    public boolean isJobRelated() {
-        return jobRelated;
     }
 
     public String getJobTitle() {
