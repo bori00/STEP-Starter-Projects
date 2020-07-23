@@ -29,7 +29,10 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** This servlet handles comment's data: 
+ - doPost() stores get's the recently submitted comment's data from the request 
+            and stores in a database using Datastore API
+ - doGet() returns the comments from the database, aftern converting them to JSON*/
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
     @Override
