@@ -42,8 +42,15 @@ function createCardElement(highlight){
     return card;
 }
 
-function createHeadingElement(string){
+function createHeading3Element(string){
     var heading = document.createElement("h3"); 
+    heading.innerText = string;
+    return heading;
+}
+
+function createHeading5Element(string){
+    var heading = document.createElement("h5");
+    heading.setAttribute('class', 'bottom-heading'); 
     heading.innerText = string;
     return heading;
 }
@@ -59,9 +66,11 @@ function addCommentToDOM(comment){
     var cardHolder = createCardHolderElement();
     var card = createCardElement(comment.propertyMap.jobTitle!==undefined);
     var messageParagraph = createParagraphElement(comment.propertyMap.message);
-    var senderNameHeading = createHeadingElement(comment.propertyMap.firstName + " " + comment.propertyMap.lastName + " says:");
+    var senderNameHeading = createHeading3Element(comment.propertyMap.firstName + " " + comment.propertyMap.lastName + " says:");
+    var emailHeading = createHeading5Element("contact: " + comment.propertyMap.email);
     card.appendChild(senderNameHeading);
     card.appendChild(messageParagraph);
+    card.appendChild(emailHeading);
     cardHolder.appendChild(card);
     var main = document.getElementById("main-comments");        
     main.appendChild(cardHolder);  

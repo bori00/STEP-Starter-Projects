@@ -153,6 +153,12 @@ button:hover{
     color: #8E8D8A;
 }
 
+.bottom-heading{
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
+}
 
 /* ------------------------content------------------------- */
 /* --------------navbar-------------- */
