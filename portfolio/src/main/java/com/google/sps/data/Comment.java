@@ -1,7 +1,5 @@
 package com.google.sps.data;
 
-import org.jetbrains.annotations.Nullable;
-
 public class Comment{
     //personal data
     private User sender;
