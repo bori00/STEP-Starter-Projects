@@ -30,6 +30,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 /** This servlet handles comment's data: 
  *- doPost() stores get's the recently submitted comment's data from the request 
@@ -64,7 +66,7 @@ public class CommentsServlet extends HttpServlet {
     private Comment getCommentFromRequest(HttpServletRequest request){
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
-        String email = request.getParameter("email");
+        String email = getUserEmail();
         String phone = request.getParameter("phone");
         String jobTitle = null;
         if(request.getParameterValues("type")!=null){ //box is checked
@@ -104,5 +106,10 @@ public class CommentsServlet extends HttpServlet {
         Gson gson = new Gson();
         String json = gson.toJson(o);
         return json;
+    }
+
+    private String getUserEmail(){
+        UserService userService = UserServiceFactory.getUserService();
+        return userService.getCurrentUser().getEmail();
     }
 }
