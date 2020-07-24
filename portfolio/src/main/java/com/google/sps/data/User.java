@@ -8,7 +8,7 @@ public class User{
     //job related data: optional
     @Nullable private final String jobTitle;
 
-    public Comment(String firstName, String lastName, String email, String phone, String jobTitle){
+    public User(String firstName, String lastName, String email, String phone, String jobTitle){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
