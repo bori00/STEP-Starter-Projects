@@ -1,10 +1,30 @@
+function addMaxCommentsInputListener(){
+    var maxCommentsInput = document.getElementById("max-comments");
+    maxCommentsInput.addEventListener("change", displayComments);
+}
+
 function displayComments(){
-    fetch('/comments-data')
+    removeAllCommentsFromDOM();
+    var maxComments = getNoMaxComments();
+    console.log(maxComments);
+    var url = new URL("/comments-data", document.URL);
+    url.searchParams.append('max-comments', maxComments)
+    fetch(url) 
     .catch(error => console.log('failed to fetch comments data from server: '+ error))
     .then(response => response.json())
     .catch(error => console.log('failed to parse comments: ' + error))
     .then(response => addAllCommentsToDOM(response))
     .catch(error => console.log('failed to print comments to DOM: ' + error));
+}
+
+function deleteAllComments(){
+    fetch('/delete-comments-data', {method: 'POST'})
+    .catch(error => console.log('failed to fetch from delete-comments-data'))
+    .then(respone => displayComments());
+}
+
+function getNoMaxComments(){
+    return document.getElementById("max-comments").value;
 }
 
 function createCardHolderElement(){
@@ -53,4 +73,8 @@ function addAllCommentsToDOM(comments){
         addCommentToDOM(comments[i]);
         console.log(comments[i]);
     }
+}
+
+function removeAllCommentsFromDOM(){
+    document.getElementById("main-comments").innerHTML = "";
 }

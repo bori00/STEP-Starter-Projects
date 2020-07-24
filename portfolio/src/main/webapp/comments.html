@@ -7,7 +7,7 @@
     <title>Comments | Bori</title>
     <script src="comments.js"></script>
 </head>
-<body onload="displayComments()">
+<body onload="displayComments(); addMaxCommentsInputListener()">
     <header> 
         <nav id="navbar">
             <h1 id="menu-title"><a href="index.html">Bori's Portfolio</a></h1>
@@ -21,7 +21,15 @@
         </nav>
     </header>
 
-    <main id="main-comments">
+    <main>
+        <hr>
+        <h1>Comments</h1>
+        <div display="block">
+            <label for="max-comments">Number of comments to display:</label>
+            <input type="number" id="max-comments" min="1" max="20" value="5">
+        </div>
+        <button onClick="deleteAllComments()">Delete all</button>
+        <div id="main-comments"></div>
     </main>
 
     <footer id="main-footer">

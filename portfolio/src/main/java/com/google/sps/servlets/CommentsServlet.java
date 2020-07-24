@@ -28,7 +28,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
- import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.FetchOptions;
 
 /** This servlet handles comment's data: 
  *- doPost() stores get's the recently submitted comment's data from the request 
@@ -54,9 +54,10 @@ public class CommentsServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
-        PreparedQuery results = getCommentsFromDatastore(); 
+        int maxComments = Integer.parseInt(request.getParameter("max-comments"));
+        List<Entity> results = getCommentsFromDatastore(maxComments); 
         response.setContentType("application/json;");
-        response.getWriter().println(convertToJsonUsingGson(results.asList(FetchOptions.Builder.withDefaults())));
+        response.getWriter().println(convertToJsonUsingGson(results));
     }
 
     private Comment getCommentFromRequest(HttpServletRequest request){
@@ -90,11 +91,11 @@ public class CommentsServlet extends HttpServlet {
         return commentEntity;
     }
 
-    private PreparedQuery getCommentsFromDatastore(){
+    private List<Entity> getCommentsFromDatastore(int maxComments){
         Query commentsQuery = new Query(COMMENT_ENTITY_NAME);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(commentsQuery);
-        return results;
+        return results.asList(FetchOptions.Builder.withLimit(maxComments));
     }
 
     private String convertToJsonUsingGson(Object o) {
