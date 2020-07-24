@@ -22,18 +22,39 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
+import org.jetbrains.annotations.Nullable;
 
 
 /** This servlet handles user's data: doGet() checks if the user is authenticated 
  * and redirects them to a log in page if needed*/
 @WebServlet("/user-data")
 public class UserServlet extends HttpServlet {
+
+    private static class UserLoginData{
+        private boolean isLoggedIn;
+        @Nullable private String loginUrl;
+
+        private UserLoginData(boolean isLoggedIn, String loginUrl){
+            this.isLoggedIn = isLoggedIn;
+            this.loginUrl = loginUrl;
+        }
+
+        public static UserLoginData generateUserLoginData(){
+            UserService userService = UserServiceFactory.getUserService();
+            boolean isUserLoggedIn = userService.isUserLoggedIn();
+            String myLoginUrl = null;
+            if(!isUserLoggedIn){
+                myLoginUrl = userService.createLoginURL("/contact");
+            }
+            return new UserLoginData(isUserLoggedIn, myLoginUrl);
+        }
+    }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
-        UserService userService = UserServiceFactory.getUserService();
         response.setContentType("application/json;");
-        boolean isUserLoggedIn = userService.isUserLoggedIn();
-        response.getWriter().println(convertToJsonUsingGson(isUserLoggedIn));
+        UserLoginData currentUserLoginData = UserLoginData.generateUserLoginData();
+        response.getWriter().println(convertToJsonUsingGson(currentUserLoginData));
     }
 
     private String convertToJsonUsingGson(Object o) {

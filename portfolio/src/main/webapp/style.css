@@ -627,6 +627,7 @@ button:hover{
     width: 500px;
     margin: 50px auto;
     padding: 45px 30px;
+    display: none;
 }
 
 #contact-form hr{
