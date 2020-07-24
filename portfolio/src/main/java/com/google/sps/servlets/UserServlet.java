@@ -33,10 +33,12 @@ public class UserServlet extends HttpServlet {
     private static class UserLoginData{
         private boolean isLoggedIn;
         @Nullable private String loginUrl;
+        @Nullable private String logoutUrl;
 
-        private UserLoginData(boolean isLoggedIn, String loginUrl){
+        private UserLoginData(boolean isLoggedIn, String loginUrl, String logoutUrl){
             this.isLoggedIn = isLoggedIn;
             this.loginUrl = loginUrl;
+            this.logoutUrl = logoutUrl;
         }
 
         public static UserLoginData generateUserLoginData(){
@@ -45,6 +47,9 @@ public class UserServlet extends HttpServlet {
             String myLoginUrl = null;
             if(!isUserLoggedIn){
                 myLoginUrl = userService.createLoginURL("/contact.html");
+            }
+            else{
+                myLogoutUrl = userService.createLogoutURL("/contact.html");
             }
             return new UserLoginData(isUserLoggedIn, myLoginUrl);
         }
