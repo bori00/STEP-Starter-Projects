@@ -5,8 +5,11 @@ function isUserLoggedIn(){
     .catch(error => "failed to convert to json: " + error)
     .then(response => {
         if(response.isLoggedIn==true){
+            console.log("user is logged in: " + response);
             document.getElementById("contact-form").style.display="block";
-            console.log("user is logged in: " + response)
+            var logoutUrl = response.logoutUrl;
+            console.log("logoutUrl = " + logoutUrl);
+            document.getElementById("logout-url").innerHTML = "You can change account here<a class=\"link-light\" href=\"" + logoutUrl + "\"> here</a>";
         }
         else{
             console.log("user is not logged in");

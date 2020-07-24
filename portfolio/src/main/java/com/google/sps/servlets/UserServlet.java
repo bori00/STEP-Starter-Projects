@@ -45,13 +45,14 @@ public class UserServlet extends HttpServlet {
             UserService userService = UserServiceFactory.getUserService();
             boolean isUserLoggedIn = userService.isUserLoggedIn();
             String myLoginUrl = null;
+            String myLogoutUrl = null;
             if(!isUserLoggedIn){
                 myLoginUrl = userService.createLoginURL("/contact.html");
             }
             else{
                 myLogoutUrl = userService.createLogoutURL("/contact.html");
             }
-            return new UserLoginData(isUserLoggedIn, myLoginUrl);
+            return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl);
         }
     }
 
