@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import com.google.sps.data.Comment;
+import com.google.sps.data.User;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -65,12 +66,13 @@ public class CommentsServlet extends HttpServlet {
         String lastName = request.getParameter("last-name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-        String message = request.getParameter("comment");
         String jobTitle = null;
         if(request.getParameterValues("type")!=null){ //box is checked
             jobTitle = request.getParameter("job-title");
         }
-        Comment newComment = new Comment(firstName, lastName, email, phone, message, jobTitle);
+        User sender = new User(firstName, lastName, email, phone, jobTitle);
+        String message = request.getParameter("comment");
+        Comment newComment = new Comment(sender, message);
         return newComment;
     }
 
@@ -82,12 +84,12 @@ public class CommentsServlet extends HttpServlet {
 
     private Entity getCommentEntityFromComment(Comment myComment){
         Entity commentEntity = new Entity(COMMENT_ENTITY_NAME);
-        commentEntity.setProperty(FIRST_NAME_PROPERTY, myComment.getFirstName());
-        commentEntity.setProperty(LAST_NAME_PROPERTY, myComment.getLastName());
-        commentEntity.setProperty(EMAIL_PROPERTY, myComment.getEmail());
-        commentEntity.setProperty(PHONE_PROPERTY, myComment.getPhone());
+        commentEntity.setProperty(FIRST_NAME_PROPERTY, myComment.getSender().getFirstName());
+        commentEntity.setProperty(LAST_NAME_PROPERTY, myComment.getSender().getLastName());
+        commentEntity.setProperty(EMAIL_PROPERTY, myComment.getSender().getEmail());
+        commentEntity.setProperty(PHONE_PROPERTY, myComment.getSender().getPhone());
+        commentEntity.setProperty(JOB_TITLE_PROPERTY, myComment.getSender().getJobTitle());
         commentEntity.setProperty(MESSAGE_PROPERTY, myComment.getMessage());
-        commentEntity.setProperty(JOB_TITLE_PROPERTY, myComment.getJobTitle());
         return commentEntity;
     }
 

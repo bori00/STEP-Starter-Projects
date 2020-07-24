@@ -11,7 +11,7 @@ public class Comment{
         this.message = message;
     }
 
-    public String getSender(){
+    public User getSender(){
         return sender;
     }
 
