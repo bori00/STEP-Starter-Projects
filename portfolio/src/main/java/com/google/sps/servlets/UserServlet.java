@@ -44,7 +44,7 @@ public class UserServlet extends HttpServlet {
             boolean isUserLoggedIn = userService.isUserLoggedIn();
             String myLoginUrl = null;
             if(!isUserLoggedIn){
-                myLoginUrl = userService.createLoginURL("/contact");
+                myLoginUrl = userService.createLoginURL("/contact.html");
             }
             return new UserLoginData(isUserLoggedIn, myLoginUrl);
         }
