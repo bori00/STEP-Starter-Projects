@@ -10,8 +10,9 @@ jobRelated_checkbox.addEventListener('change', function() {
 });
 
 
+// email field removed: I request email address from UserService, after authenticating the user
 //email check: add red outline if invalid
-function validEmail(string){
+/*function validEmail(string){
     return string!="" && /@/.test(string) && !(/^@/.test(string) || /@$/.test(string));
 }
 var email_input = document.getElementById("email-input");
@@ -27,7 +28,7 @@ email_input.addEventListener('change', function() {
         this.style.borderColor="#8E8D8A";
         this.style.borderWidth="0.5px";
     }
-});
+});*/
 
 
 //phone check: add red outline if invalid
@@ -62,8 +63,7 @@ function formValidation(){
     var firstName = document.getElementById("first-name-input").value;
     var lastName = document.getElementById("last-name-input").value;
     var comment = document.getElementById("comment-textarea").value;
-    if(validEmail(email_input.value)
-     && validPhone(phone_input.value) 
+    if(validPhone(phone_input.value) 
      && firstName != ""
      && lastName != ""
      && comment != ""){ //form is valid, can be sent
