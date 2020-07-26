@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import com.google.sps.data.User;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,12 +37,6 @@ import java.util.List;
  * and redirects them to a log in page if needed*/
 @WebServlet("/user-data")
 public class UserServlet extends HttpServlet {
-    private static final String USER_ENTITY_NAME = "User";
-    private static final String USER_ID_PROPERTY = "id";
-    private static final String USER_FISRTNAME_PROPERTY = "firstName";
-    private static final String USER_LASTNAME_PROPERTY = "lastName";
-    private static final String USER_PHONE_PROPERTY = "phone";
-    private static final String USER_JOB_TITLE_PROPERTY = "jobTitle";
 
     private static class UserLoginData{
         private boolean isLoggedIn;
@@ -74,7 +69,7 @@ public class UserServlet extends HttpServlet {
 
         @Nullable
         private static Entity getSavedUserEntity(String id){
-            Query commentsQuery = new Query(USER_ENTITY_NAME).setFilter(new Query.FilterPredicate(USER_ID_PROPERTY, Query.FilterOperator.EQUAL, id));
+            Query commentsQuery = new Query(User.ENTITY_NAME).setFilter(new Query.FilterPredicate(User.ID_PROPERTY, Query.FilterOperator.EQUAL, id));
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             List<Entity> results = datastore.prepare(commentsQuery).asList(FetchOptions.Builder.withDefaults());
             if(results.size()>0) return results.get(0);

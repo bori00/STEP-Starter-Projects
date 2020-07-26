@@ -3,12 +3,17 @@ package com.google.sps.data;
 import org.jetbrains.annotations.Nullable;
 
 public class User{
-    //datastore entity name
-    public static final String ENTITY_NAME = "User";
     //personal data
     private final String firstName, lastName, email, phone;
     //job related data: optional
     @Nullable private final String jobTitle;
+     //datastore entity name
+    public static final String ENTITY_NAME = "User";
+    public static final String ID_PROPERTY = "id";
+    public static final String FISRTNAME_PROPERTY = "firstName";
+    public static final String LASTNAME_PROPERTY = "lastName";
+    public static final String PHONE_PROPERTY = "phone";
+    public static final String JOB_TITLE_PROPERTY = "jobTitle";
 
     public User(String firstName, String lastName, String email, String phone, String jobTitle){
         this.firstName = firstName;
@@ -17,6 +22,7 @@ public class User{
         this.phone = phone;
         this.jobTitle = jobTitle;
     }
+
 
     public String getFirstName() {
         return firstName;
