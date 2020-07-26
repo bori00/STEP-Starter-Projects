@@ -23,12 +23,12 @@ public class User{
         this.jobTitle = jobTitle;
     }
 
-    public void saveToDataStore(int id){
+    public void saveToDataStore(String id){
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(getUserEntity(id));
     }
 
-    private Entity getUserEntity(int id){
+    private Entity getUserEntity(String id){
         Entity userEntity = new Entity(User.ENTITY_NAME);
         userEntity.setProperty(ID_PROPERTY, id);
         userEntity.setProperty(FIRST_NAME_PROPERTY, firstName);
@@ -37,6 +37,23 @@ public class User{
         userEntity.setProperty(PHONE_PROPERTY, phone);
         userEntity.setProperty(JOB_TITLE_PROPERTY, jobTitle);
         return  userEntity;
+    }
+
+    public static boolean isUserDataSaved(String id){
+        Query commentsQuery = new Query(User.ENTITY_NAME).setFilter(new Query.FilterPredicate(User.ID_PROPERTY, Query.FilterOperator.EQUAL, id));
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        List<Entity> results = datastore.prepare(commentsQuery).asList(FetchOptions.Builder.withDefaults());
+        if(results.size()>0) return true;
+        else return false;
+    }
+
+    @Nullable
+    public static Entity getSavedUserEntity(String id){
+        Query commentsQuery = new Query(User.ENTITY_NAME).setFilter(new Query.FilterPredicate(User.ID_PROPERTY, Query.FilterOperator.EQUAL, id));
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        List<Entity> results = datastore.prepare(commentsQuery).asList(FetchOptions.Builder.withDefaults());
+        if(results.size()>0) return results.get(0);
+        else return null;
     }
 
     public String getFirstName() {
