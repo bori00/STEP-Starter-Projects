@@ -39,18 +39,14 @@ import com.google.appengine.api.users.UserServiceFactory;
  *- doGet() returns the comments from the database, aftern converting them to JSON*/
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
-    private static final String FIRST_NAME_PROPERTY = "firstName";
-    private static final String LAST_NAME_PROPERTY = "lastName";
-    private static final String EMAIL_PROPERTY = "email";
-    private static final String MESSAGE_PROPERTY = "message";
-    private static final String PHONE_PROPERTY = "phone";
-    private static final String JOB_TITLE_PROPERTY = "jobTitle";
-
-
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Comment newComment = getCommentFromRequest(request);
-        putCommentToDatastore(newComment);
+        String userId = User.getUserIdFromUserService();
+        //it's guaranteed that the user is logged in at this point
+        if(User.isUserDataSaved(userId)){ //save user data only if not already saved
+            User.getUserFromRequest(request).saveToDatastore();
+        }
+        Comment.getCommentFromRequest(userId, request).saveToDatastore();
         response.sendRedirect("/contact.html");
     }
 
@@ -60,38 +56,6 @@ public class CommentsServlet extends HttpServlet {
         List<Entity> results = getCommentsFromDatastore(maxComments); 
         response.setContentType("application/json;");
         response.getWriter().println(convertToJsonUsingGson(results));
-    }
-
-    private Comment getCommentFromRequest(HttpServletRequest request){
-        String firstName = request.getParameter("first-name");
-        String lastName = request.getParameter("last-name");
-        String email = getUserEmail();
-        String phone = request.getParameter("phone");
-        String jobTitle = null;
-        if(request.getParameterValues("type")!=null){ //box is checked
-            jobTitle = request.getParameter("job-title");
-        }
-        User sender = new User(firstName, lastName, email, phone, jobTitle);
-        String message = request.getParameter("comment");
-        Comment newComment = new Comment(sender, message);
-        return newComment;
-    }
-
-    private void putCommentToDatastore(Comment myComment){
-        Entity commentEntity = getCommentEntityFromComment(myComment);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
-    }
-
-    private Entity getCommentEntityFromComment(Comment myComment){
-        Entity commentEntity = new Entity(Comment.ENTITY_NAME);
-        commentEntity.setProperty(FIRST_NAME_PROPERTY, myComment.getSender().getFirstName());
-        commentEntity.setProperty(LAST_NAME_PROPERTY, myComment.getSender().getLastName());
-        commentEntity.setProperty(EMAIL_PROPERTY, myComment.getSender().getEmail());
-        commentEntity.setProperty(PHONE_PROPERTY, myComment.getSender().getPhone());
-        commentEntity.setProperty(JOB_TITLE_PROPERTY, myComment.getSender().getJobTitle());
-        commentEntity.setProperty(MESSAGE_PROPERTY, myComment.getMessage());
-        return commentEntity;
     }
 
     private List<Entity> getCommentsFromDatastore(int maxComments){
@@ -105,10 +69,5 @@ public class CommentsServlet extends HttpServlet {
         Gson gson = new Gson();
         String json = gson.toJson(o);
         return json;
-    }
-
-    private String getUserEmail(){
-        UserService userService = UserServiceFactory.getUserService();
-        return userService.getCurrentUser().getEmail();
     }
 }

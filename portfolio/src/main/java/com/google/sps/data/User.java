@@ -1,21 +1,34 @@
 package com.google.sps.data;
 
 import org.jetbrains.annotations.Nullable;
+import com.google.appengine.api.datastore.Entity;
+import javax.servlet.http.HttpServletRequest;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.FetchOptions;
+import java.util.List; 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 public class User{
     //personal data
-    private final String firstName, lastName, email, phone;
+    private final String id, firstName, lastName, email, phone;
     //job related data: optional
     @Nullable private final String jobTitle;
      //datastore entity name
     public static final String ENTITY_NAME = "User";
     public static final String ID_PROPERTY = "id";
-    public static final String FISRTNAME_PROPERTY = "firstName";
-    public static final String LASTNAME_PROPERTY = "lastName";
+    public static final String FIRST_NAME_PROPERTY = "firstName";
+    public static final String LAST_NAME_PROPERTY = "lastName";
     public static final String PHONE_PROPERTY = "phone";
+    public static final String EMAIL_PROPERTY = "email";
     public static final String JOB_TITLE_PROPERTY = "jobTitle";
 
-    public User(String firstName, String lastName, String email, String phone, String jobTitle){
+    public User(String id, String firstName, String lastName, String email, String phone, String jobTitle){
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -23,12 +36,12 @@ public class User{
         this.jobTitle = jobTitle;
     }
 
-    public void saveToDataStore(String id){
+    public void saveToDatastore(){
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(getUserEntity(id));
+        datastore.put(getUserEntity());
     }
 
-    private Entity getUserEntity(String id){
+    private Entity getUserEntity(){
         Entity userEntity = new Entity(User.ENTITY_NAME);
         userEntity.setProperty(ID_PROPERTY, id);
         userEntity.setProperty(FIRST_NAME_PROPERTY, firstName);
@@ -54,6 +67,29 @@ public class User{
         List<Entity> results = datastore.prepare(commentsQuery).asList(FetchOptions.Builder.withDefaults());
         if(results.size()>0) return results.get(0);
         else return null;
+    }
+
+    public static User getUserFromRequest(HttpServletRequest request){
+        String firstName = request.getParameter("first-name");
+        String lastName = request.getParameter("last-name");
+        String email = getUserEmailFromUserService();
+        String phone = request.getParameter("phone");
+        String jobTitle = null;
+        if(request.getParameterValues("type")!=null){ //box is checked
+            jobTitle = request.getParameter("job-title");
+        }
+        User newUser = new User(getUserIdFromUserService(), firstName, lastName, email, phone, jobTitle);
+        return newUser;
+    }
+
+    public static String getUserEmailFromUserService(){
+        UserService userService = UserServiceFactory.getUserService();
+        return userService.getCurrentUser().getEmail();
+    }
+
+    public static String getUserIdFromUserService(){
+        UserService userService = UserServiceFactory.getUserService();
+        return userService.getCurrentUser().getUserId();
     }
 
     public String getFirstName() {

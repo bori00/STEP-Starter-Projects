@@ -62,18 +62,9 @@ public class UserServlet extends HttpServlet {
             }
             else{
                 myLogoutUrl = userService.createLogoutURL("/contact.html");
-                savedUserEntity =  getSavedUserEntity(userService.getCurrentUser().getUserId());
+                savedUserEntity =  User.getSavedUserEntity(userService.getCurrentUser().getUserId());
             }
             return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl, savedUserEntity);
-        }
-
-        @Nullable
-        private static Entity getSavedUserEntity(String id){
-            Query commentsQuery = new Query(User.ENTITY_NAME).setFilter(new Query.FilterPredicate(User.ID_PROPERTY, Query.FilterOperator.EQUAL, id));
-            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-            List<Entity> results = datastore.prepare(commentsQuery).asList(FetchOptions.Builder.withDefaults());
-            if(results.size()>0) return results.get(0);
-            else return null;
         }
     }
 
