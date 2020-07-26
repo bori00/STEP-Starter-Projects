@@ -39,7 +39,6 @@ import com.google.appengine.api.users.UserServiceFactory;
  *- doGet() returns the comments from the database, aftern converting them to JSON*/
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
-    private static final String COMMENT_ENTITY_NAME = "Comment";
     private static final String FIRST_NAME_PROPERTY = "firstName";
     private static final String LAST_NAME_PROPERTY = "lastName";
     private static final String EMAIL_PROPERTY = "email";
@@ -85,7 +84,7 @@ public class CommentsServlet extends HttpServlet {
     }
 
     private Entity getCommentEntityFromComment(Comment myComment){
-        Entity commentEntity = new Entity(COMMENT_ENTITY_NAME);
+        Entity commentEntity = new Entity(Comment.ENTITY_NAME);
         commentEntity.setProperty(FIRST_NAME_PROPERTY, myComment.getSender().getFirstName());
         commentEntity.setProperty(LAST_NAME_PROPERTY, myComment.getSender().getLastName());
         commentEntity.setProperty(EMAIL_PROPERTY, myComment.getSender().getEmail());
@@ -96,7 +95,7 @@ public class CommentsServlet extends HttpServlet {
     }
 
     private List<Entity> getCommentsFromDatastore(int maxComments){
-        Query commentsQuery = new Query(COMMENT_ENTITY_NAME);
+        Query commentsQuery = new Query(Comment.ENTITY_NAME);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(commentsQuery);
         return results.asList(FetchOptions.Builder.withLimit(maxComments));

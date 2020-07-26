@@ -3,6 +3,8 @@ package com.google.sps.data;
 import org.jetbrains.annotations.Nullable;
 
 public class User{
+    //datastore entity name
+    public static final String ENTITY_NAME = "User";
     //personal data
     private final String firstName, lastName, email, phone;
     //job related data: optional

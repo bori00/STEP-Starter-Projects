@@ -1,6 +1,8 @@
 package com.google.sps.data;
 
 public class Comment{
+    //datastore netity name
+    public static final String ENTITY_NAME = "Comment";
     //personal data
     private User sender;
     //message 

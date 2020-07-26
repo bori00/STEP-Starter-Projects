@@ -45,7 +45,7 @@ public class DeleteCommentsServlet extends HttpServlet {
     }
 
     private PreparedQuery getCommentsFromDatastore(){
-        Query commentsQuery = new Query("Comment");
+        Query commentsQuery = new Query(Comment.ENTITY_NAME);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(commentsQuery);
         return results;
