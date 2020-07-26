@@ -1,20 +1,34 @@
 package com.google.sps.data;
 
 public class Comment{
-    //datastore netity name
-    public static final String ENTITY_NAME = "Comment";
     //personal data
-    private User sender;
+    private int senderId;
     //message 
     private final String message;
+    //datastore netity name
+    public static final String ENTITY_NAME = "Comment";
+    private static final String MESSAGE_PROPERTY = "message";
+    private static final String SENDER_ID_PROPERTY = "senderId";
 
-    public Comment(User sender, String message){
-        this.sender = sender;
+    public Comment(private senderId, String message){
+        this.senderId = senderId;
         this.message = message;
     }
 
-    public User getSender(){
-        return sender;
+    public void saveToDataStore(){
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(getCommentEntity());
+    }
+
+    private Entity getUserEntity(int id){
+        Entity commentEntity = new Entity(ENTITY_NAME);
+        commentEntity.setProperty(MESSAGE_PROPERTY, message);
+        commentEntity.setProperty(SENDER_ID_PROPERTY, senderId);
+        return  commentEntity;
+    }
+
+    public int getSenderId(){
+        return senderId;
     }
 
     public String getMessage() {
