@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzpdeVwp-tAv0hxqqMWWxtELzDDeCisjc"></script>
+    <script src="maps.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Maps | Bori</title>
 </head>
-<body>
+<body onLoad="createMap()">
     <header> 
         <nav id="navbar">
             <h1 id="menu-title"><a href="index.html">Bori's Portfolio</a></h1>
@@ -16,10 +18,12 @@
                 <li><a href="photos.html">Photos</a><li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="comments.html">Comments</a></li>
-                <li><a class="current" href="#">Comments</a></li>
+                <li><a class="current" href="#">Maps</a></li>
             </ul>
         </nav>
     </header>
+
+    <div id="map"></div>
 
     <footer id="main-footer">
         <p>Fazakas Borbála &copy</p>
