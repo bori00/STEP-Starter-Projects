@@ -21,6 +21,7 @@ html, body{
     color: #8E8D8A;
     background-color: #f2eeed;
     font-size: 14px;
+    height: 100%;
 }
 
 a{
@@ -158,6 +159,11 @@ button:hover{
     bottom: 20px;
     left: 50%;
     transform: translate(-50%);
+}
+
+#map {
+    height: 100%;
+    margin: 0px auto;
 }
 
 /* ------------------------content------------------------- */
@@ -689,7 +695,6 @@ button:hover{
 #main-footer{
     background-color: #8E8D8A;
     color: #f2eeed;
-    height: 20%;
-    overflow: auto;
+    max-height: 45px;
 }
 
