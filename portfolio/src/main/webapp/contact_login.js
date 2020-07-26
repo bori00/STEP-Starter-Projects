@@ -9,6 +9,9 @@ function handleUserLogin(){
             console.log("user is logged in: " + response);
             displayContactForm();
             displayLogoutUrl(response);
+            if(response.savedUserEntity!=undefined){
+                disableSavedInputs(response);
+            }
         }
         else{
             console.log("user is not logged in");
@@ -31,4 +34,14 @@ function displayLoginUrl(response){
     var loginUrl = response.loginUrl;
     console.log("loginUrl = " + loginUrl);
     document.getElementById("login-info").innerHTML = "Please login<a class=\"link-emphasise\" href=\"" + loginUrl + "\"> here</a>";
+}
+
+function disableSavedInputs(response){
+    console.log("disable saved inputs");
+    disableInputWithPresetText(document.getElementById("first-name-input", response.savedUserEntity.propertyMap.firstName));
+}
+
+function disableInputWithPresetText(input, text){
+    input.disabled = true;
+    input.placeholder = text;
 }
