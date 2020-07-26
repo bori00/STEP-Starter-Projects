@@ -23,6 +23,21 @@ public class User{
         this.jobTitle = jobTitle;
     }
 
+    public void saveToDataStore(int id){
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(getUserEntity(id));
+    }
+
+    private Entity getUserEntity(int id){
+        Entity userEntity = new Entity(User.ENTITY_NAME);
+        userEntity.setProperty(ID_PROPERTY, id);
+        userEntity.setProperty(FIRST_NAME_PROPERTY, firstName);
+        userEntity.setProperty(LAST_NAME_PROPERTY, lastName);
+        userEntity.setProperty(EMAIL_PROPERTY, email);
+        userEntity.setProperty(PHONE_PROPERTY, phone);
+        userEntity.setProperty(JOB_TITLE_PROPERTY, jobTitle);
+        return  userEntity;
+    }
 
     public String getFirstName() {
         return firstName;
