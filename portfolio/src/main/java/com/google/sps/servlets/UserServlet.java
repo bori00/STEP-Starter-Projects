@@ -23,22 +23,37 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import org.jetbrains.annotations.Nullable;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.FetchOptions;
+import java.util.List; 
 
 
 /** This servlet handles user's data: doGet() checks if the user is authenticated 
  * and redirects them to a log in page if needed*/
 @WebServlet("/user-data")
 public class UserServlet extends HttpServlet {
+    private static final String USER_ENTITY_NAME = "User";
+    private static final String USER_ID_PROPERTY = "id";
+    private static final String USER_FISRTNAME_PROPERTY = "firstName";
+    private static final String USER_LASTNAME_PROPERTY = "lastName";
+    private static final String USER_PHONE_PROPERTY = "phone";
+    private static final String USER_JOB_TITLE_PROPERTY = "jobTitle";
 
     private static class UserLoginData{
         private boolean isLoggedIn;
         @Nullable private String loginUrl;
         @Nullable private String logoutUrl;
+        @Nullable private Entity savedUserEntity; //contains data stored in the database about the user
 
-        private UserLoginData(boolean isLoggedIn, String loginUrl, String logoutUrl){
+        private UserLoginData(boolean isLoggedIn, String loginUrl, String logoutUrl, Entity savedUserEntity){
             this.isLoggedIn = isLoggedIn;
             this.loginUrl = loginUrl;
             this.logoutUrl = logoutUrl;
+            this.savedUserEntity = savedUserEntity;
         }
 
         public static UserLoginData generateUserLoginData(){
@@ -46,14 +61,25 @@ public class UserServlet extends HttpServlet {
             boolean isUserLoggedIn = userService.isUserLoggedIn();
             String myLoginUrl = null;
             String myLogoutUrl = null;
+            Entity savedUserEntity = null;
             if(!isUserLoggedIn){
                 myLoginUrl = userService.createLoginURL("/contact.html");
             }
             else{
                 myLogoutUrl = userService.createLogoutURL("/contact.html");
+                savedUserEntity =  getSavedUserEntity(userService.getCurrentUser().getUserId());
             }
-            return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl);
+            return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl, savedUserEntity);
         }
+
+         @Nullable
+        private static Entity getSavedUserEntity(String id){
+        Query commentsQuery = new Query(USER_ENTITY_NAME).setFilter(new Query.FilterPredicate(USER_ID_PROPERTY, Query.FilterOperator.EQUAL, id));
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        List<Entity> results = datastore.prepare(commentsQuery).asList(FetchOptions.Builder.withDefaults());
+        if(results.size()>0) return results.get(0);
+        else return null;
+    }
     }
 
     @Override
@@ -68,4 +94,5 @@ public class UserServlet extends HttpServlet {
         String json = gson.toJson(o);
         return json;
     }
+
 }
