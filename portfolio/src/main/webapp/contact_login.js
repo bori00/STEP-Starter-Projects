@@ -10,7 +10,13 @@ function handleUserLogin(){
             displayContactForm();
             displayLogoutUrl(response);
             if(response.savedUserEntity!=undefined){
+                console.log(response.savedUserEntity.propertyMap.firstName);
+                console.log(response.savedUserEntity.lastName);
                 disableSavedInputs(response);
+                console.log("user has saved data in database");
+            }
+            else{
+                console.log("user has no saved data in database");
             }
         }
         else{
@@ -38,15 +44,16 @@ function displayLoginUrl(response){
 
 function disableSavedInputs(response){
     console.log("disable saved inputs");
-    disableInputWithPresetText(document.getElementById("first-name-input", response.savedUserEntity.propertyMap.firstName));
-    disableInputWithPresetText(document.getElementById("last-name-input", response.savedUserEntity.propertyMap.lastName));
-    disableInputWithPresetText(document.getElementById("phone-input", response.savedUserEntity.propertyMap.phone));
+    console.log(response.savedUserEntity.propertyMap.firstName);
+    disableInputWithPresetText(document.getElementById("first-name-input"), response.savedUserEntity.propertyMap.firstName);
+    disableInputWithPresetText(document.getElementById("last-name-input"), response.savedUserEntity.propertyMap.lastName);
+    disableInputWithPresetText(document.getElementById("phone-input"), response.savedUserEntity.propertyMap.phone);
     disableCheck(document.getElementById("job-related-check"));
-    disableInputWithPresetText(document.getElementById("job-title-input", response.savedUserEntity.propertyMap.jobTitle));
+    disableInputWithPresetText(document.getElementById("job-title-dropdown"), response.savedUserEntity.propertyMap.jobTitle);
 }
 
 function disableInputWithPresetText(input, text){
-    input.readonly = true;
+    input.disabled = true;
     input.value = text;
 }
 

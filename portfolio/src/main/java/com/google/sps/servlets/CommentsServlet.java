@@ -39,14 +39,21 @@ import com.google.appengine.api.users.UserServiceFactory;
  *- doGet() returns the comments from the database, aftern converting them to JSON*/
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
+    private class CommentData{
+        private Comment comment;
+        private User user;
+    }
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userId = User.getUserIdFromUserService();
         //it's guaranteed that the user is logged in at this point
-        if(User.isUserDataSaved(userId)){ //save user data only if not already saved
-            User.getUserFromRequest(request).saveToDatastore();
+        User sender = User.getUserFromDatastore(userId);
+        if(sender==null){ //save user data only if not already saved
+            sender = User.getUserFromRequest(request);
+            sender.saveToDatastore();
         }
-        Comment.getCommentFromRequest(userId, request).saveToDatastore();
+        Comment.getCommentFromRequest(sender, request).saveToDatastore();
         response.sendRedirect("/contact.html");
     }
 

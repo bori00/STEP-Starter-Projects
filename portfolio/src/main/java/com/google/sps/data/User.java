@@ -20,7 +20,7 @@ public class User{
     @Nullable private final String jobTitle;
      //datastore entity name
     public static final String ENTITY_NAME = "User";
-    public static final String ID_PROPERTY = "id";
+    public static final String ID_PROPERTY = "userId";
     public static final String FIRST_NAME_PROPERTY = "firstName";
     public static final String LAST_NAME_PROPERTY = "lastName";
     public static final String PHONE_PROPERTY = "phone";
@@ -41,7 +41,7 @@ public class User{
         datastore.put(getUserEntity());
     }
 
-    private Entity getUserEntity(){
+    public Entity getUserEntity(){
         Entity userEntity = new Entity(User.ENTITY_NAME);
         userEntity.setProperty(ID_PROPERTY, id);
         userEntity.setProperty(FIRST_NAME_PROPERTY, firstName);
@@ -61,12 +61,29 @@ public class User{
     }
 
     @Nullable
+    public static User getUserFromDatastore(String id){
+        return getUserFromUserEntity(getSavedUserEntity(id));
+    }
+
+    @Nullable
     public static Entity getSavedUserEntity(String id){
         Query commentsQuery = new Query(User.ENTITY_NAME).setFilter(new Query.FilterPredicate(User.ID_PROPERTY, Query.FilterOperator.EQUAL, id));
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         List<Entity> results = datastore.prepare(commentsQuery).asList(FetchOptions.Builder.withDefaults());
         if(results.size()>0) return results.get(0);
         else return null;
+    }
+
+    @Nullable
+    private static User getUserFromUserEntity(Entity userEntity){
+        if(userEntity==null) return null;
+        String id = (String) userEntity.getProperty(ID_PROPERTY);
+        String firstName = (String) userEntity.getProperty(FIRST_NAME_PROPERTY);
+        String lastName = (String) userEntity.getProperty(LAST_NAME_PROPERTY);
+        String email = (String) userEntity.getProperty(EMAIL_PROPERTY);
+        String phone = (String) userEntity.getProperty(PHONE_PROPERTY);
+        String jobTitle = (String) userEntity.getProperty(JOB_TITLE_PROPERTY);
+        return  new User(id, firstName, lastName, email, phone, jobTitle);
     }
 
     public static User getUserFromRequest(HttpServletRequest request){
@@ -90,6 +107,10 @@ public class User{
     public static String getUserIdFromUserService(){
         UserService userService = UserServiceFactory.getUserService();
         return userService.getCurrentUser().getUserId();
+    }
+
+    public String getId(){
+        return id;
     }
 
     public String getFirstName() {

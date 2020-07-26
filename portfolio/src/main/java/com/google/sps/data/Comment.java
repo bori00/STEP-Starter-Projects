@@ -11,16 +11,16 @@ import com.google.appengine.api.datastore.FetchOptions;
 
 public class Comment{
     //personal data
-    private String senderId;
+    private User sender;
     //message 
     private final String message;
     //datastore netity name
     public static final String ENTITY_NAME = "Comment";
     private static final String MESSAGE_PROPERTY = "message";
-    private static final String SENDER_ID_PROPERTY = "senderId";
+    private static final String SENDER_PROPERTY = "sender";
 
-    public Comment(String senderId, String message){
-        this.senderId = senderId;
+    public Comment(User sender, String message){
+        this.sender = sender;
         this.message = message;
     }
 
@@ -30,20 +30,25 @@ public class Comment{
     }
 
     private Entity getCommentEntity(){
-        Entity commentEntity = new Entity(ENTITY_NAME);
+        Entity commentEntity = new Entity(Comment.ENTITY_NAME);
+        commentEntity.setProperty(User.ID_PROPERTY, sender.getId());
+        commentEntity.setProperty(User.FIRST_NAME_PROPERTY, sender.getFirstName());
+        commentEntity.setProperty(User.LAST_NAME_PROPERTY, sender.getLastName());
+        commentEntity.setProperty(User.EMAIL_PROPERTY, sender.getEmail());
+        commentEntity.setProperty(User.PHONE_PROPERTY, sender.getPhone());
+        commentEntity.setProperty(User.JOB_TITLE_PROPERTY, sender.getJobTitle());
         commentEntity.setProperty(MESSAGE_PROPERTY, message);
-        commentEntity.setProperty(SENDER_ID_PROPERTY, senderId);
         return commentEntity;
     }
 
-    public static Comment getCommentFromRequest(String senderId, HttpServletRequest request){
+    public static Comment getCommentFromRequest(User sender, HttpServletRequest request){
         String message = request.getParameter("comment");
-        Comment newComment = new Comment(senderId, message);
+        Comment newComment = new Comment(sender, message);
         return newComment;
     }
 
-    public String getSenderId(){
-        return senderId;
+    public User getSender(){
+        return sender;
     }
 
     public String getMessage() {
