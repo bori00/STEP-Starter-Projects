@@ -39,9 +39,17 @@ function displayLoginUrl(response){
 function disableSavedInputs(response){
     console.log("disable saved inputs");
     disableInputWithPresetText(document.getElementById("first-name-input", response.savedUserEntity.propertyMap.firstName));
+    disableInputWithPresetText(document.getElementById("last-name-input", response.savedUserEntity.propertyMap.lastName));
+    disableInputWithPresetText(document.getElementById("phone-input", response.savedUserEntity.propertyMap.phone));
+    disableCheck(document.getElementById("job-related-check"));
+    disableInputWithPresetText(document.getElementById("job-title-input", response.savedUserEntity.propertyMap.jobTitle));
 }
 
 function disableInputWithPresetText(input, text){
-    input.disabled = true;
-    input.placeholder = text;
+    input.readonly = true;
+    input.value = text;
+}
+
+function disableCheck(check){
+    check.disabled = true;
 }
