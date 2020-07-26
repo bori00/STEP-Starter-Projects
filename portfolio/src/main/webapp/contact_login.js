@@ -1,4 +1,5 @@
-function isUserLoggedIn(){
+function handleUserLogin(){
+    console.log("trying to fetch user data from UserServlet");
     fetch('user-data')
     .catch(error => "failed to fetch from user-data: " + error)
     .then(response => response.json())
@@ -6,16 +7,28 @@ function isUserLoggedIn(){
     .then(response => {
         if(response.isLoggedIn==true){
             console.log("user is logged in: " + response);
-            document.getElementById("contact-form").style.display="block";
-            var logoutUrl = response.logoutUrl;
-            console.log("logoutUrl = " + logoutUrl);
-            document.getElementById("logout-url").innerHTML = "You can change account here<a class=\"link-light\" href=\"" + logoutUrl + "\"> here</a>";
+            displayContactForm();
+            displayLogoutUrl(response);
         }
         else{
             console.log("user is not logged in");
-            var loginUrl = response.loginUrl;
-            console.log("loginUrl = " + loginUrl);
-            document.getElementById("login-info").innerHTML = "Please login<a class=\"link-emphasise\" href=\"" + loginUrl + "\"> here</a>";
+            displayLoginUrl(response);
         }
     });
+}
+
+function displayContactForm(){
+    document.getElementById("contact-form").style.display="block";
+}
+
+function displayLogoutUrl(response){
+    var logoutUrl = response.logoutUrl;
+    console.log("logoutUrl = " + logoutUrl);
+    document.getElementById("logout-url").innerHTML = "You can change account here<a class=\"link-light\" href=\"" + logoutUrl + "\"> here</a>";
+}
+
+function displayLoginUrl(response){
+    var loginUrl = response.loginUrl;
+    console.log("loginUrl = " + loginUrl);
+    document.getElementById("login-info").innerHTML = "Please login<a class=\"link-emphasise\" href=\"" + loginUrl + "\"> here</a>";
 }
