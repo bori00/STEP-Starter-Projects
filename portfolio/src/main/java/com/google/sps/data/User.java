@@ -32,6 +32,7 @@ public class User{
         return phone;
     }
 
+    @Nullable
     public String getJobTitle() {
         return jobTitle;
     }
