@@ -64,10 +64,10 @@ function createParagraphElement(string){
 function addCommentToDOM(comment){
     console.log("displaying comment " + comment)
     var cardHolder = createCardHolderElement();
-    var card = createCardElement(false);
+    var card = createCardElement(comment.sender.jobTitle!==undefined);
     var messageParagraph = createParagraphElement(comment.message);
-    var senderNameHeading = createHeading3Element("unknown says:");
-    var emailHeading = createHeading5Element("contact: " + "unknown mail");
+    var senderNameHeading = createHeading3Element(comment.sender.firstName + " " + comment.sender.lastName + " says:");
+    var emailHeading = createHeading5Element("contact: " + comment.sender.email);
     card.appendChild(senderNameHeading);
     card.appendChild(messageParagraph);
     card.appendChild(emailHeading);
@@ -79,8 +79,8 @@ function addCommentToDOM(comment){
 function addAllCommentsToDOM(comments){
     console.log("add all comments to DOM: "+  comments.length)
     for(var i=0; i<comments.length; i++){
-        addCommentToDOM(comments[i]);
         console.log(comments[i]);
+        addCommentToDOM(comments[i]);
     }
 }
 
