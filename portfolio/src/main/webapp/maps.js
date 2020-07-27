@@ -1,7 +1,11 @@
 function createMap() {
-  const map = new google.maps.Map(
-      document.getElementById('map'),{
-        center: {lat: 46.7712, lng: 23.6236},
+    var clujLatlng = new google.maps.LatLng(46.7712, 23.6236); //Cluj-Napoca coordinates
+    var myMapOptions = {
         zoom: 8,
-        backgroundColor: "#8E8D8A"}); //Cluj-Napoca coordinates
+        center: clujLatlng,
+        mapTypeId: 'roadmap',
+        backgroundColor: "#8E8D8A"
+    };
+    const map = new google.maps.Map(
+        document.getElementById('map'), myMapOptions); 
 }
