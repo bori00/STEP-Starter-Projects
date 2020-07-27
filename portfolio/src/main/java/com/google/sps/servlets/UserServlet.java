@@ -33,8 +33,8 @@ import com.google.appengine.api.datastore.FetchOptions;
 import java.util.List; 
 
 
-/** This servlet handles user's data: doGet() checks if the user is authenticated 
- * and redirects them to a log in page if needed*/
+/** This servlet handles user's data: doGet() checks if the user is 
+authenticated and redirects them to a log in/log out page if needed. */
 @WebServlet("/user-data")
 public class UserServlet extends HttpServlet {
 
