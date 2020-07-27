@@ -64,10 +64,10 @@ function createParagraphElement(string){
 function addCommentToDOM(comment){
     console.log("displaying comment " + comment)
     var cardHolder = createCardHolderElement();
-    var card = createCardElement(comment.propertyMap.jobTitle!==undefined);
-    var messageParagraph = createParagraphElement(comment.propertyMap.message);
-    var senderNameHeading = createHeading3Element(comment.propertyMap.firstName + " " + comment.propertyMap.lastName + " says:");
-    var emailHeading = createHeading5Element("contact: " + comment.propertyMap.email);
+    var card = createCardElement(false);
+    var messageParagraph = createParagraphElement(comment.message);
+    var senderNameHeading = createHeading3Element("unknown says:");
+    var emailHeading = createHeading5Element("contact: " + "unknown mail");
     card.appendChild(senderNameHeading);
     card.appendChild(messageParagraph);
     card.appendChild(emailHeading);

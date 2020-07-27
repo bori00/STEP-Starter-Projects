@@ -14,10 +14,12 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.Comment;
+import com.google.sps.comment.Comment;
 import com.google.sps.user.User;
 import com.google.sps.user.repository.UserRepository;
 import com.google.sps.user.repository.UserRepositoryFactory;
+import com.google.sps.comment.repository.CommentRepository;
+import com.google.sps.comment.repository.CommentRepositoryFactory;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -44,32 +46,29 @@ public class CommentsServlet extends HttpServlet {
     
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String userId = getUserIdFromUserService();
+        String senderId = getUserIdFromUserService();
         //it's guaranteed that the user is logged in at this point
         UserRepository myUserRepository = new UserRepositoryFactory()
                                             .getUserRepository(UserRepositoryFactory.UserRepositoryType.DATASTORE);
-        User sender = myUserRepository.getUser(userId);
+        CommentRepository myCommentRepository = new CommentRepositoryFactory()
+                                            .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
+        User sender = myUserRepository.getUser(senderId);
         if(sender==null){ //save user data only if not already saved
             sender = getUserFromRequest(request);
             myUserRepository.saveUser(sender);
         }
-        Comment.getCommentFromRequest(sender, request).saveToDatastore();
+        myCommentRepository.saveComment(getCommentFromRequest(senderId, request));
         response.sendRedirect("/contact.html");
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
+        CommentRepository myCommentRepository = new CommentRepositoryFactory()
+                                            .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
         int maxComments = Integer.parseInt(request.getParameter("max-comments"));
-        List<Entity> results = getCommentsFromDatastore(maxComments); 
+        List<Comment> results = myCommentRepository.getGivenNumberOfComments(maxComments);
         response.setContentType("application/json;");
         response.getWriter().println(convertToJsonUsingGson(results));
-    }
-
-    private List<Entity> getCommentsFromDatastore(int maxComments){
-        Query commentsQuery = new Query(Comment.ENTITY_NAME);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        PreparedQuery results = datastore.prepare(commentsQuery);
-        return results.asList(FetchOptions.Builder.withLimit(maxComments));
     }
 
     private String convertToJsonUsingGson(Object o) {
@@ -78,7 +77,7 @@ public class CommentsServlet extends HttpServlet {
         return json;
     }
 
-    private static User getUserFromRequest(HttpServletRequest request){
+    private User getUserFromRequest(HttpServletRequest request){
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
         String email = getUserEmailFromUserService();
@@ -89,6 +88,12 @@ public class CommentsServlet extends HttpServlet {
         }
         User newUser = new User(getUserIdFromUserService(), firstName, lastName, email, phone, jobTitle);
         return newUser;
+    }
+
+    private Comment getCommentFromRequest(String senderId, HttpServletRequest request){
+        String message = request.getParameter("comment");
+        Comment newComment = new Comment(senderId, message);
+        return newComment;
     }
 
     public static String getUserEmailFromUserService(){

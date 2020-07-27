@@ -14,7 +14,7 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.Comment;
+import com.google.sps.comment.Comment;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -45,7 +45,7 @@ public class DeleteCommentsServlet extends HttpServlet {
     }
 
     private PreparedQuery getCommentsFromDatastore(){
-        Query commentsQuery = new Query(Comment.ENTITY_NAME);
+        Query commentsQuery = new Query("Comment");
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(commentsQuery);
         return results;
