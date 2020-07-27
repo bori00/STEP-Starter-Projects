@@ -83,7 +83,7 @@ public class DatastoreUserRepository implements UserRepository{
         Query usersQuery = new Query(ENTITY_NAME);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery userEntities = datastore.prepare(usersQuery);
-        HashMap<Integer, User> result = new HashMap<>();
+        HashMap<String, User> result = new HashMap<>();
         for(Entity userEntity : userEntities.asIterable()){
             User newUser = getUserFromUserEntity(userEntity);
             result.put(newUser.getId(), newUser);
