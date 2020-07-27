@@ -24,7 +24,7 @@ public class User{
     public static final String EMAIL_PROPERTY = "email";
     public static final String JOB_TITLE_PROPERTY = "jobTitle";
 
-    public User(String id, String firstName, String lastName, String email, String phone, String jobTitle){
+    public User(String id, String firstName, String lastName, String email, String phone, @Nullable String jobTitle){
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
