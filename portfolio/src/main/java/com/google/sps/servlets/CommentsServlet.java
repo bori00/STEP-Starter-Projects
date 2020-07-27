@@ -46,7 +46,8 @@ public class CommentsServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userId = getUserIdFromUserService();
         //it's guaranteed that the user is logged in at this point
-        UserRepository myUserRepository = new UserRepositoryFactory().getUserRepository("Datastore");
+        UserRepository myUserRepository = new UserRepositoryFactory()
+                                            .getUserRepository(UserRepositoryFactory.UserRepositoryType.DATASTORE);
         User sender = myUserRepository.getUser(userId);
         if(sender==null){ //save user data only if not already saved
             sender = getUserFromRequest(request);

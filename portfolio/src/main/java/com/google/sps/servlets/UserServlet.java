@@ -75,7 +75,8 @@ public class UserServlet extends HttpServlet {
         }
         else{
             myLogoutUrl = userService.createLogoutURL("/contact.html");
-            UserRepository myUserRepository = new UserRepositoryFactory().getUserRepository("Datastore");
+            UserRepository myUserRepository = new UserRepositoryFactory()
+                                                .getUserRepository(UserRepositoryFactory.UserRepositoryType.DATASTORE);
             savedUser =  myUserRepository.getUser(userService.getCurrentUser().getUserId());
         }
         return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl, savedUser);
