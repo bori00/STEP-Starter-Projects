@@ -82,7 +82,7 @@ public class CommentsServlet extends HttpServlet {
         HashMap<Integer, User> users = myUserRepository.getAllUsers();
         ArrayList<CommentData> result = new ArrayList<CommentData>();
         for(Comment comment : comments){
-            User correspondingUser = users.get(comment.getSenderId().hashCode());
+            User correspondingUser = users.get(comment.getSenderId());
             result.add(new CommentData(comment.getMessage(), correspondingUser));
         }
         response.setContentType("application/json;");

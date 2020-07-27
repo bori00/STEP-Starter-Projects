@@ -12,5 +12,5 @@ public interface UserRepository{
     @Nullable
     public User getUser(String id);
 
-    public HashMap<Integer, User> getAllUsers();
+    public HashMap<String, User> getAllUsers();
 }
