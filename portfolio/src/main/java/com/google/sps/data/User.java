@@ -18,7 +18,7 @@ public class User{
     private final String id, firstName, lastName, email, phone;
     //job related data: optional
     @Nullable private final String jobTitle;
-     //datastore entity name
+     //datastore related info
     public static final String ENTITY_NAME = "User";
     public static final String ID_PROPERTY = "userId";
     public static final String FIRST_NAME_PROPERTY = "firstName";

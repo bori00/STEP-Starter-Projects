@@ -14,7 +14,7 @@ public class Comment{
     private User sender;
     //message 
     private final String message;
-    //datastore netity name
+    //datastore related info
     public static final String ENTITY_NAME = "Comment";
     private static final String MESSAGE_PROPERTY = "message";
     private static final String SENDER_PROPERTY = "sender";
