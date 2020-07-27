@@ -9,28 +9,6 @@ jobRelated_checkbox.addEventListener('change', function() {
     }
 });
 
-
-// email field removed: I request email address from UserService, after authenticating the user
-//email check: add red outline if invalid
-/*function validEmail(string){
-    return string!="" && /@/.test(string) && !(/^@/.test(string) || /@$/.test(string));
-}
-var email_input = document.getElementById("email-input");
-email_input.addEventListener('change', function() {
-    console.log("test email");
-    if(!validEmail(this.value)) {
-        this.style.outlineColor="red";
-        this.style.borderColor="red";
-        this.style.borderWidth="3px";
-    }
-    else{
-        this.style.outlineColor="#f2eeed";
-        this.style.borderColor="#8E8D8A";
-        this.style.borderWidth="0.5px";
-    }
-});*/
-
-
 //phone check: add red outline if invalid
 function isNumeric(string)
 {
