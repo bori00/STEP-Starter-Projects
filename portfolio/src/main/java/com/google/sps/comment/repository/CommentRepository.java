@@ -10,4 +10,6 @@ public interface CommentRepository{
     public List<Comment> getAllComments();
 
     public List<Comment> getGivenNumberOfComments(int maxNoComments);
+
+    public void deleteAllComments();
 }

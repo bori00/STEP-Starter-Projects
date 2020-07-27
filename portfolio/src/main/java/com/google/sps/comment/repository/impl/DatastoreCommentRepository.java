@@ -59,4 +59,14 @@ public class DatastoreCommentRepository implements CommentRepository{
         }
         return result;
     }
+
+    @Override
+    public void deleteAllComments(){
+        Query commentsQuery = new Query(ENTITY_NAME);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery comments = datastore.prepare(commentsQuery);
+        for (Entity entity : comments.asIterable()) {
+           datastore.delete(entity.getKey());
+        }
+    }
 }

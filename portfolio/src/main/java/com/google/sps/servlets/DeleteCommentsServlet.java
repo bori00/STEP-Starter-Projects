@@ -15,6 +15,8 @@
 package com.google.sps.servlets;
 
 import com.google.sps.comment.Comment;
+import com.google.sps.comment.repository.CommentRepository;
+import com.google.sps.comment.repository.CommentRepositoryFactory;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -36,18 +38,9 @@ public class DeleteCommentsServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        PreparedQuery comments = getCommentsFromDatastore(); 
-        for (Entity entity : comments.asIterable()) {
-           datastore.delete(entity.getKey());
-        }
+        CommentRepository myCommentRepository = new CommentRepositoryFactory()
+                                            .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
+        myCommentRepository.deleteAllComments();
         response.sendRedirect("/comments.html");
-    }
-
-    private PreparedQuery getCommentsFromDatastore(){
-        Query commentsQuery = new Query("Comment");
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        PreparedQuery results = datastore.prepare(commentsQuery);
-        return results;
     }
 }
