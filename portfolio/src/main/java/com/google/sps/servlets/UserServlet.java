@@ -41,7 +41,7 @@ import java.util.List;
 @WebServlet("/user-data")
 public class UserServlet extends HttpServlet {
 
-    private static class UserLoginData{
+    private class UserLoginData{
         private boolean isLoggedIn;
         @Nullable private String loginUrl;
         @Nullable private String logoutUrl;
@@ -53,29 +53,29 @@ public class UserServlet extends HttpServlet {
             this.logoutUrl = logoutUrl;
             this.savedUserEntity = savedUserEntity;
         }
-
-        public static UserLoginData generateUserLoginData(){
-            UserService userService = UserServiceFactory.getUserService();
-            boolean isUserLoggedIn = userService.isUserLoggedIn();
-            String myLoginUrl = null;
-            String myLogoutUrl = null;
-            Entity savedUserEntity = null;
-            if(!isUserLoggedIn){
-                myLoginUrl = userService.createLoginURL("/contact.html");
-            }
-            else{
-                myLogoutUrl = userService.createLogoutURL("/contact.html");
-                savedUserEntity =  User.getSavedUserEntity(userService.getCurrentUser().getUserId());
-            }
-            return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl, savedUserEntity);
-        }
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
         response.setContentType("application/json;");
-        UserLoginData currentUserLoginData = UserLoginData.generateUserLoginData();
+        UserLoginData currentUserLoginData = generateUserLoginData();
         response.getWriter().println(convertToJsonUsingGson(currentUserLoginData));
+    }
+
+    private UserLoginData generateUserLoginData(){
+        UserService userService = UserServiceFactory.getUserService();
+        boolean isUserLoggedIn = userService.isUserLoggedIn();
+        String myLoginUrl = null;
+        String myLogoutUrl = null;
+        Entity savedUserEntity = null;
+        if(!isUserLoggedIn){
+            myLoginUrl = userService.createLoginURL("/contact.html");
+        }
+        else{
+            myLogoutUrl = userService.createLogoutURL("/contact.html");
+            savedUserEntity =  User.getSavedUserEntity(userService.getCurrentUser().getUserId());
+        }
+        return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl, savedUserEntity);
     }
 
     private String convertToJsonUsingGson(Object o) {
