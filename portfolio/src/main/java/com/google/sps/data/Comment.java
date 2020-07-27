@@ -10,11 +10,8 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.FetchOptions;
 
 public class Comment{
-    //personal data
     private User sender;
-    //message 
     private final String message;
-    //datastore related info
     public static final String ENTITY_NAME = "Comment";
     private static final String MESSAGE_PROPERTY = "message";
     private static final String SENDER_PROPERTY = "sender";

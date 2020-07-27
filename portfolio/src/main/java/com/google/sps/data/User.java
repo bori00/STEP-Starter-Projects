@@ -14,11 +14,8 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 public class User{
-    //personal data
     private final String id, firstName, lastName, email, phone;
-    //job related data: optional
-    @Nullable private final String jobTitle;
-     //datastore related info
+    @Nullable private final String jobTitle; //job related data: optional
     public static final String ENTITY_NAME = "User";
     public static final String ID_PROPERTY = "userId";
     public static final String FIRST_NAME_PROPERTY = "firstName";
