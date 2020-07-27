@@ -1,8 +1,16 @@
 class Place{
-    constructor(positionLat, positionLng, title, label, markerColor){
+    constructor(positionLat, positionLng, title, label, iconName){
         this._position = new google.maps.LatLng(positionLat, positionLng);
         this._title = title;
-        this._marker = new google.maps.Marker({position: this._position, title: this._title, label: label});
+        var iconBase = 'https://maps.google.com/mapfiles/kml/';
+        this._marker = new google.maps.Marker({
+            position: this._position, 
+            title: this._title, 
+            label: label, 
+            icon: { 
+                url: iconBase + iconName,
+            }
+        });
         console.log(this._marker);
     }
 
@@ -17,7 +25,7 @@ class Place{
 }
 
 function createMap() {
-    var cluj = new Place(46.7712, 23.6236, "My hometown: Cluj-Napoca", "M", "green"); //Cluj-Napoca coordinates
+    var cluj = new Place(46.7712, 23.6236, "My hometown: Cluj-Napoca", "M", "paddle/grn-blank.png"); //Cluj-Napoca coordinates
     var myMapOptions = {
         zoom: 8,
         center: cluj.position,
