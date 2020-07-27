@@ -8,9 +8,9 @@ function createMap() {
     };
     const map = new google.maps.Map(
         document.getElementById('map'), myMapOptions); 
-    addMarker(map, clujLatLng);
+    addMarker(map, clujLatLng, "My hometown: Cluj");
 }
 
-function addMarker(map, markerPosition){
-    var marker = new google.maps.Marker({position: markerPosition, map: map});
+function addMarker(map, markerPosition, markerTitle){
+    var marker = new google.maps.Marker({position: markerPosition, map: map, title: markerTitle});
 }
