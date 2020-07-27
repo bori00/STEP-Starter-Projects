@@ -36,6 +36,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import java.util.HashMap;
 
 /** This servlet handles comment's data: 
  *- doPost() stores get's the recently submitted comment's data from the request 
@@ -43,6 +44,15 @@ import com.google.appengine.api.users.UserServiceFactory;
  *- doGet() returns the comments from the database, aftern converting them to JSON*/
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
+    private class CommentData{
+        private String message;
+        private User sender;
+
+        CommentData(String message, User sender){
+            this.message = message;
+            this.sender = sender;
+        }
+    }
     
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -65,10 +75,18 @@ public class CommentsServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
         CommentRepository myCommentRepository = new CommentRepositoryFactory()
                                             .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
+        UserRepository myUserRepository = new UserRepositoryFactory()
+                                            .getUserRepository(UserRepositoryFactory.UserRepositoryType.DATASTORE);
         int maxComments = Integer.parseInt(request.getParameter("max-comments"));
-        List<Comment> results = myCommentRepository.getGivenNumberOfComments(maxComments);
+        List<Comment> comments = myCommentRepository.getGivenNumberOfComments(maxComments);
+        HashMap<Integer, User> users = myUserRepository.getAllUsers();
+        ArrayList<CommentData> result = new ArrayList<CommentData>();
+        for(Comment comment : comments){
+            User correspondingUser = users.get(comment.getSenderId().hashCode());
+            result.add(new CommentData(comment.getMessage(), correspondingUser));
+        }
         response.setContentType("application/json;");
-        response.getWriter().println(convertToJsonUsingGson(results));
+        response.getWriter().println(convertToJsonUsingGson(result));
     }
 
     private String convertToJsonUsingGson(Object o) {

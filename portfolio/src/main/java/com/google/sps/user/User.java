@@ -21,6 +21,15 @@ public class User{
         return id.hashCode();
     } 
 
+    @Override
+    public boolean equals(Object o){
+        if(o.getClass()==this.getClass()){
+            User other = (User) o;
+            return other.getId()==id;
+        }
+        return false;
+    } 
+
     public String getId(){
         return id;
     }

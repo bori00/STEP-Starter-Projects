@@ -15,6 +15,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import java.util.List; 
+import java.util.HashMap;
 
 public class DatastoreUserRepository implements UserRepository{
     public static final String ENTITY_NAME = "User";
@@ -42,11 +43,6 @@ public class DatastoreUserRepository implements UserRepository{
 
     @Override
     public boolean isUserDataSaved(String id){
-        /*Query commentsQuery = new Query(ENTITY_NAME).setFilter(new Query.FilterPredicate(ID_PROPERTY, Query.FilterOperator.EQUAL, id));
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        List<Entity> results = datastore.prepare(commentsQuery).asList(FetchOptions.Builder.withDefaults());
-        if(results.size()>0) return true;
-        else return false;*/
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Key userKey = KeyFactory.createKey(ENTITY_NAME, id);
         try {
@@ -60,7 +56,6 @@ public class DatastoreUserRepository implements UserRepository{
 
     @Override @Nullable
     public User getUser(String id){
-        //return getUserFromUserEntity(getSavedUserEntity(id));
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Key userKey = KeyFactory.createKey(ENTITY_NAME, id);
         try {
@@ -70,15 +65,6 @@ public class DatastoreUserRepository implements UserRepository{
             return null;
         }
     }
-
-    /*@Nullable
-    private Entity getSavedUserEntity(String id){
-        Query commentsQuery = new Query(ENTITY_NAME).setFilter(new Query.FilterPredicate(ID_PROPERTY, Query.FilterOperator.EQUAL, id));
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        List<Entity> results = datastore.prepare(commentsQuery).asList(FetchOptions.Builder.withDefaults());
-        if(results.size()>0) return results.get(0);
-        else return null;
-    }*/
 
     @Nullable
     private User getUserFromUserEntity(Entity userEntity){
@@ -93,13 +79,14 @@ public class DatastoreUserRepository implements UserRepository{
     }
 
     @Override
-    public HashMap<User> getAllUsers(){
+    public HashMap<Integer, User> getAllUsers(){
         Query usersQuery = new Query(ENTITY_NAME);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        List<Entity> userEntities = datastore.prepare(commentsQuery);
-        HashMap<User> result = new HashMap<>();
-        for(Entity userEntity : results){
-            result.put(getUserFromUserEntity(userEntity))
+        PreparedQuery userEntities = datastore.prepare(usersQuery);
+        HashMap<Integer, User> result = new HashMap<>();
+        for(Entity userEntity : userEntities.asIterable()){
+            User newUser = getUserFromUserEntity(userEntity);
+            result.put(newUser.hashCode(), newUser);
         }
         return result;
     }
