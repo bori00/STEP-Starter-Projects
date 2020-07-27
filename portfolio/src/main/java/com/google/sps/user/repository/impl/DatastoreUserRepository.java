@@ -91,4 +91,16 @@ public class DatastoreUserRepository implements UserRepository{
         String jobTitle = (String) userEntity.getProperty(JOB_TITLE_PROPERTY);
         return  new User(id, firstName, lastName, email, phone, jobTitle);
     }
+
+    @Override
+    public HashMap<User> getAllUsers(){
+        Query usersQuery = new Query(ENTITY_NAME);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        List<Entity> userEntities = datastore.prepare(commentsQuery);
+        HashMap<User> result = new HashMap<>();
+        for(Entity userEntity : results){
+            result.put(getUserFromUserEntity(userEntity))
+        }
+        return result;
+    }
 }

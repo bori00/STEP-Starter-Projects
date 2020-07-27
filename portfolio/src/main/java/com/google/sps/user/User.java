@@ -16,6 +16,11 @@ public class User{
         this.jobTitle = jobTitle;
     }
 
+    @Override
+    public int hashCode(){
+        return id.hashCode();
+    } 
+
     public String getId(){
         return id;
     }

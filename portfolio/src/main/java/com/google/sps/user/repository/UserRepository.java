@@ -10,4 +10,6 @@ public interface UserRepository{
 
     @Nullable
     public User getUser(String id);
+
+    public HashMap<User> getAllUsers();
 }
