@@ -15,7 +15,9 @@
 package com.google.sps.servlets;
 
 import com.google.sps.data.Comment;
-import com.google.sps.data.User;
+import com.google.sps.user.User;
+import com.google.sps.user.repository.UserRepository;
+import com.google.sps.user.repository.UserRepositoryFactory;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -42,12 +44,13 @@ public class CommentsServlet extends HttpServlet {
     
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String userId = User.getUserIdFromUserService();
+        String userId = getUserIdFromUserService();
         //it's guaranteed that the user is logged in at this point
-        User sender = User.getUserFromDatastore(userId);
+        UserRepository myUserRepository = new UserRepositoryFactory().getUserRepository("Datastore");
+        User sender = myUserRepository.getUser(userId);
         if(sender==null){ //save user data only if not already saved
-            sender = User.getUserFromRequest(request);
-            sender.saveToDatastore();
+            sender = getUserFromRequest(request);
+            myUserRepository.saveUser(sender);
         }
         Comment.getCommentFromRequest(sender, request).saveToDatastore();
         response.sendRedirect("/contact.html");
@@ -72,5 +75,28 @@ public class CommentsServlet extends HttpServlet {
         Gson gson = new Gson();
         String json = gson.toJson(o);
         return json;
+    }
+
+    private static User getUserFromRequest(HttpServletRequest request){
+        String firstName = request.getParameter("first-name");
+        String lastName = request.getParameter("last-name");
+        String email = getUserEmailFromUserService();
+        String phone = request.getParameter("phone");
+        String jobTitle = null;
+        if(request.getParameterValues("type")!=null){ //box is checked
+            jobTitle = request.getParameter("job-title");
+        }
+        User newUser = new User(getUserIdFromUserService(), firstName, lastName, email, phone, jobTitle);
+        return newUser;
+    }
+
+    public static String getUserEmailFromUserService(){
+        UserService userService = UserServiceFactory.getUserService();
+        return userService.getCurrentUser().getEmail();
+    }
+
+    public static String getUserIdFromUserService(){
+        UserService userService = UserServiceFactory.getUserService();
+        return userService.getCurrentUser().getUserId();
     }
 }

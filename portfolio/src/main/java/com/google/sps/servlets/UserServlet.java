@@ -15,7 +15,9 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
-import com.google.sps.data.User;
+import com.google.sps.user.User;
+import com.google.sps.user.repository.UserRepository;
+import com.google.sps.user.repository.UserRepositoryFactory;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,13 +47,13 @@ public class UserServlet extends HttpServlet {
         private boolean isLoggedIn;
         @Nullable private String loginUrl;
         @Nullable private String logoutUrl;
-        @Nullable private Entity savedUserEntity; //contains data stored in the database about the user
+        @Nullable private User savedUser; //contains data stored in the database about the user
 
-        private UserLoginData(boolean isLoggedIn, @Nullable String loginUrl, @Nullable String logoutUrl, @Nullable Entity savedUserEntity){
+        private UserLoginData(boolean isLoggedIn, @Nullable String loginUrl, @Nullable String logoutUrl, @Nullable User savedUser){
             this.isLoggedIn = isLoggedIn;
             this.loginUrl = loginUrl;
             this.logoutUrl = logoutUrl;
-            this.savedUserEntity = savedUserEntity;
+            this.savedUser = savedUser;
         }
     }
 
@@ -67,15 +69,16 @@ public class UserServlet extends HttpServlet {
         boolean isUserLoggedIn = userService.isUserLoggedIn();
         String myLoginUrl = null;
         String myLogoutUrl = null;
-        Entity savedUserEntity = null;
+        User savedUser = null;
         if(!isUserLoggedIn){
             myLoginUrl = userService.createLoginURL("/contact.html");
         }
         else{
             myLogoutUrl = userService.createLogoutURL("/contact.html");
-            savedUserEntity =  User.getSavedUserEntity(userService.getCurrentUser().getUserId());
+            UserRepository myUserRepository = new UserRepositoryFactory().getUserRepository("Datastore");
+            savedUser =  myUserRepository.getUser(userService.getCurrentUser().getUserId());
         }
-        return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl, savedUserEntity);
+        return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl, savedUser);
     }
 
     private String convertToJsonUsingGson(Object o) {

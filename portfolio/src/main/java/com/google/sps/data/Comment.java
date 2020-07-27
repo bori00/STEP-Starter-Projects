@@ -1,5 +1,6 @@
 package com.google.sps.data;
 
+import com.google.sps.user.User;
 import com.google.appengine.api.datastore.Entity;
 import javax.servlet.http.HttpServletRequest;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -28,12 +29,12 @@ public class Comment{
 
     private Entity getCommentEntity(){
         Entity commentEntity = new Entity(Comment.ENTITY_NAME);
-        commentEntity.setProperty(User.ID_PROPERTY, sender.getId());
-        commentEntity.setProperty(User.FIRST_NAME_PROPERTY, sender.getFirstName());
-        commentEntity.setProperty(User.LAST_NAME_PROPERTY, sender.getLastName());
-        commentEntity.setProperty(User.EMAIL_PROPERTY, sender.getEmail());
-        commentEntity.setProperty(User.PHONE_PROPERTY, sender.getPhone());
-        commentEntity.setProperty(User.JOB_TITLE_PROPERTY, sender.getJobTitle());
+        commentEntity.setProperty("id", sender.getId());
+        commentEntity.setProperty("firstName", sender.getFirstName());
+        commentEntity.setProperty("lastName", sender.getLastName());
+        commentEntity.setProperty("email", sender.getEmail());
+        commentEntity.setProperty("phone", sender.getPhone());
+        commentEntity.setProperty("jobTitle", sender.getJobTitle());
         commentEntity.setProperty(MESSAGE_PROPERTY, message);
         return commentEntity;
     }
