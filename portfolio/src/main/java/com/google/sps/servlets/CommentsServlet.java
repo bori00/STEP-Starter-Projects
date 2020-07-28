@@ -57,13 +57,13 @@ public class CommentsServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String senderId = getUserIdFromUserService();
-        //it's guaranteed that the user is logged in at this point
+        // It's guaranteed that the user is logged in at this point
         UserRepository myUserRepository = new UserRepositoryFactory()
                                             .getUserRepository(UserRepositoryFactory.UserRepositoryType.DATASTORE);
         CommentRepository myCommentRepository = new CommentRepositoryFactory()
                                             .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
         User sender = myUserRepository.getUser(senderId);
-        if(sender==null){ //save user data only if not already saved
+        if(sender==null){ // Save user data only if not already saved
             sender = getUserFromRequest(request);
             myUserRepository.saveUser(sender);
         }
@@ -101,7 +101,7 @@ public class CommentsServlet extends HttpServlet {
         String email = getUserEmailFromUserService();
         String phone = request.getParameter("phone");
         String jobTitle = null;
-        if(request.getParameterValues("type")!=null){ //box is checked
+        if(request.getParameterValues("type")!=null){ // Box is checked
             jobTitle = request.getParameter("job-title");
         }
         User newUser = new User(getUserIdFromUserService(), firstName, lastName, email, phone, jobTitle);

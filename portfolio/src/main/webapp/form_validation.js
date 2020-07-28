@@ -1,4 +1,4 @@
-//enable job title input if email is job related
+// Enable job title input if email is job related
 var jobRelated_checkbox = document.getElementById("job-related-check");
 var jobTitle_dropdown = document.getElementById("job-title-dropdown");
 jobRelated_checkbox.addEventListener('change', function() {
@@ -9,7 +9,7 @@ jobRelated_checkbox.addEventListener('change', function() {
     }
 });
 
-//phone check: add red outline if invalid
+// Phone check: add red outline if invalid
 function isNumeric(string)
 {
     return /^\d+$/.test(string);
@@ -44,7 +44,7 @@ function formValidation(){
     if(validPhone(phone_input.value) 
      && firstName != ""
      && lastName != ""
-     && comment != ""){ //form is valid, can be sent
+     && comment != ""){ // Form is valid, can be sent
         var message = 'Your comment has been succesfully sent! I will contact you as soon as possible';
         window.alert(message);
      }

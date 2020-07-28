@@ -1,10 +1,10 @@
-//sliding
+// Sliding
 var slideIndex = 1;
 var slides = document.getElementsByClassName("slide");
 var noSlides = slides.length;
-showObject(slides[slideIndex-1]); //initial state
+showObject(slides[slideIndex-1]); // Initial state
 
-//hide/show functions
+// Hide/show functions
 function showObject(object){
     object.style.display="block";
 }
@@ -14,7 +14,7 @@ function hideObject(object){
 }
 
 
-//sliding
+// Sliding
 function incrementSlideIndex(n){
     slideIndex=slideIndex+n;
     if(slideIndex>noSlides || slideIndex<1 ){
@@ -34,18 +34,18 @@ function plusSlides(n){
     showObject(slides[slideIndex-1]);
 }
 
-// hiding buttons, captions and slidenumbers + showing them when mouse is moved
+// Hiding buttons, captions and slidenumbers + showing them when mouse is moved
 var hidingObjects = document.querySelectorAll('.btn-prev, .btn-next, .caption, .slidenumber')
 setHidingObjectsEventListener();
 
-var showTimeout; //time period for showing the objects
+var showTimeout; // Time period for showing the objects
 function showObjects(){
     clearTimeout(showTimeout);
     console.log("show objects");
     for (var i = 0; i < hidingObjects.length; i++) {
         showObject(hidingObjects[i]);
     }
-    //hide buttons after 2s, if the mouse is not moved again
+    // Hide buttons after 2s, if the mouse is not moved again
     showTimeout = setTimeout(hideObjects, 3000); 
 }
 

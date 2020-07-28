@@ -47,7 +47,7 @@ public class UserServlet extends HttpServlet {
         private boolean isLoggedIn;
         @Nullable private String loginUrl;
         @Nullable private String logoutUrl;
-        @Nullable private User savedUser; //contains data stored in the database about the user
+        @Nullable private User savedUser; // Contains data stored in the database about the user
 
         private UserLoginData(boolean isLoggedIn, @Nullable String loginUrl, @Nullable String logoutUrl, @Nullable User savedUser){
             this.isLoggedIn = isLoggedIn;
