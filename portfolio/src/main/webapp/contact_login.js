@@ -5,13 +5,11 @@ function handleUserLogin(){
     .then(response => response.json())
     .catch(error => "failed to convert to json: " + error)
     .then(response => {
-        if(response.isLoggedIn==true){
+        if(response.isLoggedIn == true){
             console.log("user is logged in: " + response);
             displayContactForm();
             displayLogoutUrl(response);
-            if(response.savedUserEntity!=undefined){
-                console.log(response.savedUserEntity.propertyMap.firstName);
-                console.log(response.savedUserEntity.lastName);
+            if(response.savedUser!=undefined){
                 disableSavedInputs(response);
                 console.log("user has saved data in database");
             }
@@ -44,12 +42,12 @@ function displayLoginUrl(response){
 
 function disableSavedInputs(response){
     console.log("disable saved inputs");
-    console.log(response.savedUserEntity.propertyMap.firstName);
-    disableInputWithPresetText(document.getElementById("first-name-input"), response.savedUserEntity.propertyMap.firstName);
-    disableInputWithPresetText(document.getElementById("last-name-input"), response.savedUserEntity.propertyMap.lastName);
-    disableInputWithPresetText(document.getElementById("phone-input"), response.savedUserEntity.propertyMap.phone);
+    console.log(response.savedUser.firstName);
+    disableInputWithPresetText(document.getElementById("first-name-input"), response.savedUser.firstName);
+    disableInputWithPresetText(document.getElementById("last-name-input"), response.savedUser.lastName);
+    disableInputWithPresetText(document.getElementById("phone-input"), response.savedUser.phone);
     disableCheck(document.getElementById("job-related-check"));
-    disableInputWithPresetText(document.getElementById("job-title-dropdown"), response.savedUserEntity.propertyMap.jobTitle);
+    disableInputWithPresetText(document.getElementById("job-title-dropdown"), response.savedUser.jobTitle);
 }
 
 function disableInputWithPresetText(input, text){

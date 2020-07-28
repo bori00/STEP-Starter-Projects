@@ -15,7 +15,10 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
-import com.google.sps.data.User;
+import com.google.sps.user.User;
+import com.google.sps.user.repository.UserRepository;
+import com.google.sps.user.repository.UserRepositoryFactory;
+import com.google.sps.data.RepositoryType;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,46 +36,52 @@ import com.google.appengine.api.datastore.FetchOptions;
 import java.util.List; 
 
 
-/** This servlet handles user's data: doGet() checks if the user is authenticated 
- * and redirects them to a log in page if needed*/
+/** 
+* This servlet handles user's data.
+*
+* <p> The {@link #doGet(HttpServletRequest, HttpServletResponse) doGet()} checks if the user is 
+* authenticated and redirects them to a log in/log out page if needed. 
+*/
 @WebServlet("/user-data")
 public class UserServlet extends HttpServlet {
 
-    private static class UserLoginData{
+    private class UserLoginData {
         private boolean isLoggedIn;
         @Nullable private String loginUrl;
         @Nullable private String logoutUrl;
-        @Nullable private Entity savedUserEntity; //contains data stored in the database about the user
+        @Nullable private User savedUser; // Contains data stored in the database about the user
 
-        private UserLoginData(boolean isLoggedIn, String loginUrl, String logoutUrl, Entity savedUserEntity){
+        private UserLoginData(boolean isLoggedIn, @Nullable String loginUrl, @Nullable String logoutUrl, @Nullable User savedUser){
             this.isLoggedIn = isLoggedIn;
             this.loginUrl = loginUrl;
             this.logoutUrl = logoutUrl;
-            this.savedUserEntity = savedUserEntity;
-        }
-
-        public static UserLoginData generateUserLoginData(){
-            UserService userService = UserServiceFactory.getUserService();
-            boolean isUserLoggedIn = userService.isUserLoggedIn();
-            String myLoginUrl = null;
-            String myLogoutUrl = null;
-            Entity savedUserEntity = null;
-            if(!isUserLoggedIn){
-                myLoginUrl = userService.createLoginURL("/contact.html");
-            }
-            else{
-                myLogoutUrl = userService.createLogoutURL("/contact.html");
-                savedUserEntity =  User.getSavedUserEntity(userService.getCurrentUser().getUserId());
-            }
-            return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl, savedUserEntity);
+            this.savedUser = savedUser;
         }
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
         response.setContentType("application/json;");
-        UserLoginData currentUserLoginData = UserLoginData.generateUserLoginData();
+        UserLoginData currentUserLoginData = generateUserLoginData();
         response.getWriter().println(convertToJsonUsingGson(currentUserLoginData));
+    }
+
+    private UserLoginData generateUserLoginData() {
+        UserService userService = UserServiceFactory.getUserService();
+        boolean isUserLoggedIn = userService.isUserLoggedIn();
+        String myLoginUrl = null;
+        String myLogoutUrl = null;
+        User savedUser = null;
+        if (!isUserLoggedIn) {
+            myLoginUrl = userService.createLoginURL("/contact.html");
+        }
+        else {
+            myLogoutUrl = userService.createLogoutURL("/contact.html");
+            UserRepository myUserRepository = new UserRepositoryFactory()
+                                                .getUserRepository(RepositoryType.DATASTORE);
+            savedUser =  myUserRepository.getUser(userService.getCurrentUser().getUserId());
+        }
+        return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl, savedUser);
     }
 
     private String convertToJsonUsingGson(Object o) {

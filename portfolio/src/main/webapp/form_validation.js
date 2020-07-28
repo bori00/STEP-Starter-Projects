@@ -1,4 +1,4 @@
-//enable job title input if email is job related
+// Enable job title input if email is job related
 var jobRelated_checkbox = document.getElementById("job-related-check");
 var jobTitle_dropdown = document.getElementById("job-title-dropdown");
 jobRelated_checkbox.addEventListener('change', function() {
@@ -9,36 +9,14 @@ jobRelated_checkbox.addEventListener('change', function() {
     }
 });
 
-
-// email field removed: I request email address from UserService, after authenticating the user
-//email check: add red outline if invalid
-/*function validEmail(string){
-    return string!="" && /@/.test(string) && !(/^@/.test(string) || /@$/.test(string));
-}
-var email_input = document.getElementById("email-input");
-email_input.addEventListener('change', function() {
-    console.log("test email");
-    if(!validEmail(this.value)) {
-        this.style.outlineColor="red";
-        this.style.borderColor="red";
-        this.style.borderWidth="3px";
-    }
-    else{
-        this.style.outlineColor="#f2eeed";
-        this.style.borderColor="#8E8D8A";
-        this.style.borderWidth="0.5px";
-    }
-});*/
-
-
-//phone check: add red outline if invalid
+// Phone check: add red outline if invalid
 function isNumeric(string)
 {
     return /^\d+$/.test(string);
 }
 
 function validPhone(string){
-    return string!=="" && string.length===10 && isNumeric(string);
+    return string !== "" && string.length === 10 && isNumeric(string);
 }
 
 var phone_input = document.getElementById("phone-input");
@@ -66,7 +44,7 @@ function formValidation(){
     if(validPhone(phone_input.value) 
      && firstName != ""
      && lastName != ""
-     && comment != ""){ //form is valid, can be sent
+     && comment != ""){ // Form is valid, can be sent
         var message = 'Your comment has been succesfully sent! I will contact you as soon as possible';
         window.alert(message);
      }
