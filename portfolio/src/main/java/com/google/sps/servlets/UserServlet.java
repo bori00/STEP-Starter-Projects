@@ -39,7 +39,8 @@ import java.util.List;
 * This servlet handles user's data.
 *
 * <p> The {@link #doGet(HttpServletRequest, HttpServletResponse) doGet()} checks if the user is 
-* authenticated and redirects them to a log in/log out page if needed. */
+* authenticated and redirects them to a log in/log out page if needed. 
+*/
 @WebServlet("/user-data")
 public class UserServlet extends HttpServlet {
 

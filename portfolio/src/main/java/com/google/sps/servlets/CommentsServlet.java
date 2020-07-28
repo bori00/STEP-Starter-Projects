@@ -44,7 +44,8 @@ import java.util.HashMap;
  * and stores in a database using Datastore API
  *
  * <p>{@link #doGet(HttpServletRequest, HttpServletResponse) doGet()} returns the
- * comments from the database, aftern converting them to JSON*/
+ * comments from the database, aftern converting them to JSON
+ */
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
     private class CommentData{
