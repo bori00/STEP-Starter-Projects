@@ -71,10 +71,10 @@ public class UserServlet extends HttpServlet {
         String myLoginUrl = null;
         String myLogoutUrl = null;
         User savedUser = null;
-        if(!isUserLoggedIn) {
+        if (!isUserLoggedIn) {
             myLoginUrl = userService.createLoginURL("/contact.html");
         }
-        else{
+        else {
             myLogoutUrl = userService.createLogoutURL("/contact.html");
             UserRepository myUserRepository = new UserRepositoryFactory()
                                                 .getUserRepository(UserRepositoryFactory.UserRepositoryType.DATASTORE);
