@@ -55,7 +55,8 @@ public class DatastoreUserRepository implements UserRepository{
         }
     }
 
-    @Override @Nullable
+    @Override 
+    @Nullable
     public User getUser(String id){
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Key userKey = KeyFactory.createKey(ENTITY_NAME, id);
