@@ -44,7 +44,7 @@ import java.util.List;
 @WebServlet("/user-data")
 public class UserServlet extends HttpServlet {
 
-    private class UserLoginData{
+    private class UserLoginData {
         private boolean isLoggedIn;
         @Nullable private String loginUrl;
         @Nullable private String logoutUrl;
@@ -59,19 +59,19 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
         response.setContentType("application/json;");
         UserLoginData currentUserLoginData = generateUserLoginData();
         response.getWriter().println(convertToJsonUsingGson(currentUserLoginData));
     }
 
-    private UserLoginData generateUserLoginData(){
+    private UserLoginData generateUserLoginData() {
         UserService userService = UserServiceFactory.getUserService();
         boolean isUserLoggedIn = userService.isUserLoggedIn();
         String myLoginUrl = null;
         String myLogoutUrl = null;
         User savedUser = null;
-        if(!isUserLoggedIn){
+        if(!isUserLoggedIn) {
             myLoginUrl = userService.createLoginURL("/contact.html");
         }
         else{

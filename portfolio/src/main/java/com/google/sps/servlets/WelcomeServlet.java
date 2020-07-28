@@ -28,7 +28,7 @@ public class WelcomeServlet extends HttpServlet {
   private List<String> welcomeTexts;
 
   @Override
-  public void init(){
+  public void init() {
       welcomeTexts = new ArrayList();
       welcomeTexts.add("Welcome");
       welcomeTexts.add("Isten hozott!");
@@ -42,7 +42,7 @@ public class WelcomeServlet extends HttpServlet {
     response.getWriter().println(getRandomWelcomeText());
   }
 
-  private String getRandomWelcomeText(){
+  private String getRandomWelcomeText() {
     int index = (int) (Math.random() * welcomeTexts.size());
     return welcomeTexts.get(index);
   }

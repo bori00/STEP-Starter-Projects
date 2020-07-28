@@ -5,12 +5,12 @@ import com.google.sps.user.repository.impl.DatastoreUserRepository;
 import org.jetbrains.annotations.Nullable;
 
 /** Creates a UserRepository according to the requested type. */
-public class UserRepositoryFactory{
-    public static enum UserRepositoryType{
+public class UserRepositoryFactory {
+    public static enum UserRepositoryType {
         DATASTORE
     }
 
-    public UserRepository getUserRepository(UserRepositoryType repositoryType){
+    public UserRepository getUserRepository(UserRepositoryType repositoryType) {
         if(repositoryType == null) {
             throw new IllegalArgumentException("repositoryType can't be null!");
         }

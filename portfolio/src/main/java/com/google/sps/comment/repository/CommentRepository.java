@@ -4,7 +4,7 @@ import com.google.sps.comment.Comment;
 import org.jetbrains.annotations.Nullable;
 import java.util.List; 
 
-public interface CommentRepository{
+public interface CommentRepository {
     public void saveComment(Comment comment);
 
     public List<Comment> getAllComments();

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.HashMap;
 
 /** Handles the storage of comments using the Datastore API. */ 
-public class DatastoreUserRepository implements UserRepository{
+public class DatastoreUserRepository implements UserRepository {
     public static final String ENTITY_NAME = "User";
     public static final String FIRST_NAME_PROPERTY = "firstName";
     public static final String LAST_NAME_PROPERTY = "lastName";
@@ -27,12 +27,12 @@ public class DatastoreUserRepository implements UserRepository{
     public static final String JOB_TITLE_PROPERTY = "jobTitle";
 
     @Override
-    public void saveUser(User user){
+    public void saveUser(User user) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(getUserEntity(user));
     }
 
-    private Entity getUserEntity(User user){
+    private Entity getUserEntity(User user) {
         Entity userEntity = new Entity(ENTITY_NAME, user.getId());
         userEntity.setProperty(FIRST_NAME_PROPERTY, user.getFirstName());
         userEntity.setProperty(LAST_NAME_PROPERTY, user.getLastName());
@@ -43,7 +43,7 @@ public class DatastoreUserRepository implements UserRepository{
     }
 
     @Override
-    public boolean isUserDataSaved(String id){
+    public boolean isUserDataSaved(String id) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Key userKey = KeyFactory.createKey(ENTITY_NAME, id);
         try {
@@ -57,20 +57,20 @@ public class DatastoreUserRepository implements UserRepository{
 
     @Override 
     @Nullable
-    public User getUser(String id){
+    public User getUser(String id) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Key userKey = KeyFactory.createKey(ENTITY_NAME, id);
         try {
             return getUserFromUserEntity(datastore.get(userKey));
         }
-        catch(EntityNotFoundException e){
+        catch(EntityNotFoundException e) {
             return null;
         }
     }
 
     @Nullable
-    private User getUserFromUserEntity(Entity userEntity){
-        if(userEntity==null) return null;
+    private User getUserFromUserEntity(Entity userEntity) {
+        if (userEntity==null) return null;
         String id = (String) userEntity.getKey().getName();
         String firstName = (String) userEntity.getProperty(FIRST_NAME_PROPERTY);
         String lastName = (String) userEntity.getProperty(LAST_NAME_PROPERTY);
@@ -86,7 +86,7 @@ public class DatastoreUserRepository implements UserRepository{
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery userEntities = datastore.prepare(usersQuery);
         HashMap<String, User> result = new HashMap<>();
-        for(Entity userEntity : userEntities.asIterable()){
+        for (Entity userEntity : userEntities.asIterable()) {
             User newUser = getUserFromUserEntity(userEntity);
             result.put(newUser.getId(), newUser);
         }

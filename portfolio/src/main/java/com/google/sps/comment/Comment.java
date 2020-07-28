@@ -12,20 +12,20 @@ import com.google.appengine.api.datastore.FetchOptions;
 
 
 /** Stores the data related to one comment */
-public class Comment{
-    private String senderId;
-    private final String message;
+public class Comment {
+  private String senderId;
+  private final String message;
 
-    public Comment(String senderId, String message){
-        this.senderId = senderId;
-        this.message = message;
-    }
+  public Comment(String senderId, String message) {
+    this.senderId = senderId;
+    this.message = message;
+  }
 
-    public String getSenderId(){
-        return senderId;
-    }
-
-    public String getMessage() {
-        return message;
-    }
+  public String getSenderId() {
+    return senderId;
+  }
+  
+  public String getMessage() {
+    return message;
+  }
 }

@@ -48,11 +48,11 @@ import java.util.HashMap;
  */
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
-    private class CommentData{
+    private class CommentData {
         private String message;
         private User sender;
 
-        CommentData(String message, User sender){
+        CommentData(String message, User sender) {
             this.message = message;
             this.sender = sender;
         }
@@ -67,7 +67,7 @@ public class CommentsServlet extends HttpServlet {
         CommentRepository myCommentRepository = new CommentRepositoryFactory()
                                             .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
         User sender = myUserRepository.getUser(senderId);
-        if(sender == null){ // Save user data only if not already saved
+        if(sender == null) { // Save user data only if not already saved
             sender = getUserFromRequest(request);
             myUserRepository.saveUser(sender);
         }
@@ -76,7 +76,7 @@ public class CommentsServlet extends HttpServlet {
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
         CommentRepository myCommentRepository = new CommentRepositoryFactory()
                                             .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
         UserRepository myUserRepository = new UserRepositoryFactory()
@@ -85,7 +85,7 @@ public class CommentsServlet extends HttpServlet {
         List<Comment> comments = myCommentRepository.getGivenNumberOfComments(maxComments);
         HashMap<String, User> users = myUserRepository.getAllUsers();
         ArrayList<CommentData> result = new ArrayList<CommentData>();
-        for(Comment comment : comments){
+        for(Comment comment : comments) {
             User correspondingUser = users.get(comment.getSenderId());
             result.add(new CommentData(comment.getMessage(), correspondingUser));
         }
@@ -105,25 +105,25 @@ public class CommentsServlet extends HttpServlet {
         String email = getUserEmailFromUserService();
         String phone = request.getParameter("phone");
         String jobTitle = null;
-        if(request.getParameterValues("type")!=null){ // Box is checked
+        if(request.getParameterValues("type")!=null) { // Box is checked
             jobTitle = request.getParameter("job-title");
         }
         User newUser = new User(getUserIdFromUserService(), firstName, lastName, email, phone, jobTitle);
         return newUser;
     }
 
-    private Comment getCommentFromRequest(String senderId, HttpServletRequest request){
+    private Comment getCommentFromRequest(String senderId, HttpServletRequest request) {
         String message = request.getParameter("comment");
         Comment newComment = new Comment(senderId, message);
         return newComment;
     }
 
-    public static String getUserEmailFromUserService(){
+    public static String getUserEmailFromUserService() {
         UserService userService = UserServiceFactory.getUserService();
         return userService.getCurrentUser().getEmail();
     }
 
-    public static String getUserIdFromUserService(){
+    public static String getUserIdFromUserService() {
         UserService userService = UserServiceFactory.getUserService();
         return userService.getCurrentUser().getUserId();
     }

@@ -3,11 +3,11 @@ package com.google.sps.user;
 import org.jetbrains.annotations.Nullable;
 
 /** Stores the data related to one user */
-public class User{
+public class User {
     private final String id, firstName, lastName, email, phone;
     @Nullable private final String jobTitle; //job related data: optional
 
-    public User(String id, String firstName, String lastName, String email, String phone, @Nullable String jobTitle){
+    public User(String id, String firstName, String lastName, String email, String phone, @Nullable String jobTitle) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -16,7 +16,7 @@ public class User{
         this.jobTitle = jobTitle;
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
 
