@@ -14,6 +14,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 import java.util.List; 
 import java.util.ArrayList;
 
+/* Handles the storage of comments using the Datastore API. */ 
 public class DatastoreCommentRepository implements CommentRepository{
     public static final String ENTITY_NAME = "Comment";
     private static final String MESSAGE_PROPERTY = "message";

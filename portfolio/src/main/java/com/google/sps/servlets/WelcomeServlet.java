@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List; 
 import java.util.ArrayList;
 
-/** Servlet that returns a random welcome text */
+/** Servlet that returns a random welcome text. */
 @WebServlet("/welcome-data")
 public class WelcomeServlet extends HttpServlet {
   private List<String> welcomeTexts;

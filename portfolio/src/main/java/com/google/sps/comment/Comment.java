@@ -10,6 +10,8 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.FetchOptions;
 
+
+/* Stores the data related to one comment */
 public class Comment{
     private String senderId;
     private final String message;

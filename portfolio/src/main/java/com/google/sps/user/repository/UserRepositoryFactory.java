@@ -4,6 +4,7 @@ import com.google.sps.user.User;
 import com.google.sps.user.repository.impl.DatastoreUserRepository;
 import org.jetbrains.annotations.Nullable;
 
+/* Creates a UserRepository according to the requested type. */
 public class UserRepositoryFactory{
     public static enum UserRepositoryType{
         DATASTORE

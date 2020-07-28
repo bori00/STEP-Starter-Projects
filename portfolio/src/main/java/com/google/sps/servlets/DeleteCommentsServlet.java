@@ -32,7 +32,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Key;
 
-/* This servlet is responsible for deleting all the comments from the database */
+/* This servlet is responsible for deleting all the comments from the database. */
 @WebServlet("/delete-comments-data")
 public class DeleteCommentsServlet extends HttpServlet {
 

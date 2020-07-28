@@ -38,10 +38,13 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.util.HashMap;
 
-/** This servlet handles comment's data: 
- *- doPost() stores get's the recently submitted comment's data from the request 
- *          and stores in a database using Datastore API
- *- doGet() returns the comments from the database, aftern converting them to JSON*/
+/** This servlet handles comment's data.
+ *
+ * <p>{@link #doPost(HttpServletRequest, HttpServletResponse) doPost()} stores get's the recently submitted comment's data from the request 
+ * and stores in a database using Datastore API
+ *
+ * <p>{@link #doGet(HttpServletRequest, HttpServletResponse) doGet()} returns the
+ * comments from the database, aftern converting them to JSON*/
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
     private class CommentData{

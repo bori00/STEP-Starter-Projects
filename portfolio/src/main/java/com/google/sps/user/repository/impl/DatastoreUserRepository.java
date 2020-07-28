@@ -17,6 +17,7 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 import java.util.List; 
 import java.util.HashMap;
 
+/* Handles the storage of comments using the Datastore API. */ 
 public class DatastoreUserRepository implements UserRepository{
     public static final String ENTITY_NAME = "User";
     public static final String FIRST_NAME_PROPERTY = "firstName";
