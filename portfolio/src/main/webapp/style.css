@@ -90,6 +90,14 @@ h5{
     color: #8E8D8A;
 }
 
+.link-emphasise{
+    color: #ff9966;
+}
+
+.link-emphasise:hover{
+    color: #8E8D8A;
+}
+
 .page-title{
     margin: 40px;
 }
@@ -145,6 +153,12 @@ button:hover{
     color: #8E8D8A;
 }
 
+.bottom-heading{
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
+}
 
 /* ------------------------content------------------------- */
 /* --------------navbar-------------- */
@@ -213,7 +227,6 @@ button:hover{
 }
 
 .info-content{
-    display: inline;
     background-color: hsla(20, 100%, 70%, 80%);
     color: #8E8D8A;
     border-radius: 15% 0 15% 0;
@@ -627,6 +640,7 @@ button:hover{
     width: 500px;
     margin: 50px auto;
     padding: 45px 30px;
+    display: none;
 }
 
 #contact-form hr{

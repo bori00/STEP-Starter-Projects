@@ -14,7 +14,13 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.Comment;
+import com.google.sps.comment.Comment;
+import com.google.sps.user.User;
+import com.google.sps.user.repository.UserRepository;
+import com.google.sps.user.repository.UserRepositoryFactory;
+import com.google.sps.comment.repository.CommentRepository;
+import com.google.sps.comment.repository.CommentRepositoryFactory;
+import com.google.sps.data.RepositoryType;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -29,78 +35,98 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import java.util.HashMap;
 
-/** This servlet handles comment's data: 
- *- doPost() stores get's the recently submitted comment's data from the request 
- *          and stores in a database using Datastore API
- *- doGet() returns the comments from the database, aftern converting them to JSON*/
+/** 
+ * This servlet handles comment's data.
+ *
+ * <p>{@link #doPost(HttpServletRequest, HttpServletResponse) doPost()} stores get's the recently submitted comment's data from the request 
+ * and stores in a database using Datastore API
+ *
+ * <p>{@link #doGet(HttpServletRequest, HttpServletResponse) doGet()} returns the
+ * comments from the database, aftern converting them to JSON
+ */
 @WebServlet("/comments-data")
 public class CommentsServlet extends HttpServlet {
-    private static final String COMMENT_ENTITY_NAME = "Comment";
-    private static final String FIRST_NAME_PROPERTY = "firstName";
-    private static final String LAST_NAME_PROPERTY = "lastName";
-    private static final String EMAIL_PROPERTY = "email";
-    private static final String MESSAGE_PROPERTY = "message";
-    private static final String PHONE_PROPERTY = "phone";
-    private static final String JOB_TITLE_PROPERTY = "jobTitle";
+    private class CommentData {
+        private String message;
+        private User sender;
 
-
+        CommentData(String message, User sender) {
+            this.message = message;
+            this.sender = sender;
+        }
+    }
+    
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Comment newComment = getCommentFromRequest(request);
-        putCommentToDatastore(newComment);
+        String senderId = getUserIdFromUserService();
+        // It's guaranteed that the user is logged in at this point
+        UserRepository myUserRepository = new UserRepositoryFactory()
+                                            .getUserRepository(RepositoryType.DATASTORE);
+        CommentRepository myCommentRepository = new CommentRepositoryFactory()
+                                            .getCommentRepository(RepositoryType.DATASTORE);
+        User sender = myUserRepository.getUser(senderId);
+        if(sender == null) { // Save user data only if not already saved
+            sender = getUserFromRequest(request);
+            myUserRepository.saveUser(sender);
+        }
+        myCommentRepository.saveComment(getCommentFromRequest(senderId, request));
         response.sendRedirect("/contact.html");
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{ 
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
+        CommentRepository myCommentRepository = new CommentRepositoryFactory()
+                                            .getCommentRepository(RepositoryType.DATASTORE);
+        UserRepository myUserRepository = new UserRepositoryFactory()
+                                            .getUserRepository(RepositoryType.DATASTORE);
         int maxComments = Integer.parseInt(request.getParameter("max-comments"));
-        List<Entity> results = getCommentsFromDatastore(maxComments); 
-        response.setContentType("application/json;");
-        response.getWriter().println(convertToJsonUsingGson(results));
-    }
-
-    private Comment getCommentFromRequest(HttpServletRequest request){
-        String firstName = request.getParameter("first-name");
-        String lastName = request.getParameter("last-name");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String message = request.getParameter("comment");
-        String jobTitle = null;
-        if(request.getParameterValues("type")!=null){ //box is checked
-            jobTitle = request.getParameter("job-title");
+        List<Comment> comments = myCommentRepository.getGivenNumberOfComments(maxComments);
+        HashMap<String, User> users = myUserRepository.getAllUsers();
+        ArrayList<CommentData> result = new ArrayList<CommentData>();
+        for(Comment comment : comments) {
+            User correspondingUser = users.get(comment.getSenderId());
+            result.add(new CommentData(comment.getMessage(), correspondingUser));
         }
-        Comment newComment = new Comment(firstName, lastName, email, phone, message, jobTitle);
-        return newComment;
-    }
-
-    private void putCommentToDatastore(Comment myComment){
-        Entity commentEntity = getCommentEntityFromComment(myComment);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
-    }
-
-    private Entity getCommentEntityFromComment(Comment myComment){
-        Entity commentEntity = new Entity(COMMENT_ENTITY_NAME);
-        commentEntity.setProperty(FIRST_NAME_PROPERTY, myComment.getFirstName());
-        commentEntity.setProperty(LAST_NAME_PROPERTY, myComment.getLastName());
-        commentEntity.setProperty(EMAIL_PROPERTY, myComment.getEmail());
-        commentEntity.setProperty(PHONE_PROPERTY, myComment.getPhone());
-        commentEntity.setProperty(MESSAGE_PROPERTY, myComment.getMessage());
-        commentEntity.setProperty(JOB_TITLE_PROPERTY, myComment.getJobTitle());
-        return commentEntity;
-    }
-
-    private List<Entity> getCommentsFromDatastore(int maxComments){
-        Query commentsQuery = new Query(COMMENT_ENTITY_NAME);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        PreparedQuery results = datastore.prepare(commentsQuery);
-        return results.asList(FetchOptions.Builder.withLimit(maxComments));
+        response.setContentType("application/json;");
+        response.getWriter().println(convertToJsonUsingGson(result));
     }
 
     private String convertToJsonUsingGson(Object o) {
         Gson gson = new Gson();
         String json = gson.toJson(o);
         return json;
+    }
+
+    private User getUserFromRequest(HttpServletRequest request){
+        String firstName = request.getParameter("first-name");
+        String lastName = request.getParameter("last-name");
+        String email = getUserEmailFromUserService();
+        String phone = request.getParameter("phone");
+        String jobTitle = null;
+        if(request.getParameterValues("type")!=null) { // Box is checked
+            jobTitle = request.getParameter("job-title");
+        }
+        User newUser = new User(getUserIdFromUserService(), firstName, lastName, email, phone, jobTitle);
+        return newUser;
+    }
+
+    private Comment getCommentFromRequest(String senderId, HttpServletRequest request) {
+        String message = request.getParameter("comment");
+        Comment newComment = new Comment(senderId, message);
+        return newComment;
+    }
+
+    public static String getUserEmailFromUserService() {
+        UserService userService = UserServiceFactory.getUserService();
+        return userService.getCurrentUser().getEmail();
+    }
+
+    public static String getUserIdFromUserService() {
+        UserService userService = UserServiceFactory.getUserService();
+        return userService.getCurrentUser().getUserId();
     }
 }
