@@ -5,7 +5,6 @@ import com.google.sps.comment.repository.impl.DatastoreCommentRepository;
 import org.jetbrains.annotations.Nullable;
 
 /** Creates a CommentRepository according to the requested type. */
-/** Creates a CommentRepository according to the requested type. */
 public class CommentRepositoryFactory {
   public static enum CommentRepositoryType {
     DATASTORE
