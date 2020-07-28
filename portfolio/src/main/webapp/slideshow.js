@@ -6,24 +6,24 @@ showObject(slides[slideIndex-1]); // Initial state
 
 // Hide/show functions
 function showObject(object){
-    object.style.display="block";
+    object.style.display = "block";
 }
 
 function hideObject(object){
-    object.style.display="none";
+    object.style.display = "none";
 }
 
 
 // Sliding
 function incrementSlideIndex(n){
     slideIndex=slideIndex+n;
-    if(slideIndex>noSlides || slideIndex<1 ){
+    if(slideIndex>noSlides || slideIndex < 1 ){
         slideIndex=((slideIndex-1)%noSlides+noSlides)%noSlides+1;
     }
 }
 
 function hideAllSlides(){
-    for(var i=0; i<noSlides; i++){
+    for(var i = 0; i < noSlides; i++){
         hideObject(slides[i]);
     }
 }

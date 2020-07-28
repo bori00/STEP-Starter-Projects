@@ -10,7 +10,7 @@ public class UserRepositoryFactory{
     }
 
     public UserRepository getUserRepository(UserRepositoryType repositoryType){
-        if(repositoryType==null) {
+        if(repositoryType == null) {
             throw new IllegalArgumentException("repositoryType can't be null!");
         }
         switch(repositoryType){

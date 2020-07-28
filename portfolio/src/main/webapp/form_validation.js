@@ -16,7 +16,7 @@ function isNumeric(string)
 }
 
 function validPhone(string){
-    return string!=="" && string.length===10 && isNumeric(string);
+    return string !== "" && string.length === 10 && isNumeric(string);
 }
 
 var phone_input = document.getElementById("phone-input");

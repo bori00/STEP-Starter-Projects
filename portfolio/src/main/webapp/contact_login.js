@@ -5,7 +5,7 @@ function handleUserLogin(){
     .then(response => response.json())
     .catch(error => "failed to convert to json: " + error)
     .then(response => {
-        if(response.isLoggedIn==true){
+        if(response.isLoggedIn == true){
             console.log("user is logged in: " + response);
             displayContactForm();
             displayLogoutUrl(response);

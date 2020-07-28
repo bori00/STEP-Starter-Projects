@@ -63,7 +63,7 @@ public class CommentsServlet extends HttpServlet {
         CommentRepository myCommentRepository = new CommentRepositoryFactory()
                                             .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
         User sender = myUserRepository.getUser(senderId);
-        if(sender==null){ // Save user data only if not already saved
+        if(sender == null){ // Save user data only if not already saved
             sender = getUserFromRequest(request);
             myUserRepository.saveUser(sender);
         }

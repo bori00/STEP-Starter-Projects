@@ -36,7 +36,7 @@ function createCardHolderElement(){
 function createCardElement(highlight){
     var card = document.createElement("div");
     card.setAttribute('class', 'card-small');
-    if(highlight===true){
+    if(highlight === true){
         card.style.backgroundColor = "hsla(20, 100%, 70%, 60%)"; 
     }
     return card;

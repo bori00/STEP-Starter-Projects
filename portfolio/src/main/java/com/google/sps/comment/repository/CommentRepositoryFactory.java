@@ -10,7 +10,7 @@ public class CommentRepositoryFactory{
     }
 
     public CommentRepository getCommentRepository(CommentRepositoryType repositoryType){
-        if(repositoryType==null) {
+        if(repositoryType == null) {
             throw new IllegalArgumentException("repositoryType can't be null!");
         }
         switch(repositoryType){
