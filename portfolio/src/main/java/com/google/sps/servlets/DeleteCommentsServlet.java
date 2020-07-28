@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import com.google.sps.comment.Comment;
 import com.google.sps.comment.repository.CommentRepository;
 import com.google.sps.comment.repository.CommentRepositoryFactory;
+import com.google.sps.data.RepositoryType;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -39,7 +40,7 @@ public class DeleteCommentsServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         CommentRepository myCommentRepository = new CommentRepositoryFactory()
-                                            .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
+                                            .getCommentRepository(RepositoryType.DATASTORE);
         myCommentRepository.deleteAllComments();
         response.sendRedirect("/comments.html");
     }

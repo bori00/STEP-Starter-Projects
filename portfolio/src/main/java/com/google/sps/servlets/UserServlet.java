@@ -18,6 +18,7 @@ import java.io.IOException;
 import com.google.sps.user.User;
 import com.google.sps.user.repository.UserRepository;
 import com.google.sps.user.repository.UserRepositoryFactory;
+import com.google.sps.data.RepositoryType;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -77,7 +78,7 @@ public class UserServlet extends HttpServlet {
         else {
             myLogoutUrl = userService.createLogoutURL("/contact.html");
             UserRepository myUserRepository = new UserRepositoryFactory()
-                                                .getUserRepository(UserRepositoryFactory.UserRepositoryType.DATASTORE);
+                                                .getUserRepository(RepositoryType.DATASTORE);
             savedUser =  myUserRepository.getUser(userService.getCurrentUser().getUserId());
         }
         return new UserLoginData(isUserLoggedIn, myLoginUrl, myLogoutUrl, savedUser);

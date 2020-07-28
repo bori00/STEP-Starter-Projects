@@ -20,6 +20,7 @@ import com.google.sps.user.repository.UserRepository;
 import com.google.sps.user.repository.UserRepositoryFactory;
 import com.google.sps.comment.repository.CommentRepository;
 import com.google.sps.comment.repository.CommentRepositoryFactory;
+import com.google.sps.data.RepositoryType;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +39,8 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.util.HashMap;
 
-/** This servlet handles comment's data.
+/** 
+ * This servlet handles comment's data.
  *
  * <p>{@link #doPost(HttpServletRequest, HttpServletResponse) doPost()} stores get's the recently submitted comment's data from the request 
  * and stores in a database using Datastore API
@@ -63,9 +65,9 @@ public class CommentsServlet extends HttpServlet {
         String senderId = getUserIdFromUserService();
         // It's guaranteed that the user is logged in at this point
         UserRepository myUserRepository = new UserRepositoryFactory()
-                                            .getUserRepository(UserRepositoryFactory.UserRepositoryType.DATASTORE);
+                                            .getUserRepository(RepositoryType.DATASTORE);
         CommentRepository myCommentRepository = new CommentRepositoryFactory()
-                                            .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
+                                            .getCommentRepository(RepositoryType.DATASTORE);
         User sender = myUserRepository.getUser(senderId);
         if(sender == null) { // Save user data only if not already saved
             sender = getUserFromRequest(request);
@@ -78,9 +80,9 @@ public class CommentsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
         CommentRepository myCommentRepository = new CommentRepositoryFactory()
-                                            .getCommentRepository(CommentRepositoryFactory.CommentRepositoryType.DATASTORE);
+                                            .getCommentRepository(RepositoryType.DATASTORE);
         UserRepository myUserRepository = new UserRepositoryFactory()
-                                            .getUserRepository(UserRepositoryFactory.UserRepositoryType.DATASTORE);
+                                            .getUserRepository(RepositoryType.DATASTORE);
         int maxComments = Integer.parseInt(request.getParameter("max-comments"));
         List<Comment> comments = myCommentRepository.getGivenNumberOfComments(maxComments);
         HashMap<String, User> users = myUserRepository.getAllUsers();
