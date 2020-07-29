@@ -33,8 +33,6 @@ public class BlobstoreUploadUrlServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     String uploadUrl = blobstoreService.createUploadUrl("/comments-data");
-    System.out.println("!!!The upload URL is: " + uploadUrl);
-
     response.setContentType("text/html");
     response.getWriter().println(uploadUrl);
   }
