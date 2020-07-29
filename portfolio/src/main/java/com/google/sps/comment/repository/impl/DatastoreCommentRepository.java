@@ -19,6 +19,7 @@ public class DatastoreCommentRepository implements CommentRepository {
     public static final String ENTITY_NAME = "Comment";
     private static final String MESSAGE_PROPERTY = "message";
     private static final String SENDER_ID_PROPERTY = "senderId";
+    private static final String IMG_URL_PROPERTY = "imgUrl";
 
     @Override
     public void saveComment(Comment comment) {
@@ -30,6 +31,7 @@ public class DatastoreCommentRepository implements CommentRepository {
         Entity commentEntity = new Entity(ENTITY_NAME);
         commentEntity.setProperty(MESSAGE_PROPERTY, comment.getMessage());
         commentEntity.setProperty(SENDER_ID_PROPERTY, comment.getSenderId());
+        commentEntity.setProperty(IMG_URL_PROPERTY, comment.getImgUrl());
         return commentEntity;
     }
 
@@ -46,7 +48,9 @@ public class DatastoreCommentRepository implements CommentRepository {
     }
 
     private Comment getCommentFromCommentEntity(Entity commentEntity) {
-        return new Comment((String) commentEntity.getProperty(SENDER_ID_PROPERTY), (String) commentEntity.getProperty(MESSAGE_PROPERTY));
+        return new Comment((String) commentEntity.getProperty(SENDER_ID_PROPERTY), 
+                            (String) commentEntity.getProperty(MESSAGE_PROPERTY),
+                            (String) commentEntity.getProperty(IMG_URL_PROPERTY));
     }
 
     @Override
