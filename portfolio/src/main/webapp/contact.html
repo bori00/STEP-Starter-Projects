@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Contact | Bori</title>
-    <script src="contact_login.js"></script>
+    <script src="contact_form.js"></script>
 </head>
-<body onLoad="handleUserLogin()">
+<body onLoad="handleUserLoginAndBlobstoreUrl()">
     <header> 
         <nav id="navbar">
             <h1 id="menu-title"><a href="index.html">Bori's Portfolio</a></h1>
@@ -25,7 +25,7 @@
         <div height="300px">
             <h2 id="login-info"></h2>
         </div>
-        <form class="info-content" id="contact-form" action="/comments-data" method="POST">
+        <form class="info-content" id="contact-form" class="hidden" method="POST" enctype="multipart/form-data">
             <h2 class="text-primary">Contact</h2>
             <hr>
             <h4>Feel free to contact me!</h4>
