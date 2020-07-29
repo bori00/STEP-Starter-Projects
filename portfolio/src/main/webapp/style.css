@@ -557,8 +557,7 @@ button:hover{
     bottom: 50px;
     left: 50%;
     transform: translate(-50%);
-    margin: 10px;
-
+    margin: 10px 0;
 }
 
 .card-small:hover{
