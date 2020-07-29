@@ -35,6 +35,10 @@ function addCommentToDOM(commentData) {
     card.appendChild(senderNameHeading);
     card.appendChild(messageParagraph);
     card.appendChild(emailHeading);
+    if (commentData.comment.imgUrl !== undefined) {
+        var img  = createImgElement(commentData.comment.imgUrl);
+        card.appendChild(img);
+    }
     cardHolder.appendChild(card);
     var main = document.getElementById("main-comments");        
     main.appendChild(cardHolder);  
@@ -86,4 +90,10 @@ function createParagraphElement(string) {
     var paragraph = document.createElement("p"); 
     paragraph.innerText = string;
     return paragraph;
+}
+
+function createImgElement(srcUrl){
+    var img = document.createElement("img");
+    img.src = srcUrl;
+    return img;
 }

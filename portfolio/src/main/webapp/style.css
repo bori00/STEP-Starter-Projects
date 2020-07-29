@@ -552,8 +552,13 @@ button:hover{
 
 .card-small img{
     max-width: 120px;
-    max-height: 120px;
-    padding-bottom: 20px;
+    max-height: 100px;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translate(-50%);
+    margin: 10px;
+
 }
 
 .card-small:hover{
