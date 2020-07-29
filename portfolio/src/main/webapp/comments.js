@@ -1,9 +1,9 @@
-function addMaxCommentsInputListener(){
+function addMaxCommentsInputListener() {
     var maxCommentsInput = document.getElementById("max-comments");
     maxCommentsInput.addEventListener("change", displayComments);
 }
 
-function displayComments(){
+function displayComments() {
     removeAllCommentsFromDOM();
     var maxComments = getNoMaxComments();
     console.log(maxComments);
@@ -17,23 +17,50 @@ function displayComments(){
     .catch(error => console.log('failed to print comments to DOM: ' + error));
 }
 
-function deleteAllComments(){
-    fetch('/delete-comments-data', {method: 'POST'})
-    .catch(error => console.log('failed to fetch from delete-comments-data'))
-    .then(respone => displayComments());
+function addAllCommentsToDOM(commentDatas) {
+    console.log("add all comments to DOM: "+  commentDatas.length)
+    for(var i=0; i<commentDatas.length; i++) {
+        console.log(commentDatas[i]);
+        addCommentToDOM(commentDatas[i]);
+    }
 }
 
-function getNoMaxComments(){
+function addCommentToDOM(commentData) {
+    console.log("displaying comment " + commentData)
+    var cardHolder = createCardHolderElement();
+    var card = createCardElement(commentData.sender.jobTitle!==undefined);
+    var messageParagraph = createParagraphElement(commentData.comment.message);
+    var senderNameHeading = createHeading3Element(commentData.sender.firstName + " " + commentData.sender.lastName + " says:");
+    var emailHeading = createHeading5Element("contact: " + commentData.sender.email);
+    card.appendChild(senderNameHeading);
+    card.appendChild(messageParagraph);
+    card.appendChild(emailHeading);
+    cardHolder.appendChild(card);
+    var main = document.getElementById("main-comments");        
+    main.appendChild(cardHolder);  
+}
+
+function deleteAllComments() {
+    fetch('/delete-comments-data', {method: 'POST'})
+    .catch(error => console.log('failed to fetch from delete-comments-data'))
+    .then(response => displayComments());
+}
+
+function removeAllCommentsFromDOM() {
+    document.getElementById("main-comments").innerHTML = "";
+}
+
+function getNoMaxComments() {
     return document.getElementById("max-comments").value;
 }
 
-function createCardHolderElement(){
+function createCardHolderElement() {
     var cardHolder = document.createElement("div");
     cardHolder.setAttribute('class', 'card-holder-small');
     return cardHolder;
 }
 
-function createCardElement(highlight){
+function createCardElement(highlight) {
     var card = document.createElement("div");
     card.setAttribute('class', 'card-small');
     if(highlight === true){
@@ -42,7 +69,7 @@ function createCardElement(highlight){
     return card;
 }
 
-function createHeading3Element(string){
+function createHeading3Element(string) {
     var heading = document.createElement("h3"); 
     heading.innerText = string;
     return heading;
@@ -55,35 +82,8 @@ function createHeading5Element(string){
     return heading;
 }
 
-function createParagraphElement(string){
+function createParagraphElement(string) {
     var paragraph = document.createElement("p"); 
     paragraph.innerText = string;
     return paragraph;
-}
-
-function addCommentToDOM(comment){
-    console.log("displaying comment " + comment)
-    var cardHolder = createCardHolderElement();
-    var card = createCardElement(comment.sender.jobTitle!==undefined);
-    var messageParagraph = createParagraphElement(comment.message);
-    var senderNameHeading = createHeading3Element(comment.sender.firstName + " " + comment.sender.lastName + " says:");
-    var emailHeading = createHeading5Element("contact: " + comment.sender.email);
-    card.appendChild(senderNameHeading);
-    card.appendChild(messageParagraph);
-    card.appendChild(emailHeading);
-    cardHolder.appendChild(card);
-    var main = document.getElementById("main-comments");        
-    main.appendChild(cardHolder);  
-}
-
-function addAllCommentsToDOM(comments){
-    console.log("add all comments to DOM: "+  comments.length)
-    for(var i=0; i<comments.length; i++){
-        console.log(comments[i]);
-        addCommentToDOM(comments[i]);
-    }
-}
-
-function removeAllCommentsFromDOM(){
-    document.getElementById("main-comments").innerHTML = "";
 }

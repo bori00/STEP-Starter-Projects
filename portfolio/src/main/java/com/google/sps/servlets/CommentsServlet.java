@@ -66,11 +66,11 @@ public class CommentsServlet extends HttpServlet {
     private static final String IMG_INPUT_NAME = "commentImg";
 
     private class CommentData {
-        private String message;
-        private User sender;
+        private final Comment comment;
+        private final User sender;
 
-        CommentData(String message, User sender) {
-            this.message = message;
+        CommentData(Comment comment, User sender) {
+            this.comment = comment;
             this.sender = sender;
         }
     }
@@ -104,7 +104,7 @@ public class CommentsServlet extends HttpServlet {
         ArrayList<CommentData> result = new ArrayList<CommentData>();
         for(Comment comment : comments) {
             User correspondingUser = users.get(comment.getSenderId());
-            result.add(new CommentData(comment.getMessage(), correspondingUser));
+            result.add(new CommentData(comment, correspondingUser));
         }
         response.setContentType("application/json;");
         response.getWriter().println(convertToJsonUsingGson(result));
