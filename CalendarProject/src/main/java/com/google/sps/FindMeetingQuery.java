@@ -35,10 +35,17 @@ public final class FindMeetingQuery {
         return availableTimeRanges;
     }
 
+    /* 
+    * Removes from the list the time ranges which are shorter than minDuration.
+    */ 
     private void removeTooShortTimeRanges(List<TimeRange> timeRanges, long minDuration) {
         timeRanges.removeIf(timeRange -> timeRange.duration() < minDuration);
     }
 
+    /* 
+    * Given the timeRanges in one day, this function returns the list of complementerTimeRanges that are in the same day, but are not present in timeRanegs.
+    * The union of timeRanges and complementerTimeRanges is an entire day.
+    */
     private List<TimeRange> getComplementerTimeRanges(List<TimeRange> timeRanges) {
         List<TimeRange> complementerTimeRanges = new LinkedList<TimeRange>();
         int lastRangeEndPoint = 0;
@@ -48,7 +55,7 @@ public final class FindMeetingQuery {
              }
              lastRangeEndPoint = timeRange.end();
         }
-        if ( lastRangeEndPoint < TimeRange.END_OF_DAY ) {
+        if (lastRangeEndPoint < TimeRange.END_OF_DAY ) {
             complementerTimeRanges.add(TimeRange.fromStartEnd(lastRangeEndPoint, TimeRange.END_OF_DAY, true));
         }
         return complementerTimeRanges;
@@ -56,7 +63,7 @@ public final class FindMeetingQuery {
 
     /*
     * Removes the duplications from the overlapping timeRanges, and merges them into one single TimeRange. 
-    * Returns a list containing a minimal number of timeRanges, which do not overlpa, but they do contain each original timeRange
+    * Returns a list containing a minimal number of timeRanges, which do not overlpa, but they do contain each original timeRange.
     */
     private List<TimeRange> getReducedListOfTimeRanges(List<TimeRange> timeRanges) {
         List<TimeRange> reducedTimeRanges = new LinkedList<>();
@@ -71,7 +78,7 @@ public final class FindMeetingQuery {
                 //unite this timeRange with the previous one(s)
                 expandableTimeRange = expandableTimeRange.getUnion(currentTimeRange);
             }
-            else{ 
+            else { 
                 //add the previous timeRange to the list of reduced timeRanges, because it can't be expanded anymore
                 //start a new cuurentTimeRange
                 reducedTimeRanges.add(expandableTimeRange);
@@ -82,6 +89,9 @@ public final class FindMeetingQuery {
         return reducedTimeRanges;
     }
 
+    /* 
+    * creates a list containing the time ranges only out of the events. 
+    */
     private List<TimeRange> getListOfTimeRanges(Collection<Event> events) {
         List<TimeRange> result = new ArrayList<>();
         for (Event event : events) {
@@ -91,7 +101,7 @@ public final class FindMeetingQuery {
     }
 
     /* 
-    * Checks if there is exists an intersection(a common attendee) of the attendee list of two events
+    * Checks if there is exists an intersection(a common attendee) of the attendee list of two events.
     */
     private boolean existCommonAttendees(Collection<String> attendeesEventA, Collection<String> attendeesEventB) {
         //swap collections so that I can iterate through the shorter one
