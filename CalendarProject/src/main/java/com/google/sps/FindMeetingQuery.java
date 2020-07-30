@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -36,11 +37,18 @@ public final class FindMeetingQuery {
         System.out.println("After removing intersections: " + reducedUnavailableTimes);
         List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
         System.out.println("Available times: " + availableTimeRanges);
+        System.out.println("Min durtaion is: " + request.getDuration());
+        removeTooShortTimeRanges(availableTimeRanges, request.getDuration());
+        System.out.println("After removing too short ranges: " + availableTimeRanges);
         return availableTimeRanges;
     }
 
+    private void removeTooShortTimeRanges(List<TimeRange> timeRanges, long minDuration) {
+        timeRanges.removeIf(timeRange -> timeRange.duration() < minDuration);
+    }
+
     private List<TimeRange> getComplementerTimeRanges(List<TimeRange> timeRanges) {
-        List<TimeRange> complementerTimeRanges = new ArrayList<TimeRange>();
+        List<TimeRange> complementerTimeRanges = new LinkedList<TimeRange>();
         int lastRangeEndPoint = 0;
         for (TimeRange timeRange : timeRanges) {
              if (lastRangeEndPoint < timeRange.start()) {
@@ -59,7 +67,10 @@ public final class FindMeetingQuery {
     * Returns a list containing a minimal number of timeRanges, which do not overlpa, but they do contain each original timeRange
     */
     private List<TimeRange> getReducedListOfTimeRanges(List<TimeRange> timeRanges) {
-        List<TimeRange> reducedTimeRanges = new ArrayList<>();
+        List<TimeRange> reducedTimeRanges = new LinkedList<>();
+        if (timeRanges.size()==0) {
+            return reducedTimeRanges;
+        }
         TimeRange expandableTimeRange = timeRanges.get(0);
         TimeRange currentTimeRange;
         for (int i = 1; i<timeRanges.size(); i++) {
