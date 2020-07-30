@@ -96,7 +96,7 @@ public final class TimeRange {
     /*
     * returns a minimum length timerange which contains both of the timeranges transmitted as parameters
     */
-    public TimeRange getUnion(TimeRange other){
+    public TimeRange getUnion(TimeRange other) {
         int unionStart = Math.min(this.start, other.start());
         int unionEnd = Math.max(this.start+this.duration, other.start()+other.duration());
         return fromStartEnd(unionStart, unionEnd, false);
