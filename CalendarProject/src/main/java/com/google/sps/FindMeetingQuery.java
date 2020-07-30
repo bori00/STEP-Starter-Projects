@@ -27,6 +27,7 @@ import java.util.List;
 public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         //throw new UnsupportedOperationException("TODO: Implement this method.");
+        events = new ArrayList(events);
         System.out.println("Size of events is: " + events.size());
         events.removeIf(event -> !existCommonAttendees(event.getAttendees(), request.getAttendees()));
         System.out.println("Size of events after removal is: " + events.size());
