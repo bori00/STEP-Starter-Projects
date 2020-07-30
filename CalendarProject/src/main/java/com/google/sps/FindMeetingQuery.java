@@ -26,21 +26,12 @@ import java.util.List;
 
 public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-        //throw new UnsupportedOperationException("TODO: Implement this method.");
         events = new ArrayList(events);
-        System.out.println("Size of events is: " + events.size());
         events.removeIf(event -> !existCommonAttendees(event.getAttendees(), request.getAttendees()));
-        System.out.println("Size of events after removal is: " + events.size());
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
-        Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
-        System.out.println("The ordered timeranges are: " + unavailableTimes);
         List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
-        System.out.println("After removing intersections: " + reducedUnavailableTimes);
         List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
-        System.out.println("Available times: " + availableTimeRanges);
-        System.out.println("Min durtaion is: " + request.getDuration());
         removeTooShortTimeRanges(availableTimeRanges, request.getDuration());
-        System.out.println("After removing too short ranges: " + availableTimeRanges);
         return availableTimeRanges;
     }
 
