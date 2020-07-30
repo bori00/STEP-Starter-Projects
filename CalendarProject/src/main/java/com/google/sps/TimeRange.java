@@ -92,6 +92,16 @@ public final class TimeRange {
     return this.contains(other.start) || other.contains(this.start);
   }
 
+
+    /*
+    * returns a timerange which contains both of the timeranges transmitted as parameters
+    */
+    public TimeRange getUnion(TimeRange other){
+        int unionStart = Math.min(this.start, other.start());
+        int unionEnd = Math.max(this.start+this.duration, other.start()+other.duration());
+        return fromStartEnd(unionStart, unionEnd, false);
+    }
+
   /**
    * Checks if this range completely contains another range. This means that {@code other} is a
    * subset of this range. This is an inclusive bounds, meaning that if two ranges are the same,

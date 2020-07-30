@@ -31,8 +31,52 @@ public final class FindMeetingQuery {
         System.out.println("Size of events after removal is: " + events.size());
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
         Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
-        System.out.println("the ordered timeranges are: " + unavailableTimes);
-        return unavailableTimes;
+        System.out.println("The ordered timeranges are: " + unavailableTimes);
+        List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
+        System.out.println("After removing intersections: " + reducedUnavailableTimes);
+        List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
+        System.out.println("Available times: " + availableTimeRanges);
+        return availableTimeRanges;
+    }
+
+    private List<TimeRange> getComplementerTimeRanges(List<TimeRange> timeRanges) {
+        List<TimeRange> complementerTimeRanges = new ArrayList<TimeRange>();
+        int lastRangeEndPoint = 0;
+        for (TimeRange timeRange : timeRanges) {
+             if (lastRangeEndPoint < timeRange.start()) {
+                 complementerTimeRanges.add(TimeRange.fromStartEnd(lastRangeEndPoint, timeRange.start(), false));
+             }
+             lastRangeEndPoint = timeRange.end();
+        }
+        if ( lastRangeEndPoint < TimeRange.END_OF_DAY ) {
+            complementerTimeRanges.add(TimeRange.fromStartEnd(lastRangeEndPoint, TimeRange.END_OF_DAY, true));
+        }
+        return complementerTimeRanges;
+    }
+
+    /*
+    * Removes the duplications from the overlapping timeRanges, and merges them into one single TimeRange. 
+    * Returns a list containing a minimal number of timeRanges, which do not overlpa, but they do contain each original timeRange
+    */
+    private List<TimeRange> getReducedListOfTimeRanges(List<TimeRange> timeRanges) {
+        List<TimeRange> reducedTimeRanges = new ArrayList<>();
+        TimeRange expandableTimeRange = timeRanges.get(0);
+        TimeRange currentTimeRange;
+        for (int i = 1; i<timeRanges.size(); i++) {
+            currentTimeRange = timeRanges.get(i);
+            if (expandableTimeRange.overlaps(currentTimeRange)) { 
+                //unite this timeRange with the previous one(s)
+                expandableTimeRange = expandableTimeRange.getUnion(currentTimeRange);
+            }
+            else{ 
+                //add the previous timeRange to the list of reduced timeRanges, because it can't be expanded anymore
+                //start a new cuurentTimeRange
+                reducedTimeRanges.add(expandableTimeRange);
+                expandableTimeRange = currentTimeRange;
+            }
+        }
+        reducedTimeRanges.add(expandableTimeRange);
+        return reducedTimeRanges;
     }
 
     private List<TimeRange> getListOfTimeRanges(Collection<Event> events) {
