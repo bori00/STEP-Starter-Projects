@@ -70,7 +70,7 @@ public final class FindMeetingQuery {
     */
     private List<TimeRange> getReducedListOfTimeRanges(List<TimeRange> timeRanges) {
         List<TimeRange> reducedTimeRanges = new LinkedList<>();
-        if (timeRanges.size()==0) {
+        if (timeRanges.isEmpty()) {
             return reducedTimeRanges;
         }
         TimeRange expandableTimeRange = timeRanges.get(0);
