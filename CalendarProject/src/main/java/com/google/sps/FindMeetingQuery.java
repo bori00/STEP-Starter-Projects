@@ -35,13 +35,8 @@ public final class FindMeetingQuery {
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
         List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
         List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
-        removeTooShortTimeRanges(availableTimeRanges, request.getDuration());
+        availableTimeRanges.removeIf(timeRange -> timeRange.duration() < minDuration);
         return availableTimeRanges;
-    }
-
-    /* Removes from the list the time ranges which are shorter than minDuration. */ 
-    private void removeTooShortTimeRanges(List<TimeRange> timeRanges, long minDuration) {
-        timeRanges.removeIf(timeRange -> timeRange.duration() < minDuration);
     }
 
     /* 
