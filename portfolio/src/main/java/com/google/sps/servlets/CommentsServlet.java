@@ -101,8 +101,8 @@ public class CommentsServlet extends HttpServlet {
         int maxComments = Integer.parseInt(request.getParameter("max-comments"));
         List<Comment> comments = myCommentRepository.getGivenNumberOfComments(maxComments);
         HashMap<String, User> users = myUserRepository.getAllUsers();
-        ArrayList<CommentData> result = new ArrayList<CommentData>();
-        for(Comment comment : comments) {
+        ArrayList<CommentData> result = new ArrayList<>();
+        for (Comment comment : comments) {
             User correspondingUser = users.get(comment.getSenderId());
             result.add(new CommentData(comment, correspondingUser));
         }
