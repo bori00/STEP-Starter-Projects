@@ -103,7 +103,7 @@ public final class FindMeetingQuery {
     /* Checks if there is exists an intersection(a common attendee) of the attendee list of two events. */
     private boolean existCommonAttendees(Collection<String> attendeesEventA, Collection<String> attendeesEventB) {
         //swap collections so that I can iterate through the shorter one
-        if (attendeesEventA.size()>attendeesEventB.size()) { 
+        if (attendeesEventA.size() > attendeesEventB.size()) { 
             Collection<String> helper = attendeesEventA;
             attendeesEventA = attendeesEventB;
             attendeesEventB = helper;
