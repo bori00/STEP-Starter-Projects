@@ -33,7 +33,6 @@ public final class FindMeetingQuery {
         events = new LinkedList(events);
         events.removeIf(event -> !existCommonAttendees(event.getAttendees(), request.getAttendees()));
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
-        Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
         List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
         List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
         availableTimeRanges.removeIf(timeRange -> timeRange.duration() < request.getDuration());
@@ -63,9 +62,9 @@ public final class FindMeetingQuery {
     /*
     * Removes the duplications from the overlapping timeRanges, and merges them into one single TimeRange. 
     * Returns a list containing a minimal number of timeRanges, which do not overlpa, but they do contain each original timeRange.
-    * Prerequisities: timeRanges must be sorted in ascending order based on the starting points.
     */
     private List<TimeRange> getReducedListOfTimeRanges(List<TimeRange> timeRanges) {
+        Collections.sort(timeRanges, TimeRange.ORDER_BY_START);
         List<TimeRange> reducedTimeRanges = new LinkedList<>();
         if (timeRanges.isEmpty()) {
             return reducedTimeRanges;
