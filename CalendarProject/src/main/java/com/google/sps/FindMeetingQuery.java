@@ -38,11 +38,8 @@ public final class FindMeetingQuery {
         events.removeIf(event -> !existCommonAttendees(event.getAttendees(), allAttendees));
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
         Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
-        System.out.println("unavailable times: " + unavailableTimes);
         List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
-        System.out.println("Reduced unavailable times: " + reducedUnavailableTimes);
         List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
-        System.out.println("Available times: " + availableTimeRanges);
         availableTimeRanges.removeIf(timeRange -> timeRange.duration() < request.getDuration());
         if (!availableTimeRanges.isEmpty()) { 
             return availableTimeRanges;
