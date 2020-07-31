@@ -78,11 +78,11 @@ public final class FindMeetingQuery {
         for (int i = 1; i < timeRanges.size(); i++) {
             currentTimeRange = timeRanges.get(i);
             if (expandableTimeRange.overlaps(currentTimeRange)) { 
-                //unite this timeRange with the previous one(s)
+                // Unite this timeRange with the previous one(s).
                 expandableTimeRange = expandableTimeRange.getUnion(currentTimeRange);
             } else { 
-                //add the previous timeRange to the list of reduced timeRanges, because it can't be expanded anymore
-                //start a new cuurentTimeRange
+                // Add the previous timeRange to the list of reduced timeRanges, because it can't be expanded anymore.
+                // Start a new cuurentTimeRange.
                 reducedTimeRanges.add(expandableTimeRange);
                 expandableTimeRange = currentTimeRange;
             }
@@ -102,14 +102,14 @@ public final class FindMeetingQuery {
 
     /* Checks if there is exists an intersection(a common attendee) of the attendee list of two events. */
     private boolean existCommonAttendees(Collection<String> attendeesEventA, Collection<String> attendeesEventB) {
-        //swap collections so that I can iterate through the shorter one
+        // Swap collections so that I can iterate through the shorter one.
         if (attendeesEventA.size() > attendeesEventB.size()) { 
             Collection<String> helper = attendeesEventA;
             attendeesEventA = attendeesEventB;
             attendeesEventB = helper;
         }
 
-        //itarate through the attendees of event A and check if any of them also attends event B. If so,return true
+        // Itarate through the attendees of event A and check if any of them also attends event B. If so,return true.
         Iterator iteratorB = attendeesEventB.iterator(); 
         boolean foundCommonAttendee = false;
         while (iteratorB.hasNext() && !foundCommonAttendee) { 
