@@ -59,7 +59,7 @@ public final class FindMeetingQueryTest {
     query = new FindMeetingQuery();
   }
 
-  /*@Test
+  @Test
   public void optionsForNoAttendees() {
     MeetingRequest request = new MeetingRequest(NO_ATTENDEES, DURATION_1_HOUR);
 
@@ -272,7 +272,7 @@ public final class FindMeetingQueryTest {
     Collection<TimeRange> expected = Arrays.asList();
 
     Assert.assertEquals(expected, actual);
-  }*/
+  }
 
 
    @Test

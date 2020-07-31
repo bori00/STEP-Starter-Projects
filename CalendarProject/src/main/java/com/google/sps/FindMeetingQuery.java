@@ -31,10 +31,28 @@ public final class FindMeetingQuery {
     */
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         events = new LinkedList(events);
-        events.removeIf(event -> !existCommonAttendees(event.getAttendees(), request.getAttendees()));
+        LinkedList<Event> originalEvents = new LinkedList(events);
+        // Try to find a slot suited for optional attendees as well.
+        Collection<String> allAttendees = new HashSet<>(request.getAttendees());
+        allAttendees.addAll(request.getOptionalAttendees());
+        events.removeIf(event -> !existCommonAttendees(event.getAttendees(), allAttendees));
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
+        Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
+        System.out.println("unavailable times: " + unavailableTimes);
         List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
+        System.out.println("Reduced unavailable times: " + reducedUnavailableTimes);
         List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
+        System.out.println("Available times: " + availableTimeRanges);
+        availableTimeRanges.removeIf(timeRange -> timeRange.duration() < request.getDuration());
+        if (!availableTimeRanges.isEmpty()) { 
+            return availableTimeRanges;
+        } 
+        // Try to find a slot for mandatory attendees only. 
+        originalEvents.removeIf(event -> !existCommonAttendees(event.getAttendees(), request.getAttendees()));
+        unavailableTimes = getListOfTimeRanges(originalEvents);
+        Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
+        reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
+        availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
         availableTimeRanges.removeIf(timeRange -> timeRange.duration() < request.getDuration());
         return availableTimeRanges;
     }
@@ -78,7 +96,7 @@ public final class FindMeetingQuery {
                 expandableTimeRange = expandableTimeRange.getUnion(currentTimeRange);
             } else { 
                 // Add the previous timeRange to the list of reduced timeRanges, because it can't be expanded anymore.
-                // Start a new cuurentTimeRange.
+                // Start a new currentTimeRange.
                 reducedTimeRanges.add(expandableTimeRange);
                 expandableTimeRange = currentTimeRange;
             }
@@ -87,7 +105,7 @@ public final class FindMeetingQuery {
         return reducedTimeRanges;
     }
 
-    /* Creates a list containing the time ranges only out of the events. */
+    /** Creates a list containing the time ranges only out of the events. */
     private List<TimeRange> getListOfTimeRanges(Collection<Event> events) {
         List<TimeRange> result = new ArrayList<>();
         for (Event event : events) {
@@ -96,7 +114,8 @@ public final class FindMeetingQuery {
         return result;
     }
 
-    /* Checks if there is exists an intersection(a common attendee) of the attendee list of two events. */
+
+    /** Checks if there is exists an intersection(a common attendee) of the attendee list of two events. */
     private boolean existCommonAttendees(Collection<String> attendeesEventA, Collection<String> attendeesEventB) {
         // Swap collections so that I can iterate through the shorter one.
         if (attendeesEventA.size() > attendeesEventB.size()) { 
