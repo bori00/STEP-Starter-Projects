@@ -35,7 +35,7 @@ public final class FindMeetingQuery {
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
         List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
         List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
-        availableTimeRanges.removeIf(timeRange -> timeRange.duration() < minDuration);
+        availableTimeRanges.removeIf(timeRange -> timeRange.duration() < request.getDuration());
         return availableTimeRanges;
     }
 
@@ -106,10 +106,10 @@ public final class FindMeetingQuery {
         }
 
         // Itarate through the attendees of event A and check if any of them also attends event B. If so,return true.
-        Iterator iteratorB = attendeesEventB.iterator(); 
+        Iterator iteratorA = attendeesEventA.iterator(); 
         boolean foundCommonAttendee = false;
-        while (iteratorB.hasNext() && !foundCommonAttendee) { 
-            if (attendeesEventA.contains(iteratorB.next())) {
+        while (iteratorA.hasNext() && !foundCommonAttendee) { 
+            if (attendeesEventB.contains(iteratorA.next())) {
                 foundCommonAttendee=true;
             }
         } 
