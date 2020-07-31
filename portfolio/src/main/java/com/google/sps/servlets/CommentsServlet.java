@@ -132,7 +132,6 @@ public class CommentsServlet extends HttpServlet {
     private Comment getCommentFromRequest(String senderId, HttpServletRequest request) {
         String message = request.getParameter(COMMENT_INPUT_NAME);
         String imgUrl = getUploadedFileUrl(request, IMG_INPUT_NAME);
-        System.out.println("!!!The image's url is: " + imgUrl);
         Comment newComment = new Comment(senderId, message, imgUrl);
         return newComment;
     }
