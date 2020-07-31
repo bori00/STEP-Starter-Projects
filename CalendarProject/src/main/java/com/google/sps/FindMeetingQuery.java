@@ -33,6 +33,7 @@ public final class FindMeetingQuery {
         events = new LinkedList(events);
         events.removeIf(event -> !existCommonAttendees(event.getAttendees(), request.getAttendees()));
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
+        Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
         List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
         List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
         availableTimeRanges.removeIf(timeRange -> timeRange.duration() < request.getDuration());
