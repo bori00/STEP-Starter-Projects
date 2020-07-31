@@ -19,7 +19,7 @@ function displayComments() {
 
 function addAllCommentsToDOM(commentDatas) {
     console.log("add all comments to DOM: "+  commentDatas.length)
-    for(var i=0; i<commentDatas.length; i++) {
+    for (var i = 0; i < commentDatas.length; i++) {
         console.log(commentDatas[i]);
         addCommentToDOM(commentDatas[i]);
     }
