@@ -39,9 +39,7 @@ public final class FindMeetingQuery {
         return availableTimeRanges;
     }
 
-    /* 
-    * Removes from the list the time ranges which are shorter than minDuration.
-    */ 
+    /* Removes from the list the time ranges which are shorter than minDuration. */ 
     private void removeTooShortTimeRanges(List<TimeRange> timeRanges, long minDuration) {
         timeRanges.removeIf(timeRange -> timeRange.duration() < minDuration);
     }
@@ -93,9 +91,7 @@ public final class FindMeetingQuery {
         return reducedTimeRanges;
     }
 
-    /* 
-    * creates a list containing the time ranges only out of the events. 
-    */
+    /* Creates a list containing the time ranges only out of the events. */
     private List<TimeRange> getListOfTimeRanges(Collection<Event> events) {
         List<TimeRange> result = new ArrayList<>();
         for (Event event : events) {
@@ -104,9 +100,7 @@ public final class FindMeetingQuery {
         return result;
     }
 
-    /* 
-    * Checks if there is exists an intersection(a common attendee) of the attendee list of two events.
-    */
+    /* Checks if there is exists an intersection(a common attendee) of the attendee list of two events. */
     private boolean existCommonAttendees(Collection<String> attendeesEventA, Collection<String> attendeesEventB) {
         //swap collections so that I can iterate through the shorter one
         if (attendeesEventA.size()>attendeesEventB.size()) { 
