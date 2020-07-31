@@ -80,8 +80,7 @@ public final class FindMeetingQuery {
             if (expandableTimeRange.overlaps(currentTimeRange)) { 
                 //unite this timeRange with the previous one(s)
                 expandableTimeRange = expandableTimeRange.getUnion(currentTimeRange);
-            }
-            else { 
+            } else { 
                 //add the previous timeRange to the list of reduced timeRanges, because it can't be expanded anymore
                 //start a new cuurentTimeRange
                 reducedTimeRanges.add(expandableTimeRange);
