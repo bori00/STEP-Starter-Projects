@@ -25,7 +25,7 @@ import java.util.List;
 
 
 public final class FindMeetingQuery {
-    /* 
+    /**
     * Given  alist of events in one day and a request for a meeting, 
     * returns all the timeRanges when the meetik can take place so that each attendee can attend without having anothe roverlapping event.
     */
