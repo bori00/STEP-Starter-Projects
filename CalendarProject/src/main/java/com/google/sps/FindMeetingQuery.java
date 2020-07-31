@@ -30,7 +30,7 @@ public final class FindMeetingQuery {
     * returns all the timeRanges when the meetik can take place so that each attendee can attend without having anothe roverlapping event.
     */
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-        events = new ArrayList(events);
+        events = new LinkedList(events);
         events.removeIf(event -> !existCommonAttendees(event.getAttendees(), request.getAttendees()));
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
         List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
