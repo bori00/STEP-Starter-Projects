@@ -67,7 +67,7 @@ public final class FindMeetingQuery {
     /*
     * Removes the duplications from the overlapping timeRanges, and merges them into one single TimeRange. 
     * Returns a list containing a minimal number of timeRanges, which do not overlpa, but they do contain each original timeRange.
-    * Prerequisities: timeRanges must be sorted based on the starting points
+    * Prerequisities: timeRanges must be sorted in ascending order based on the starting points.
     */
     private List<TimeRange> getReducedListOfTimeRanges(List<TimeRange> timeRanges) {
         List<TimeRange> reducedTimeRanges = new LinkedList<>();
