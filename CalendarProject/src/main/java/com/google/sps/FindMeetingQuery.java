@@ -75,7 +75,7 @@ public final class FindMeetingQuery {
         }
         TimeRange expandableTimeRange = timeRanges.get(0);
         TimeRange currentTimeRange;
-        for (int i = 1; i<timeRanges.size(); i++) {
+        for (int i = 1; i < timeRanges.size(); i++) {
             currentTimeRange = timeRanges.get(i);
             if (expandableTimeRange.overlaps(currentTimeRange)) { 
                 //unite this timeRange with the previous one(s)
