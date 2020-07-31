@@ -25,29 +25,23 @@ import java.util.List;
 
 
 public final class FindMeetingQuery {
-    /* 
+    /**
     * Given  alist of events in one day and a request for a meeting, 
     * returns all the timeRanges when the meetik can take place so that each attendee can attend without having anothe roverlapping event.
     */
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-        events = new ArrayList(events);
+        events = new LinkedList(events);
         events.removeIf(event -> !existCommonAttendees(event.getAttendees(), request.getAttendees()));
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
         List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
         List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
-        removeTooShortTimeRanges(availableTimeRanges, request.getDuration());
+        availableTimeRanges.removeIf(timeRange -> timeRange.duration() < request.getDuration());
         return availableTimeRanges;
     }
 
     /* 
-    * Removes from the list the time ranges which are shorter than minDuration.
-    */ 
-    private void removeTooShortTimeRanges(List<TimeRange> timeRanges, long minDuration) {
-        timeRanges.removeIf(timeRange -> timeRange.duration() < minDuration);
-    }
-
-    /* 
-    * Given the timeRanges in one day, this function returns the list of complementerTimeRanges that are in the same day, but are not present in timeRanges.
+    * Given the timeRanges in one day, this function returns the list of complementerTimeRanges
+    * that are in the same day, but are not present in timeRanges.
     * The union of timeRanges and complementerTimeRanges is an entire day.
     */
     private List<TimeRange> getComplementerTimeRanges(List<TimeRange> timeRanges) {
@@ -68,23 +62,23 @@ public final class FindMeetingQuery {
     /*
     * Removes the duplications from the overlapping timeRanges, and merges them into one single TimeRange. 
     * Returns a list containing a minimal number of timeRanges, which do not overlpa, but they do contain each original timeRange.
+    * Prerequisities: timeRanges must be sorted in ascending order based on the starting points.
     */
     private List<TimeRange> getReducedListOfTimeRanges(List<TimeRange> timeRanges) {
         List<TimeRange> reducedTimeRanges = new LinkedList<>();
-        if (timeRanges.size()==0) {
+        if (timeRanges.isEmpty()) {
             return reducedTimeRanges;
         }
         TimeRange expandableTimeRange = timeRanges.get(0);
         TimeRange currentTimeRange;
-        for (int i = 1; i<timeRanges.size(); i++) {
+        for (int i = 1; i < timeRanges.size(); i++) {
             currentTimeRange = timeRanges.get(i);
             if (expandableTimeRange.overlaps(currentTimeRange)) { 
-                //unite this timeRange with the previous one(s)
+                // Unite this timeRange with the previous one(s).
                 expandableTimeRange = expandableTimeRange.getUnion(currentTimeRange);
-            }
-            else { 
-                //add the previous timeRange to the list of reduced timeRanges, because it can't be expanded anymore
-                //start a new cuurentTimeRange
+            } else { 
+                // Add the previous timeRange to the list of reduced timeRanges, because it can't be expanded anymore.
+                // Start a new cuurentTimeRange.
                 reducedTimeRanges.add(expandableTimeRange);
                 expandableTimeRange = currentTimeRange;
             }
@@ -93,9 +87,7 @@ public final class FindMeetingQuery {
         return reducedTimeRanges;
     }
 
-    /* 
-    * creates a list containing the time ranges only out of the events. 
-    */
+    /* Creates a list containing the time ranges only out of the events. */
     private List<TimeRange> getListOfTimeRanges(Collection<Event> events) {
         List<TimeRange> result = new ArrayList<>();
         for (Event event : events) {
@@ -104,22 +96,20 @@ public final class FindMeetingQuery {
         return result;
     }
 
-    /* 
-    * Checks if there is exists an intersection(a common attendee) of the attendee list of two events.
-    */
+    /* Checks if there is exists an intersection(a common attendee) of the attendee list of two events. */
     private boolean existCommonAttendees(Collection<String> attendeesEventA, Collection<String> attendeesEventB) {
-        //swap collections so that I can iterate through the shorter one
-        if (attendeesEventA.size()>attendeesEventB.size()) { 
+        // Swap collections so that I can iterate through the shorter one.
+        if (attendeesEventA.size() > attendeesEventB.size()) { 
             Collection<String> helper = attendeesEventA;
             attendeesEventA = attendeesEventB;
             attendeesEventB = helper;
         }
 
-        //itarate through the attendees of event A and check if any of them also attends event B. If so,return true
-        Iterator iteratorB = attendeesEventB.iterator(); 
+        // Itarate through the attendees of event A and check if any of them also attends event B. If so,return true.
+        Iterator iteratorA = attendeesEventA.iterator(); 
         boolean foundCommonAttendee = false;
-        while (iteratorB.hasNext() && !foundCommonAttendee) { 
-            if (attendeesEventA.contains(iteratorB.next())) {
+        while (iteratorA.hasNext() && !foundCommonAttendee) { 
+            if (attendeesEventB.contains(iteratorA.next())) {
                 foundCommonAttendee=true;
             }
         } 
