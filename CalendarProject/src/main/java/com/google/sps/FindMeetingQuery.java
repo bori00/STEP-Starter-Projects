@@ -39,7 +39,7 @@ public final class FindMeetingQuery {
         return availableTimeRanges;
     }
 
-    /* 
+    /**
     * Given the timeRanges in one day, this function returns the list of complementerTimeRanges
     * that are in the same day, but are not present in timeRanges.
     * The union of timeRanges and complementerTimeRanges is an entire day.
