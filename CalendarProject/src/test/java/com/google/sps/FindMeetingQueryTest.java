@@ -275,10 +275,10 @@ public final class FindMeetingQueryTest {
   }
 
 
-   @Test
+  @Test
   public void everyAttendeeIsConsideredPlusWholeDayOptionalAttendee() {
     // Have each person have different events, plus one optional attendee C with a full-day event. 
-    // We should see two options because each person has split the restricted times, and C cannot attend.
+    // We should see three options because each person has split the restricted times, and C cannot attend.
     //
     // Events  :       |--A--|     |--B--|
     //           |-------------C---------------|
@@ -308,8 +308,8 @@ public final class FindMeetingQueryTest {
 
    @Test
   public void everyAttendeeIsConsideredPlusMorningOptionalAttendee() {
-    // Have each person have different events, plus one optional attendee C with a full-day event. 
-    // We should see two options because each person has split the restricted times, and C cannot attend.
+    // Have each person have different events, plus one optional attendee C with an event between the events of A and B 
+    // We should see two options only, which enable C to attend the meeting 
     //
     // Events  :       |--A--|--c--|--B--|
     // Day     : |-----------------------------|
@@ -338,8 +338,9 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void justEnoughRoomWithIgnoredOptionalAttendee() {
-    // Have one person, but make it so that there is just enough room at one point in the day to
-    // have the meeting.
+    // The meetings of person A and B cover the whole day, but B is an optional attendee
+    // We should see the time slots of B's events, that are long enough, 
+    // since there's no option such that both A and B can attend
     //
     // Events  : |--A--|--B--|----A----|
     // Day     : |---------------------|
@@ -366,12 +367,14 @@ public final class FindMeetingQueryTest {
 
     @Test
     public void onlyOptionalAttendeesWithGaps() {
-        // Have one person, but make it so that there is just enough room at one point in the day to
-        // have the meeting.
+        // There are only optional attendes, and events with ignorable attendees
+        // The events have gaps between them
+        // We should see as output the time ranges of gaps and events with ignorable attendees
+        // This way, each optional attendee can attend
         //
         // Events  : |--AB--|--D--|----B----|---|-A-|
-        // Day     : |-------------------------------|
-        // Options :         |-----|         |---|
+        // Day     : |------------------------------|
+        // Options :        |--1--|         |-2-|
         // optionals: A, B
         // doesn't attend: D
 
@@ -399,12 +402,14 @@ public final class FindMeetingQueryTest {
 
     @Test
     public void onlyOptionalAttendeesWithNoGaps() {
-        // Have one person, but make it so that there is just enough room at one point in the day to
-        // have the meeting.
+        // Have two optional attendees, but the events of these two cover the whole day
+        // There's no option to let each optional attendee attend this event, 
+        // So we must consider the mandatory attendees only
+        // Since there are no mandatory attendees, the whole day is a valid option
         //
         // Events  : |--AB--|---A---|--B--|
         // Day     : |--------------------|
-        // Options : |--------------------|
+        // Options : |----------1---------|
         // optionals: A, B
 
         Collection<Event> events = Arrays.asList(
@@ -421,7 +426,7 @@ public final class FindMeetingQueryTest {
 
         Collection<TimeRange> actual = query.query(events, request);
         Collection<TimeRange> expected =
-            Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
+            Arrays.asList(TimeRange.WHOLE_DAY);
 
         Assert.assertEquals(expected, actual);
     }
