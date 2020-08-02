@@ -31,26 +31,27 @@ public final class FindMeetingQuery {
     */
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         events = new LinkedList(events);
-        LinkedList<Event> originalEvents = new LinkedList(events);
+        LinkedList<Event> originalEvents = new LinkedList(events); // Save for later use.
         // Try to find a slot suited for optional attendees as well.
         Collection<String> allAttendees = new HashSet<>(request.getAttendees());
         allAttendees.addAll(request.getOptionalAttendees());
         events.removeIf(event -> !existCommonAttendees(event.getAttendees(), allAttendees));
+        List<TimeRange> availableTimesForAll = getAvailableTimesFromEventsWithConflicts(events, request.getDuration());
+        if (!availableTimesForAll.isEmpty()) { 
+            return availableTimesForAll;
+        } 
+        // Try to find a slot for mandatory attendees only. 
+        originalEvents.removeIf(event -> !existCommonAttendees(event.getAttendees(), request.getAttendees()));
+        List<TimeRange> availableTimesForMandatoryAttendees = getAvailableTimesFromEventsWithConflicts(originalEvents, request.getDuration());
+        return availableTimesForMandatoryAttendees;
+    }
+
+    private List<TimeRange> getAvailableTimesFromEventsWithConflicts(Collection<Event> events, long minDuration) {
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
         Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
         List<TimeRange> reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
         List<TimeRange> availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
-        availableTimeRanges.removeIf(timeRange -> timeRange.duration() < request.getDuration());
-        if (!availableTimeRanges.isEmpty()) { 
-            return availableTimeRanges;
-        } 
-        // Try to find a slot for mandatory attendees only. 
-        originalEvents.removeIf(event -> !existCommonAttendees(event.getAttendees(), request.getAttendees()));
-        unavailableTimes = getListOfTimeRanges(originalEvents);
-        Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
-        reducedUnavailableTimes = getReducedListOfTimeRanges(unavailableTimes);
-        availableTimeRanges = getComplementerTimeRanges(reducedUnavailableTimes);
-        availableTimeRanges.removeIf(timeRange -> timeRange.duration() < request.getDuration());
+        availableTimeRanges.removeIf(timeRange -> timeRange.duration() < minDuration);
         return availableTimeRanges;
     }
 
