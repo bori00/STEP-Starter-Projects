@@ -27,7 +27,7 @@ import java.util.List;
 public final class FindMeetingQuery {
     /**
     * Given  alist of events in one day and a request for a meeting, 
-    * returns all the timeRanges when the meetik can take place so that each attendee can attend without having anothe roverlapping event.
+    * returns all the timeRanges when the meeting can take place so that each attendee can attend without having another overlapping event.
     */
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         events = new LinkedList(events);
@@ -46,6 +46,10 @@ public final class FindMeetingQuery {
         return availableTimesForMandatoryAttendees;
     }
 
+    /* 
+    * Computes the time ranges which don't overlap with any of the events specified as input parameter, 
+    * and aren't shorter than minDuration.
+    */ 
     private List<TimeRange> getAvailableTimesFromEventsWithConflicts(Collection<Event> events, long minDuration) {
         List<TimeRange> unavailableTimes = getListOfTimeRanges(events);
         Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
