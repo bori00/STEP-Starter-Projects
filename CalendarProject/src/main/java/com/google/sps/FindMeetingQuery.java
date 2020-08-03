@@ -46,7 +46,7 @@ public final class FindMeetingQuery {
         return availableTimesForMandatoryAttendees;
     }
 
-    /* 
+    /**
     * Computes the time ranges which don't overlap with any of the events specified as input parameter, 
     * and aren't shorter than minDuration.
     */ 
@@ -59,7 +59,7 @@ public final class FindMeetingQuery {
         return availableTimeRanges;
     }
 
-    /* 
+    /**
     * Given the timeRanges in one day, this function returns the list of complementerTimeRanges
     * that are in the same day, but are not present in timeRanges.
     * The union of timeRanges and complementerTimeRanges is an entire day.
@@ -79,7 +79,7 @@ public final class FindMeetingQuery {
         return complementerTimeRanges;
     }
 
-    /*
+    /**
     * Removes the duplications from the overlapping timeRanges, and merges them into one single TimeRange. 
     * Returns a list containing a minimal number of timeRanges, which do not overlpa, but they do contain each original timeRange.
     * Prerequisities: timeRanges must be sorted in ascending order based on the starting points.
