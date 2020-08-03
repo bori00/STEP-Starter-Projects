@@ -25,10 +25,7 @@ import com.google.appengine.api.blobstore.BlobInfo;
 import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 
-/**
- * When the fetch() function requests the /blobstore-upload-url URL, the content of the response is
- * the URL that allows a user to upload a file to Blobstore. 
- */
+/** Serves the blob with the given blobKey. */
 @WebServlet("/blobstore-serve-blob")
 public class BlobstoreServeBlobServlet extends HttpServlet {
 
