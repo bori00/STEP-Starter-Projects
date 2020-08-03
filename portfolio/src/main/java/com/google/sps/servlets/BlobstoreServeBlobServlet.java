@@ -21,18 +21,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.appengine.api.blobstore.BlobKey;
 
 /**
  * When the fetch() function requests the /blobstore-upload-url URL, the content of the response is
  * the URL that allows a user to upload a file to Blobstore. 
  */
 @WebServlet("/blobstore-serve-blob")
-public class BlobstoreUploadUrlServlet extends HttpServlet {
+public class BlobstoreServeBlobServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-    BlobKey blobKey = new BlobKey(req.getParameter("blob-key"));
-    blobstoreService.serve(blobKey, resp);
+    BlobKey blobKey = new BlobKey(request.getParameter("blob-key"));
+    blobstoreService.serve(blobKey, response);
   }
 }

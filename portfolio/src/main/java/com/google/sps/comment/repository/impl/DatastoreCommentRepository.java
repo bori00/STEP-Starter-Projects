@@ -31,7 +31,7 @@ public class DatastoreCommentRepository implements CommentRepository {
         Entity commentEntity = new Entity(ENTITY_NAME);
         commentEntity.setProperty(MESSAGE_PROPERTY, comment.getMessage());
         commentEntity.setProperty(SENDER_ID_PROPERTY, comment.getSenderId());
-        commentEntity.setProperty(IMG_BLOB_KEY_PROPERTY, comment.getImgUrl());
+        commentEntity.setProperty(IMG_BLOB_KEY_PROPERTY, comment.getImgBlobKey());
         return commentEntity;
     }
 

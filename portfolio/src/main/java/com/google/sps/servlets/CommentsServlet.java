@@ -131,13 +131,13 @@ public class CommentsServlet extends HttpServlet {
 
     private Comment getCommentFromRequest(String senderId, HttpServletRequest request) {
         String message = request.getParameter(COMMENT_INPUT_NAME);
-        String imgUrl = getUploadedFileUrl(request, IMG_INPUT_NAME);
-        Comment newComment = new Comment(senderId, message, imgUrl);
+        String imgBlobKey = getUploadedFileBlobKey(request, IMG_INPUT_NAME);
+        Comment newComment = new Comment(senderId, message, imgBlobKey);
         return newComment;
     }
 
     @Nullable
-    private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
+    private String getUploadedFileBlobKey(HttpServletRequest request, String formInputElementName) {
         BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
         Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
         List<BlobKey> blobKeys = blobs.get(formInputElementName);
@@ -156,7 +156,7 @@ public class CommentsServlet extends HttpServlet {
             return null;
         }
 
-        ImagesService imagesService = ImagesServiceFactory.getImagesService();
+        /*ImagesService imagesService = ImagesServiceFactory.getImagesService();
         ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
         try {
             URL url = new URL(imagesService.getServingUrl(options));
@@ -164,7 +164,8 @@ public class CommentsServlet extends HttpServlet {
             return url.getPath();
         } catch (MalformedURLException e) {
             return imagesService.getServingUrl(options).toString();
-        }
+        }*/
+        return blobKey.getKeyString();
     }
 
     public static String getUserEmailFromUserService() {
