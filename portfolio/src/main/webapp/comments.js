@@ -94,7 +94,7 @@ function createParagraphElement(string) {
 }
 
 function createImgElement(srcBlobKey) {
-    var url = new URL("/blobstore-serve-blob", document.URL);
+    var url = new URL("/serve-blob", document.URL);
     url.searchParams.append('blob-key', srcBlobKey)
     var img = document.createElement("img");
     img.src = url;

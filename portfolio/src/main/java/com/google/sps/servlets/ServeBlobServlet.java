@@ -26,8 +26,8 @@ import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 
 /** Serves the blob with the given blobKey. */
-@WebServlet("/blobstore-serve-blob")
-public class BlobstoreServeBlobServlet extends HttpServlet {
+@WebServlet("/serve-blob")
+public class ServeBlobServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
