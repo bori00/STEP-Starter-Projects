@@ -35,8 +35,9 @@ function addCommentToDOM(commentData) {
     card.appendChild(senderNameHeading);
     card.appendChild(messageParagraph);
     card.appendChild(emailHeading);
-    if (commentData.comment.imgUrl !== undefined) {
-        var img  = createImgElement(commentData.comment.imgUrl);
+    if (commentData.comment.imgBlobKey !== undefined) {
+        console.log("adding img to comment with message: " + commentData.comment.message + " and blobKey: + " + commentData.comment.imgBlobKey);
+        var img  = createImgElement(commentData.comment.imgBlobKey);
         card.appendChild(img);
     }
     cardHolder.appendChild(card);
@@ -92,8 +93,10 @@ function createParagraphElement(string) {
     return paragraph;
 }
 
-function createImgElement(srcUrl){
+function createImgElement(srcBlobKey) {
+    var url = new URL("/blobstore-serve-blob", document.URL);
+    url.searchParams.append('blob-key', srcBlobKey)
     var img = document.createElement("img");
-    img.src = srcUrl;
+    img.src = url;
     return img;
 }
