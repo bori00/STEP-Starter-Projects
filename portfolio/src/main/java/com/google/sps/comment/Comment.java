@@ -17,12 +17,12 @@ public class Comment {
   private final String senderId;
   private final String message;
   @Nullable
-  private final String imgUrl;
+  private final String imgBlobKey;
 
-  public Comment(String senderId, String message, @Nullable String imgUrl) {
+  public Comment(String senderId, String message, @Nullable String imgBlobKey) {
     this.senderId = senderId;
     this.message = message;
-    this.imgUrl = imgUrl;
+    this.imgBlobKey = imgBlobKey;
   }
 
   public String getSenderId() {
@@ -34,7 +34,7 @@ public class Comment {
   }
 
   @Nullable
-  public String getImgUrl() {
-    return imgUrl;
+  public String getImgBlobKey() {
+    return imgBlobKey;
   }
 }
