@@ -141,30 +141,17 @@ public class CommentsServlet extends HttpServlet {
         BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
         Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
         List<BlobKey> blobKeys = blobs.get(formInputElementName);
-
         // User submitted form without selecting a file, so we can't get a URL. (dev server)
         if (blobKeys == null || blobKeys.isEmpty()) {
             return null;
         }
-
         BlobKey blobKey = blobKeys.get(0);
-
         // User submitted form without selecting a file, so we can't get a URL. (live server)
         BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
         if (blobInfo.getSize() == 0) {
             blobstoreService.delete(blobKey);
             return null;
         }
-
-        /*ImagesService imagesService = ImagesServiceFactory.getImagesService();
-        ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
-        try {
-            URL url = new URL(imagesService.getServingUrl(options));
-            // Return relative path.
-            return url.getPath();
-        } catch (MalformedURLException e) {
-            return imagesService.getServingUrl(options).toString();
-        }*/
         return blobKey.getKeyString();
     }
 
